@@ -1,7 +1,5 @@
 
-# Java Methods to Manage a Mictosoft Access Database (.accdb)
-
-
+#Java Methods to Manage a Mictosoft Access Database (.accdb)
 
 
 
@@ -18,6 +16,11 @@
 ```
 
 
+## Clone
+
+```gh
+gh repo clone KDesp73/Java-Database-Methods
+```
 ## Authors
 
 - [@KDesp73](https://github.com/KDesp73)
