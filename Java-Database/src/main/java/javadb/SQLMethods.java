@@ -89,6 +89,66 @@ public class SQLMethods {
 
                 return list;
         }
+        
+        public static ArrayList<Integer> SELECT(Statement s, String Table, String Column, int Value) throws SQLException {
+                ArrayList<Integer> list = new ArrayList<>();
+
+                String query = "SELECT " + Value + " FROM " + Table + " WHERE " + Column + "= '" + Value;
+                ResultSet rs = s.executeQuery(query);
+
+                while (rs.next()) {
+
+                        list.add(rs.getInt(1));
+
+                }
+
+                return list;
+        }
+        
+        public static ArrayList<Double> SELECT(Statement s, String Table, String Column, double Value) throws SQLException {
+                ArrayList<Double> list = new ArrayList<>();
+
+                String query = "SELECT " + Value + " FROM " + Table + " WHERE " + Column + "= '" + Value;
+                ResultSet rs = s.executeQuery(query);
+
+                while (rs.next()) {
+
+                        list.add(rs.getDouble(1));
+
+                }
+
+                return list;
+        }
+        
+        public static ArrayList<Boolean> SELECT(Statement s, String Table, String Column, boolean Value) throws SQLException {
+                ArrayList<Boolean> list = new ArrayList<>();
+
+                String query = "SELECT " + Value + " FROM " + Table + " WHERE " + Column + "= '" + Value;
+                ResultSet rs = s.executeQuery(query);
+
+                while (rs.next()) {
+
+                        list.add(rs.getBoolean(1));
+
+                }
+
+                return list;
+        }
+        
+        public static ArrayList<Float> SELECT(Statement s, String Table, String Column, float Value) throws SQLException {
+                ArrayList<Float> list = new ArrayList<>();
+
+                String query = "SELECT " + Value + " FROM " + Table + " WHERE " + Column + "= '" + Value;
+                ResultSet rs = s.executeQuery(query);
+
+                while (rs.next()) {
+
+                        list.add(rs.getFloat(1));
+
+                }
+
+                return list;
+        }
 
         public static ArrayList<String> SELECT(Statement s, String Table, String Column) throws SQLException {
                 ArrayList<String> list = new ArrayList<>();
