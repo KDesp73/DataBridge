@@ -21,6 +21,13 @@
 ```bash
 git clone https://github.com/KDesp73/Java-Database-Methods
 ```
+
+## Contributing
+
+Contributions are always welcome!
+
+Please adhere to this project's `code of conduct`.
+
 ## Authors
 
 - [@KDesp73](https://github.com/KDesp73)
