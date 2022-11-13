@@ -18,8 +18,8 @@
 
 ## Clone
 
-```gh
-gh repo clone KDesp73/Java-Database-Methods
+```bash
+git clone https://github.com/KDesp73/Java-Database-Methods
 ```
 ## Authors
 
