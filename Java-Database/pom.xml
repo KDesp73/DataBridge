@@ -11,4 +11,12 @@
         <maven.compiler.target>17</maven.compiler.target>
         <exec.mainClass>javadb.JavaDatabase</exec.mainClass>
     </properties>
+    
+    <dependencies>
+                <dependency>
+                        <groupId>net.sf.ucanaccess</groupId>
+                        <artifactId>ucanaccess</artifactId>
+                        <version>4.0.4</version>
+                </dependency>
+        </dependencies>
 </project>
