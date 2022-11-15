@@ -78,7 +78,7 @@ public class SQLMethods {
         public static ArrayList<String> SELECT(Statement s, String Table, String Column, String Value) throws SQLException {
                 ArrayList<String> list = new ArrayList<>();
 
-                String query = "SELECT " + Value + " FROM " + Table + " WHERE " + Column + "= \'" + Value + "\'";
+                String query = "SELECT " + Value + " FROM " + Table + " WHERE " + Column + "= \"" + Value + "\"";
                 ResultSet rs = s.executeQuery(query);
 
                 while (rs.next()) {
@@ -160,6 +160,44 @@ public class SQLMethods {
 
                         list.add(rs.getString(1));
 
+                }
+
+                return list;
+        }
+        
+        public static ArrayList<String[]> SELECT(Statement s, String Table, String[] Columns) throws SQLException {
+                ArrayList<String[]> list = new ArrayList<>();
+
+                String query = "SELECT " + Utils.arrayToList(Columns) + " FROM " + Table;
+                ResultSet rs = s.executeQuery(query);
+
+                while (rs.next()) {
+                        String[] str = new String[Columns.length];
+                        
+                        for (int i = 0; i < Columns.length; i++) {
+                                str[i] = rs.getString(i+1);
+                        }
+                        
+                        list.add(str);
+                }
+
+                return list;
+        }
+        
+        public static ArrayList<String[]> SELECT(Statement s, String Table, String[] Columns, String Column, String Value) throws SQLException {
+                ArrayList<String[]> list = new ArrayList<>();
+
+                String query = "SELECT " + Utils.arrayToList(Columns) + " FROM " + Table+ " WHERE " + Column + " = \"" +Value + "\"";
+                ResultSet rs = s.executeQuery(query);
+
+                while (rs.next()) {
+                        String[] str = new String[Columns.length];
+                        
+                        for (int i = 0; i < Columns.length; i++) {
+                                str[i] = rs.getString(i+1);
+                        }
+                        
+                        list.add(str);
                 }
 
                 return list;
