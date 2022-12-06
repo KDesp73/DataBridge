@@ -52,13 +52,64 @@ public class SQLMethods {
 
         /*===========================================================*/
         
+        public static void UPDATE(Statement s, String Table, String Column, String Value, String Id, String IdValue) throws SQLException{
+                s.executeUpdate("UPDATE " + Table + " SET "+ Column +" = \'"+ Value + "\' WHERE " + Id + " = \'" + IdValue + "\'");
+        }
+        
+        public static void UPDATE(Statement s, String Table, String Column, String Value, String Id, int IdValue) throws SQLException{
+                s.executeUpdate("UPDATE " + Table + " SET "+ Column +" = \'"+ Value + "\' WHERE " + Id + " = " + IdValue);
+        }
+        
+        public static void UPDATE(Statement s, String Table, String Column, int Value, String Id, String IdValue) throws SQLException{
+                s.executeUpdate("UPDATE " + Table + " SET "+ Column +" = \'"+ Value + "\' WHERE " + Id + " = \'" + IdValue + "\'");
+        }
+        
+        public static void UPDATE(Statement s, String Table, String Column, int Value, String Id, int IdValue) throws SQLException{
+                s.executeUpdate("UPDATE " + Table + " SET "+ Column +" = \'"+ Value + "\' WHERE " + Id + " = " + IdValue);
+        }
+        
+        public static void UPDATE(Statement s, String Table, String Column, double Value, String Id, String IdValue) throws SQLException{
+                s.executeUpdate("UPDATE " + Table + " SET "+ Column +" = \'"+ Value + "\' WHERE " + Id + " = \'" + IdValue + "\'");
+        }
+        
+        public static void UPDATE(Statement s, String Table, String Column, double Value, String Id, int IdValue) throws SQLException{
+                s.executeUpdate("UPDATE " + Table + " SET "+ Column +" = \'"+ Value + "\' WHERE " + Id + " = " + IdValue);
+        }
+        
+        public static void UPDATE(Statement s, String Table, String Column, boolean Value, String Id, String IdValue) throws SQLException{
+                s.executeUpdate("UPDATE " + Table + " SET "+ Column +" = \'"+ Value + "\' WHERE " + Id + " = \'" + IdValue + "\'");
+        }
+        
+        public static void UPDATE(Statement s, String Table, String Column, boolean Value, String Id, int IdValue) throws SQLException{
+                s.executeUpdate("UPDATE " + Table + " SET "+ Column +" = \'"+ Value + "\' WHERE " + Id + " = " + IdValue);
+        }
+        
+        public static void UPDATE(Statement s, String Table, String Column, String Value) throws SQLException{
+                s.executeUpdate("UPDATE " + Table + " SET " + Column + " = \'" + Value + "\'");
+        }
+        
+        public static void UPDATE(Statement s, String Table, String Column, int Value) throws SQLException{
+                s.executeUpdate("UPDATE " + Table + " SET " + Column + " = " + Value);
+        }
+        
+        public static void UPDATE(Statement s, String Table, String Column, double Value) throws SQLException{
+                s.executeUpdate("UPDATE " + Table + " SET " + Column + " = " + Value);
+        }
+        
+        public static void UPDATE(Statement s, String Table, String Column, boolean Value) throws SQLException{
+                s.executeUpdate("UPDATE " + Table + " SET " + Column + " = " + Value);
+        }
+        
+        
+        /*===========================================================*/
+        
         public static int DELETE(Statement s, String Table, String Column, String Value) throws SQLException { //Deletes record
                 if (!valueExists(s, Table, Column, Value)) {
                         System.out.println("Record doesn't exist");
                         return -1;
                 }
 
-                String query = "DELETE FROM " + Table + " WHERE " + Column + " = \"" + Value + "\"";
+                String query = "DELETE FROM " + Table + " WHERE " + Column + " = \'" + Value + "\'";
 
                 s.executeUpdate(query);
                 System.out.println("Record deleted");
@@ -78,7 +129,7 @@ public class SQLMethods {
         public static ArrayList<String> SELECT(Statement s, String Table, String Column, String Value) throws SQLException {
                 ArrayList<String> list = new ArrayList<>();
 
-                String query = "SELECT " + Value + " FROM " + Table + " WHERE " + Column + "= \"" + Value + "\"";
+                String query = "SELECT " + Value + " FROM " + Table + " WHERE " + Column + "= \'" + Value + "\'";
                 ResultSet rs = s.executeQuery(query);
 
                 while (rs.next()) {
@@ -187,7 +238,7 @@ public class SQLMethods {
         public static ArrayList<String[]> SELECT(Statement s, String Table, String[] Columns, String Column, String Value) throws SQLException {
                 ArrayList<String[]> list = new ArrayList<>();
 
-                String query = "SELECT " + Utils.arrayToList(Columns) + " FROM " + Table+ " WHERE " + Column + " = \"" +Value + "\"";
+                String query = "SELECT " + Utils.arrayToList(Columns) + " FROM " + Table+ " WHERE " + Column + " = \'" +Value + "\'";
                 ResultSet rs = s.executeQuery(query);
 
                 while (rs.next()) {
@@ -266,7 +317,7 @@ public class SQLMethods {
         }
 
         /*===========================================================*/
-        
+        //Need of terminal
         public static void CREATE(Statement s, String name) throws SQLException { //Create table
                 ArrayList<String> colNames = new ArrayList<>();
                 ArrayList<String> dataTypes = new ArrayList<>();
@@ -292,7 +343,7 @@ public class SQLMethods {
                 s.executeUpdate(query);
                 System.out.println("Table " + name + " created");
         }
-
+        
         public static void CREATE(Statement s, String Table, String Column, String type) throws SQLException { //Create column in table
                 if(!Utils.correctType(type)){
                         System.out.println("Incorrect data type");

@@ -80,9 +80,9 @@ public class Utils {
 
                 for (int i = 0; i < arr.length; i++) {
                         if (i == arr.length - 1) {
-                                s = s.concat("\""+arr[i] + "\"");
+                                s = s.concat("\'"+arr[i] + "\'");
                         } else {
-                                s = s.concat("\""+arr[i] + "\", ");
+                                s = s.concat("\'"+arr[i] + "\', ");
                         }
                 }
 
@@ -95,9 +95,9 @@ public class Utils {
 
                 for (int i = 0; i < arr.size(); i++) {
                         if (i == arr.size() - 1) {
-                                s = s.concat("\""+arr.get(i) + "\"");
+                                s = s.concat("\'"+arr.get(i) + "\'");
                         } else {
-                                s = s.concat("\""+arr.get(i) + "\", ");
+                                s = s.concat("\'"+arr.get(i) + "\', ");
                         }
                 }
 
@@ -143,8 +143,8 @@ public class Utils {
                         "table"
                 };
                 
-                for (int i = 0; i < types.length; i++) {
-                        if (type.equals(types[i])) {
+                for (String type1 : types) {
+                        if (type.equals(type1)) {
                                 return true;
                         }
                 }
