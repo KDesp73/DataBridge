@@ -1,6 +1,15 @@
 
 # Java Methods to Manage a Microsoft Access Database (.accdb)
 
+## Tutorial
+
+1) Create MADB object
+
+```java
+MADB db = new MADB([your_db_directory]);
+```
+
+2) Now through this object you have access to all of the SQL Methods (INSERT, SELECT, UPDATE etc)
 
 
 ## Dependencies
