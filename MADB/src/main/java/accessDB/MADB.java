@@ -1,15 +1,15 @@
-package javadb;
+package accessDB;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class Database {
+public class MADB {
 
         private String filepath;
         private java.sql.Connection conn;
         private Statement statement;
 
-        public Database(String filepath) throws SQLException {
+        public MADB(String filepath) throws SQLException {
                 String url = "jdbc:ucanaccess://" + filepath;
                 this.filepath = filepath;
                 conn = DriverManager.getConnection(url);

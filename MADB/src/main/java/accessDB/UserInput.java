@@ -1,5 +1,5 @@
 
-package javadb;
+package accessDB;
 
 import java.io.*;
 public class UserInput
