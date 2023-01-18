@@ -3,7 +3,8 @@
 
 ## Tutorial
 
-1) Create MADB object
+1) Import MADB;
+2) Create MADB object
 
 ```java
 MADB db = new MADB([your_db_directory]);
