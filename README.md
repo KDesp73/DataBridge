@@ -10,7 +10,7 @@
 MADB db = new MADB([your_db_directory]);
 ```
 
-2) Now through this object you have access to all of the SQL Methods (INSERT, SELECT, UPDATE etc)
+3) Now through this object you have access to all of the SQL Methods (INSERT, SELECT, UPDATE etc)
 
 
 ## Dependencies
