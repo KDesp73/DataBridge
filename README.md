@@ -16,13 +16,11 @@ MADB db = new MADB([your_db_directory]);
 ## Dependencies
 
 ```xml
-<dependencies>
-    <dependency>
-        <groupId>net.sf.ucanaccess</groupId>
-        <artifactId>ucanaccess</artifactId>
-        <version>4.0.4</version>
-    </dependency>
-</dependencies>
+<dependency>
+    <groupId>MADB</groupId>
+    <artifactId>MADB</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+</dependency>
 ```
 
 
