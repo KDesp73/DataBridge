@@ -267,8 +267,8 @@ public class Database {
         }
 
         /*===========================================================*/
-        public boolean valueExists(String table, String column, String value) throws SQLException {
-                String query = "SELECT " + column + " FROM " + table + " WHERE " + column + "=\'" + value + "\'";
+        public boolean valueExists(String Table, String Column, String Value) throws SQLException {
+                String query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "=\'" + Value + "\'";
 
                 ResultSet rs = this.getStatement().executeQuery(query);
                 if (rs.next()) {
@@ -278,8 +278,8 @@ public class Database {
                 return (false);
         }
 
-        public boolean valueExists(String table, String column, int value) throws SQLException {
-                String query = "SELECT " + column + " FROM " + table + " WHERE " + column + "=" + value;
+        public boolean valueExists(String Table, String Column, int Value) throws SQLException {
+                String query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "=" + Value;
 
                 ResultSet rs = this.getStatement().executeQuery(query);
                 if (rs.next()) {
@@ -289,8 +289,8 @@ public class Database {
                 return (false);
         }
 
-        public boolean valueExists(String table, String column, float value) throws SQLException {
-                String query = "SELECT " + column + " FROM " + table + " WHERE " + column + "=" + value;
+        public boolean valueExists(String Table, String Column, float Value) throws SQLException {
+                String query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "=" + Value;
 
                 ResultSet rs = this.getStatement().executeQuery(query);
                 if (rs.next()) {
@@ -300,8 +300,8 @@ public class Database {
                 return (false);
         }
 
-        public boolean valueExists(String table, String column, boolean value) throws SQLException {
-                String query = "SELECT " + column + " FROM " + table + " WHERE " + column + "=" + value;
+        public boolean valueExists(String Table, String Column, boolean Value) throws SQLException {
+                String query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "=" + Value;
 
                 ResultSet rs = this.getStatement().executeQuery(query);
                 if (rs.next()) {
@@ -364,5 +364,167 @@ public class Database {
                 System.out.println(query);
                 this.getStatement().executeUpdate(query);
                 System.out.println("Column Added");
+        }
+
+        
+        /*===========DataBase Utils===========*/
+        class Utils {
+                private static String arrayToList(int[] arr) {
+                        String s = "";
+
+                        for (int i = 0; i < arr.length; i++) {
+                                if (i == arr.length - 1) {
+                                        s = s.concat("" + arr[i]);
+                                } else {
+                                        s = s.concat(arr[i] + ", ");
+                                }
+                        }
+
+                        return s;
+                }
+
+                private static String arrayToList(float[] arr) {
+                        String s = "";
+
+                        for (int i = 0; i < arr.length; i++) {
+                                if (i == arr.length - 1) {
+                                        s = s.concat("" + arr[i]);
+                                } else {
+                                        s = s.concat(arr[i] + ", ");
+                                }
+                        }
+
+                        return s;
+                }
+
+                private static String arrayToList(double[] arr) {
+                        String s = "";
+
+                        for (int i = 0; i < arr.length; i++) {
+                                if (i == arr.length - 1) {
+                                        s = s.concat("" + arr[i]);
+                                } else {
+                                        s = s.concat(arr[i] + ", ");
+                                }
+                        }
+
+                        return s;
+                }
+
+                private static String arrayToList(boolean[] arr) {
+                        String s = "";
+
+                        for (int i = 0; i < arr.length; i++) {
+                                if (i == arr.length - 1) {
+                                        s = s.concat("" + arr[i]);
+                                } else {
+                                        s = s.concat(arr[i] + ", ");
+                                }
+                        }
+
+                        return s;
+                }
+
+                private static String arrayToList(String[] arr) {
+                        String s = "";
+
+                        for (int i = 0; i < arr.length; i++) {
+                                if (i == arr.length - 1) {
+                                        s = s.concat(arr[i]);
+                                } else {
+                                        s = s.concat(arr[i] + ", ");
+                                }
+                        }
+
+                        return s;
+                }
+
+                private static String stringToList(String[] arr) {
+                        String s = "";
+
+                        for (int i = 0; i < arr.length; i++) {
+                                if (i == arr.length - 1) {
+                                        s = s.concat("\'" + arr[i] + "\'");
+                                } else {
+                                        s = s.concat("\'" + arr[i] + "\', ");
+                                }
+                        }
+
+                        return s;
+                }
+
+                private static String stringToList(ArrayList<String> arr) {
+                        String s = "";
+
+                        for (int i = 0; i < arr.size(); i++) {
+                                if (i == arr.size() - 1) {
+                                        s = s.concat("\'" + arr.get(i) + "\'");
+                                } else {
+                                        s = s.concat("\'" + arr.get(i) + "\', ");
+                                }
+                        }
+
+                        return s;
+                }
+
+                private static boolean correctType(String type) {
+                        String[] types = {
+                                "bigint",
+                                "bit",
+                                "decimal",
+                                "int",
+                                "money",
+                                "numeric",
+                                "smallint",
+                                "smallmoney",
+                                "tinyint",
+                                "float",
+                                "real",
+                                "date",
+                                "datetime2",
+                                "datetimeoffset",
+                                "smalldatetime",
+                                "datetime",
+                                "time",
+                                "char",
+                                "varchar",
+                                "text",
+                                "nchar",
+                                "nvarchar",
+                                "ntext",
+                                "binary",
+                                "varbinary",
+                                "image",
+                                "cursor",
+                                "rowversion",
+                                "hierarchyid",
+                                "uniqueidentifier",
+                                "sql_variant",
+                                "xml",
+                                "Spatial Geometry Types",
+                                "Spatial Geography Types",
+                                "table"
+                        };
+
+                        for (String type1 : types) {
+                                if (type.equals(type1)) {
+                                        return true;
+                                }
+                        }
+                        return false;
+                }
+
+                private static String tableColsFormat(ArrayList<String> cols, ArrayList<String> types) {
+                        String s = "";
+                        for (int i = 0; i < cols.size(); i++) {
+                                if (i == cols.size() - 1) {
+                                        s = s.concat(cols.get(i) + " " + types.get(i));
+                                } else {
+                                        s = s.concat(cols.get(i) + " " + types.get(i) + ", ");
+                                }
+
+                        }
+                        return s;
+                }
         }
 }
