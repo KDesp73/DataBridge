@@ -3,7 +3,7 @@
 
 ## Tutorial
 
-1) Import MADB;
+1) Import MADB
 2) Create MADB object
 
 ```java
