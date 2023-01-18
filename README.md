@@ -3,7 +3,7 @@
 
 ## Tutorial
 
-1) Import MADB in your project as a dependency
+1) Import MADB in your project as a dependency (see Releases for .jar file)
 2) Create MADB object
 
 ```java
