@@ -23,6 +23,9 @@ db.INSERT("Table_name", new String[]{"Column_name_1", "Column_name_2", "Column_n
 
 //Select the whole column
 ArrayList<String> arr = db.SELECT("Table_name", "Column_name");
+
+//Update a value based on the condition "WHERE Id = IdValue"
+db.UPDATE("Table_name", "Column_name", value, "Column_to_check", value_to_check);
 ```
 
 ## Dependencies
