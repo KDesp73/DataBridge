@@ -48,6 +48,10 @@ db.DELETE("Table_name", "Column_name", value_to_check);
 git clone https://github.com/KDesp73/Java-Database-Methods
 ```
 
+## TODO
+* Create custom conditions
+* Make dependency fully public on the Maven repository
+
 ## Contributing
 
 Contributions are always welcome!
