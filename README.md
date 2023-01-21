@@ -26,6 +26,9 @@ ArrayList<String> arr = db.SELECT("Table_name", "Column_name");
 
 //Update a value based on the condition "WHERE Id = IdValue"
 db.UPDATE("Table_name", "Column_name", value, "Column_to_check", value_to_check);
+
+//Delete a row based on a value
+db.DELETE("Table_name", "Column_name", value_to_check);
 ```
 
 ## Dependencies
