@@ -12,6 +12,18 @@ MADB db = new MADB([your_db_directory]);
 
 3) Now through this object you have access to all of the SQL Methods (INSERT, SELECT, UPDATE etc)
 
+## Examples
+
+```java
+//Insert value at the specific column
+db.INSERT("Table_name", "Column_name", value);
+
+//Insert multiple values in multiple columns
+db.INSERT("Table_name", new String[]{"Column_name_1", "Column_name_2", "Column_name_3"}, new String[]{value1, value2, value3});
+
+//Select the whole column
+ArrayList<String> arr = db.SELECT("Table_name", "Column_name");
+```
 
 ## Dependencies
 
