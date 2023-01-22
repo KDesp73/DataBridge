@@ -3,7 +3,7 @@
 
 ## Tutorial
 
-1) Import MADB in your project as a dependency (see Releases for .jar file)
+1) Import MADB in your project as a dependency (see [Releases](https://github.com/KDesp73/MADB/releases/tag/MADBv.1.0.2) for .jar file)
 2) Create MADB object
 
 ```java
@@ -24,7 +24,7 @@ db.INSERT("Table_name", new String[]{"Column_name_1", "Column_name_2", "Column_n
 //Select the whole column
 ArrayList<String> arr = db.SELECT("Table_name", "Column_name");
 
-//Update a value based on the condition "WHERE Id = IdValue"
+//Update a value based on the condition "WHERE IdColumn = IdValue"
 db.UPDATE("Table_name", "Column_name", value, "Column_to_check", value_to_check);
 
 //Delete a row based on a value
@@ -45,7 +45,7 @@ db.DELETE("Table_name", "Column_name", value_to_check);
 ## Clone
 
 ```bash
-git clone https://github.com/KDesp73/Java-Database-Methods
+git clone https://github.com/KDesp73/MADB
 ```
 
 ## TODO
@@ -56,7 +56,7 @@ git clone https://github.com/KDesp73/Java-Database-Methods
 
 Contributions are always welcome!
 
-Please adhere to this project's `code of conduct`.
+Please report any issues you may find!
 
 ## Authors
 
