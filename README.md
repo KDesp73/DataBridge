@@ -56,7 +56,7 @@ git clone https://github.com/KDesp73/Java-Database-Methods
 
 Contributions are always welcome!
 
-Please adhere to this project's `code of conduct`.
+Please report any issues you may find!
 
 ## Authors
 
