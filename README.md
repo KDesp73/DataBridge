@@ -45,7 +45,7 @@ db.DELETE("Table_name", "Column_name", value_to_check);
 ## Clone
 
 ```bash
-git clone https://github.com/KDesp73/Java-Database-Methods
+git clone https://github.com/KDesp73/MADB
 ```
 
 ## TODO
