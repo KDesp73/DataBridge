@@ -41,7 +41,13 @@ public class MADB {
         private String filepath;
         private java.sql.Connection conn;
         private Statement statement;
-
+        
+        /**
+         * Constructor
+         * 
+         * @param filepath Database file directory including the file
+         * @throws SQLException 
+         */
         public MADB(String filepath) throws SQLException {
                 String url = "jdbc:ucanaccess://" + filepath;
                 this.filepath = filepath;
