@@ -1,5 +1,5 @@
 
-# Java Methods to Manage a Microsoft Access Database (.accdb)
+# MADB - Java Methods to Manage a Microsoft Access Database (.accdb)
 
 ## Tutorial
 
