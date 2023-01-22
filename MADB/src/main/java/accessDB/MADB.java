@@ -804,61 +804,6 @@ public class MADB {
                 return rs.getInt(1);
         }
 
-        /*===========================================================*/
-        //Need of terminal
-        
-        /**
-         * Creates a Table in the Database according to inputs from the CLI
-         * 
-         * @param name Name of the table to create
-         * @throws SQLException 
-         */
-        public void CREATE(String name) throws SQLException { //Create table
-                ArrayList<String> colNames = new ArrayList<>();
-                ArrayList<String> dataTypes = new ArrayList<>();
-
-                String again;
-                int i = 1;
-                do {
-                        System.out.print("Column" + i + " name: ");
-                        colNames.add(UserInput.getString());
-                        String type;
-                        do {
-                                System.out.print("DataType" + i + ": ");
-                                type = UserInput.getString();
-                        } while (!Utils.correctType(type));
-                        dataTypes.add(type);
-                        i++;
-
-                        System.out.print("Add another (y/n): ");
-                        again = UserInput.getString();
-                } while (again.equals("y"));
-
-                String query = "CREATE TABLE " + name + " (" + Utils.tableColsFormat(colNames, dataTypes) + ")";
-                this.getStatement().executeUpdate(query);
-                System.out.println("Table " + name + " created");
-        }
-        
-        /**
-         * Creates a Column in a Table in the Database according to inputs from the CLI
-         * 
-         * @param Table Table to create the Column
-         * @param Column Name of the Column to create
-         * @param type Type of the Column
-         * @throws SQLException 
-         */
-        public void CREATE(String Table, String Column, String type) throws SQLException { //Create column in table
-                if (!Utils.correctType(type)) {
-                        System.out.println("Incorrect data type");
-                        return;
-                }
-
-                String query = "ALTER TABLE " + Table + " ADD " + Column + " " + type;
-                System.out.println(query);
-                this.getStatement().executeUpdate(query);
-                System.out.println("Column Added");
-        }
-
         /*===========DataBase Utils===========*/
         class Utils {
 
