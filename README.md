@@ -50,7 +50,7 @@ Condition c = new Condition("ColumnA", ValueA, Operator.AND_NOT, "ColumnB", Valu
 ```xml
 <dependency>
     <groupId>MADB</groupId>
-    <artifactId>MADB</artifactId>
+    <artifactId>accessDB</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```
