@@ -236,115 +236,54 @@ public class MADB {
 
         /*===========================================================*/
         /**
-         * Updates a specific cell of the Table when the condition "WHERE Id = IdValue" is True
+         * Updates a specific cell of the Table when the condition is True
          * 
          * @param Table Table to apply changes
          * @param Column Column where the change will happen
          * @param Value String to replace existing value
-         * @param Id Column to check for the condition
-         * @param IdValue String to check for the condition
+         * @param c Custom Condition
          * @throws SQLException
          */
-        public void UPDATE(String Table, String Column, String Value, String Id, String IdValue) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = \'" + Value + "\' WHERE " + Id + " = \'" + IdValue + "\'");
+        public void UPDATE(String Table, String Column, String Value, Condition c) throws SQLException {
+                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = \'" + Value + "\' WHERE " + c.getCondition());
         }
-        
+       
         /**
-         * Updates a specific cell of the Table when the condition "WHERE Id = IdValue" is True
-         * 
-         * @param Table Table to apply changes
-         * @param Column Column where the change will happen
-         * @param Value String to replace existing value
-         * @param Id Column to check for the condition
-         * @param IdValue Integer to check for the condition
-         * @throws SQLException
-         */
-        public void UPDATE(String Table, String Column, String Value, String Id, int IdValue) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = \'" + Value + "\' WHERE " + Id + " = " + IdValue);
-        }
-        
-        /**
-         * Updates a specific cell of the Table when the condition "WHERE Id = IdValue" is True
-         * 
+         * Updates a specific cell of the Table when the condition is True
          * @param Table Table to apply changes
          * @param Column Column where the change will happen
          * @param Value Integer to replace existing value
-         * @param Id Column to check for the condition
-         * @param IdValue String to check for the condition
+         * @param c Custom Condition
          * @throws SQLException
          */
-        public void UPDATE(String Table, String Column, int Value, String Id, String IdValue) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = \'" + Value + "\' WHERE " + Id + " = \'" + IdValue + "\'");
+        public void UPDATE(String Table, String Column, int Value, Condition c) throws SQLException {
+                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = '" + Value + " WHERE " + c.getCondition());
         }
         
         /**
-         * Updates a specific cell of the Table when the condition "WHERE Id = IdValue" is True
-         * 
-         * @param Table Table to apply changes
-         * @param Column Column where the change will happen
-         * @param Value Integer to replace existing value
-         * @param Id Column to check for the condition
-         * @param IdValue Integer to check for the condition
-         * @throws SQLException
-         */
-        public void UPDATE(String Table, String Column, int Value, String Id, int IdValue) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = \'" + Value + "\' WHERE " + Id + " = " + IdValue);
-        }
-        
-        /**
-         * Updates a specific cell of the Table when the condition "WHERE Id = IdValue" is True
+         * Updates a specific cell of the Table when the condition is True
          * 
          * @param Table Table to apply changes
          * @param Column Column where the change will happen
          * @param Value Double to replace existing value
-         * @param Id Column to check for the condition
-         * @param IdValue String to check for the condition
+         * @param c Custom Condition
          * @throws SQLException
          */
-        public void UPDATE(String Table, String Column, double Value, String Id, String IdValue) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = \'" + Value + "\' WHERE " + Id + " = \'" + IdValue + "\'");
-        }
-        
-        /**
-         * Updates a specific cell of the Table when the condition "WHERE Id = IdValue" is True
-         * 
-         * @param Table Table to apply changes
-         * @param Column Column where the change will happen
-         * @param Value Double to replace existing value
-         * @param Id Column to check for the condition
-         * @param IdValue Integer to check for the condition
-         * @throws SQLException
-         */
-        public void UPDATE(String Table, String Column, double Value, String Id, int IdValue) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = \'" + Value + "\' WHERE " + Id + " = " + IdValue);
+        public void UPDATE(String Table, String Column, double Value, Condition c) throws SQLException {
+                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = " + Value + " WHERE " + c.getCondition());
         }
 
         /**
-         * Updates a specific cell of the Table when the condition "WHERE Id = IdValue" is True
+         * Updates a specific cell of the Table when the condition is True
          * 
          * @param Table Table to apply changes
          * @param Column Column where the change will happen
          * @param Value Boolean to replace existing value
-         * @param Id Column to check for the condition
-         * @param IdValue String to check for the condition
+         * @param c Custom Condition
          * @throws SQLException
          */
-        public void UPDATE(String Table, String Column, boolean Value, String Id, String IdValue) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = \'" + Value + "\' WHERE " + Id + " = \'" + IdValue + "\'");
-        }
-        
-        /**
-         * Updates a specific cell of the Table when the condition "WHERE Id = IdValue" is True
-         * 
-         * @param Table Table to apply changes
-         * @param Column Column where the change will happen
-         * @param Value Boolean to replace existing value
-         * @param Id Column to check for the condition
-         * @param IdValue Integer to check for the condition
-         * @throws SQLException
-         */
-        public void UPDATE(String Table, String Column, boolean Value, String Id, int IdValue) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = \'" + Value + "\' WHERE " + Id + " = " + IdValue);
+        public void UPDATE(String Table, String Column, boolean Value, Condition c) throws SQLException {
+                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = " + Value + " WHERE " + c.getCondition());
         }
         
         /**
@@ -772,7 +711,7 @@ public class MADB {
 
                 return (false);
         }
-
+ 
         /*===========================================================*/
         
         /**
