@@ -56,7 +56,7 @@ git clone https://github.com/KDesp73/MADB
 
 Contributions are always welcome!
 
-Please report any issues you may find!
+Please report any [issues](https://github.com/KDesp73/MADB/issues) you may find!
 
 ## Authors
 
