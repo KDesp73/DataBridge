@@ -38,6 +38,13 @@ Example - Create the condition: ColumnA = ValueA AND NOT ColumnB = ValueB
 Condition c = new Condition("ColumnA", ValueA, Operator.AND_NOT, "ColumnB", ValueB);
 ```
 
+## Available Operators
+* OR
+* AND
+* NOT
+* AND_NOT
+* OR_NOT
+
 ## Dependencies
 
 ```xml
