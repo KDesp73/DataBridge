@@ -24,11 +24,18 @@ db.INSERT("Table_name", new String[]{"Column_name_1", "Column_name_2", "Column_n
 //Select the whole column
 ArrayList<String> arr = db.SELECT("Table_name", "Column_name");
 
-//Update a value based on the condition "WHERE IdColumn = IdValue"
-db.UPDATE("Table_name", "Column_name", value, "Column_to_check", value_to_check);
+//Update a value based on the custom condition
+db.UPDATE("Table_name", "Column_name", value, new Condition("Column", Value, Operator.AND, "Other_Column", Other_Value));
 
-//Delete a row based on a value
-db.DELETE("Table_name", "Column_name", value_to_check);
+//Delete a row based on the custom condition
+db.DELETE("Table_name", "Column_name", new Condition("Column_name", Value));
+```
+
+## Creating Conditions
+
+Example - Create the condition: ColumnA = ValueA AND NOT ColumnB = ValueB
+```java
+Condition c = new Condition("ColumnA", ValueA, Operator.AND_NOT, "ColumnB", ValueB);
 ```
 
 ## Dependencies
