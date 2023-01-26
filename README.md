@@ -72,9 +72,9 @@ Contributions are always welcome!
 
 See `contributing.md` for ways to get started.
 
-Please adhere to this project's [Code of Conduct](https://github.com/KDesp73/MADB/blob/main/CODE_OF_CONDUCT.md).
-
 Please report any [issues](https://github.com/KDesp73/MADB/issues) you may find!
+
+Please adhere to this project's [Code of Conduct](https://github.com/KDesp73/MADB/blob/main/CODE_OF_CONDUCT.md).
 
 ## Authors
 
