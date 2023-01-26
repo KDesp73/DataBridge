@@ -70,7 +70,9 @@ git clone https://github.com/KDesp73/MADB
 
 Contributions are always welcome!
 
-Please report any [issues](https://github.com/KDesp73/MADB/issues) you may find!
+See [Contributing.md](https://github.com/KDesp73/MADB/blob/main/Contributing.md) for ways to get started.
+
+Please adhere to this project's [Code of Conduct](https://github.com/KDesp73/MADB/blob/main/CODE_OF_CONDUCT.md).
 
 ## Authors
 
