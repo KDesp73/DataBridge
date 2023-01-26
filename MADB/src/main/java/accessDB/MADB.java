@@ -20,9 +20,7 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-
+ */
 package accessDB;
 
 import java.sql.*;
@@ -31,7 +29,7 @@ import java.util.ArrayList;
 /**
  * SQL Methods for managing Microsoft Access
  * Databases (.accdb) with Java
- * 
+ *
  * @author KDesp73
  * @version 1.0.2
  *
@@ -41,12 +39,13 @@ public class MADB {
         private String filepath;
         private java.sql.Connection conn;
         private Statement statement;
-        
+
         /**
          * Constructor
-         * 
-         * @param filepath Database file directory including the file
-         * @throws SQLException 
+         *
+         * @param filepath Database file directory
+         * including the file
+         * @throws SQLException
          */
         public MADB(String filepath) throws SQLException {
                 String url = "jdbc:ucanaccess://" + filepath;
@@ -64,78 +63,25 @@ public class MADB {
         }
 
         /**
-         * Inserts a specific String in a column
-         * of a table
-         *
-         * @param Table Table to apply changes
-         * @param Column Column to insert the
-         * value
-         * @param Value String to be inserted
-         * @throws SQLException
-         *
-         */
-        public void INSERT(String Table, String Column, String Value) throws SQLException { //Inserts value to specific table and field
-                this.getStatement().executeUpdate("INSERT INTO " + Table + " (" + Column + ") VALUES (\'" + Value + "\')");
-        }
-
-        /**
-         * Inserts a specific Integer in a column
-         * of a table
-         *
-         * @param Table Table to apply changes
-         * @param Column Column to insert the
-         * value
-         * @param Value Integer to be inserted
-         * @throws SQLException
-         *
-         */
-        public void INSERT(String Table, String Column, int Value) throws SQLException { //Inserts value to specific table and field
-                this.getStatement().executeUpdate("INSERT INTO " + Table + "(" + Column + ") VALUES(" + Value + ")");
-        }
-
-        /**
-         * Inserts a specific Float in a column of
+         * Inserts a specific Value in a column of
          * a table
          *
          * @param Table Table to apply changes
          * @param Column Column to insert the
          * value
-         * @param Value Float to be inserted
+         * @param Value Value to be inserted
          * @throws SQLException
          *
          */
-        public void INSERT(String Table, String Column, float Value) throws SQLException { //Inserts value to specific table and field
-                this.getStatement().executeUpdate("INSERT INTO " + Table + "(" + Column + ") VALUES(" + Value + ")");
-        }
+        public void INSERT(String Table, String Column, Object Value) throws SQLException { //Inserts value to specific table and field
+                String query;
+                if (Value instanceof String) {
+                        query = "INSERT INTO " + Table + " (" + Column + ") VALUES (\'" + Value + "\')";
+                } else {
+                        query = "INSERT INTO " + Table + " (" + Column + ") VALUES (" + Value + ")";
+                }
 
-        /**
-         * Inserts a specific Double in a column
-         * of a table
-         *
-         * @param Table Table to apply changes
-         * @param Column Column to insert the
-         * value
-         * @param Value Double to be inserted
-         * @throws SQLException
-         *
-         */
-        public void INSERT(String Table, String Column, double Value) throws SQLException { //Inserts value to specific table and field
-                this.getStatement().executeUpdate("INSERT INTO " + Table + "(" + Column + ") VALUES(" + Value + ")");
-        }
-
-        /**
-         * Inserts a specific Boolean in a column
-         * of a table
-         *
-         * @param Table Table to apply changes
-         * @param Column Column to insert the
-         * value
-         * @param Value Boolean to be inserted
-         * @throws SQLException
-         *
-         */
-        public void INSERT(String Table, String Column, boolean Value) throws SQLException { //Inserts value to specific table and field
-                this.getStatement().executeUpdate("INSERT INTO " + Table + "(" + Column + ") VALUES(" + Value + ")");
+                this.getStatement().executeUpdate(query);
         }
 
         /**
@@ -146,281 +92,128 @@ public class MADB {
          * @param Table Table to apply changes
          * @param Columns Columns to insert the
          * Strings in their respective order
-         * @param Values Strings to be inserted in
-         * Array format
-         * @throws SQLException
-         */
-        public void INSERT(String Table, String[] Columns, String[] Values) throws SQLException { //Inserts value to specific table and field
-                this.getStatement().executeUpdate("INSERT INTO " + Table + "(" + Utils.arrayToList(Columns) + ") VALUES(" + Utils.stringToList(Values) + ")");
-        }
-
-        /**
-         *
-         * Inserts multiple Integers in multiple
-         * columns
-         *
-         * @param Table Table to apply changes
-         * @param Columns Columns to insert the
-         * Integers in their respective order
-         * @param Values Integers to be inserted
-         * in Array format
-         * @throws SQLException
-         */
-        public void INSERT(String Table, String[] Columns, int[] Values) throws SQLException { //Inserts value to specific table and field
-                this.getStatement().executeUpdate("INSERT INTO " + Table + "(" + Utils.arrayToList(Columns) + ") VALUES(" + Utils.arrayToList(Values) + ")");
-        }
-
-        /**
-         *
-         * Inserts multiple Floats in multiple
-         * columns
-         *
-         * @param Table Table to apply changes
-         * @param Columns Columns to insert the
-         * Floats in their respective order
-         * @param Values Floats to be inserted in
-         * Array format
-         * @throws SQLException
-         */
-        public void INSERT(String Table, String[] Columns, float[] Values) throws SQLException { //Inserts value to specific table and field
-                this.getStatement().executeUpdate("INSERT INTO " + Table + "(" + Utils.arrayToList(Columns) + ") VALUES(" + Utils.arrayToList(Values) + ")");
-        }
-
-        /**
-         *
-         * Inserts multiple Doubles in multiple
-         * columns
-         *
-         * @param Table Table to apply changes
-         * @param Columns Columns to insert the
-         * Doubles in their respective order
-         * @param Values Doubles to be inserted in
-         * Array format
-         * @throws SQLException
-         */
-        public void INSERT(String Table, String[] Columns, double[] Values) throws SQLException { //Inserts value to specific table and field
-                this.getStatement().executeUpdate("INSERT INTO " + Table + "(" + Utils.arrayToList(Columns) + ") VALUES(" + Utils.arrayToList(Values) + ")");
-        }
-
-        /**
-         *
-         * Inserts multiple Booleans in multiple
-         * columns
-         *
-         * @param Table Table to apply changes
-         * @param Columns Columns to insert the
-         * Booleans in their respective order
-         * @param Values Booleans to be inserted
-         * in Array format
-         * @throws SQLException
-         */
-        public void INSERT(String Table, String[] Columns, boolean[] Values) throws SQLException { //Inserts value to specific table and field
-                this.getStatement().executeUpdate("INSERT INTO " + Table + "(" + Utils.arrayToList(Columns) + ") VALUES(" + Utils.arrayToList(Values) + ")");
-        }
-
-        /**
-         *
-         * Inserts multiple Strings in multiple
-         * columns
-         *
-         * @param Table Table to apply changes
-         * @param Columns Columns to insert the
-         * Strings in their respective order
-         * @param Values Strings to be inserted in
+         * @param Values Values to be inserted in
          * ArrayList format
          * @throws SQLException
          */
-        public void INSERT(String Table, String[] Columns, ArrayList<String> Values) throws SQLException { //Inserts value to specific table and field
-                this.getStatement().executeUpdate("INSERT INTO " + Table + "(" + Utils.arrayToList(Columns) + ") VALUES(" + Utils.stringToList(Values) + ")");
+        public void INSERT(String Table, String[] Columns, ArrayList<Object> Values) throws SQLException { //Inserts value to specific table and field
+                this.getStatement().executeUpdate("INSERT INTO " + Table + "(" + Utils.arrayToList(Columns) + ") VALUES(" + Utils.objectToList(Values) + ")");
+        }
+
+        /**
+         * Inserts multiple Strings in multiple
+         * columns
+         *
+         * @param Table Table to apply changes
+         * @param Columns Columns to insert the
+         * Strings in their respective order
+         * @param Values Values to be inserted
+         * @throws SQLException
+         */
+        public void INSERT(String Table, String[] Columns, Object[] Values) throws SQLException {
+                String query = "INSERT INTO " + Table + "(" + Utils.arrayToList(Columns) + ") VALUES(" + Utils.objectToList(Values) + ")";
+
+                this.getStatement().executeUpdate(query);
         }
 
         /*===========================================================*/
         /**
-         * Updates a specific cell of the Table when the condition is True
-         * 
+         * Updates a specific cell of the Table
+         * when the condition is True
+         *
          * @param Table Table to apply changes
-         * @param Column Column where the change will happen
-         * @param Value String to replace existing value
+         * @param Column Column where the change
+         * will happen
+         * @param Value New value to replace
+         * existing one
          * @param c Custom Condition
          * @throws SQLException
          */
-        public void UPDATE(String Table, String Column, String Value, Condition c) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = \'" + Value + "\' WHERE " + c.getCondition());
-        }
-       
-        /**
-         * Updates a specific cell of the Table when the condition is True
-         * @param Table Table to apply changes
-         * @param Column Column where the change will happen
-         * @param Value Integer to replace existing value
-         * @param c Custom Condition
-         * @throws SQLException
-         */
-        public void UPDATE(String Table, String Column, int Value, Condition c) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = '" + Value + " WHERE " + c.getCondition());
-        }
-        
-        /**
-         * Updates a specific cell of the Table when the condition is True
-         * 
-         * @param Table Table to apply changes
-         * @param Column Column where the change will happen
-         * @param Value Double to replace existing value
-         * @param c Custom Condition
-         * @throws SQLException
-         */
-        public void UPDATE(String Table, String Column, double Value, Condition c) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = " + Value + " WHERE " + c.getCondition());
+        public void UPDATE(String Table, String Column, Object Value, Condition c) throws SQLException {
+                String query;
+                if (Value instanceof String) {
+                        query = "UPDATE " + Table + " SET " + Column + " = \'" + Value + "\' WHERE " + c.getCondition();
+                } else {
+                        query = "UPDATE " + Table + " SET " + Column + " = " + Value + " WHERE " + c.getCondition();
+                }
+
+                this.getStatement().executeUpdate(query);
         }
 
         /**
-         * Updates a specific cell of the Table when the condition is True
-         * 
+         * Updates every cell of a Column with no
+         * condition
+         *
          * @param Table Table to apply changes
-         * @param Column Column where the change will happen
-         * @param Value Boolean to replace existing value
-         * @param c Custom Condition
+         * @param Column Column where the change
+         * will happen
+         * @param Value New value to replace
+         * existing one
          * @throws SQLException
          */
-        public void UPDATE(String Table, String Column, boolean Value, Condition c) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = " + Value + " WHERE " + c.getCondition());
-        }
-        
-        /**
-         * Updates every cell of a Column with no condition
-         * 
-         * @param Table Table to apply changes
-         * @param Column Column where the change will happen
-         * @param Value String to replace existing values
-         * @throws SQLException 
-         */
-        public void UPDATE(String Table, String Column, String Value) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = \'" + Value + "\'");
-        }
+        public void UPDATE(String Table, String Column, Object Value) throws SQLException {
+                String query;
+                if (Value instanceof String) {
+                        query = "UPDATE " + Table + " SET " + Column + " = \'" + Value + "\'";
+                } else {
+                        query = "UPDATE " + Table + " SET " + Column + " = " + Value;
+                }
 
-        /**
-         * Updates every cell of a Column with no condition
-         * 
-         * @param Table Table to apply changes
-         * @param Column Column where the change will happen
-         * @param Value Integer to replace existing values
-         * @throws SQLException 
-         */
-        public void UPDATE(String Table, String Column, int Value) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = " + Value);
-        }
-
-        /**
-         * Updates every cell of a Column with no condition
-         * 
-         * @param Table Table to apply changes
-         * @param Column Column where the change will happen
-         * @param Value Double to replace existing values
-         * @throws SQLException 
-         */
-        public void UPDATE(String Table, String Column, double Value) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = " + Value);
-        }
-        
-        /**
-         * Updates every cell of a Column with no condition
-         * 
-         * @param Table Table to apply changes
-         * @param Column Column where the change will happen
-         * @param Value Boolean to replace existing values
-         * @throws SQLException 
-         */
-        public void UPDATE(String Table, String Column, boolean Value) throws SQLException {
-                this.getStatement().executeUpdate("UPDATE " + Table + " SET " + Column + " = " + Value);
+                this.getStatement().executeUpdate(query);
         }
 
         /*===========================================================*/
-        
         /**
-         * Deletes records when the condition "WHERE Column = Value" is True if the Value exists
-         * 
+         * Deletes records when the condition
+         * "WHERE Column = Value" is True if the
+         * Value exists
+         *
          * @param Table Table to apply changes
-         * @param Column Column to check for the condition
-         * @param Value String to check for the condition
-         * @throws SQLException 
+         * @param Column Column to check for the
+         * condition
+         * @param Value String to check for the
+         * condition
+         * @throws SQLException
          */
-        public void DELETE(String Table, String Column, String Value) throws SQLException { //Deletes record
+        public void DELETE(String Table, String Column, Object Value) throws SQLException { //Deletes record
                 if (!valueExists(Table, Column, Value)) {
                         System.out.println("Record doesn't exist");
                         return;
                 }
 
-                String query = "DELETE FROM " + Table + " WHERE " + Column + " = \'" + Value + "\'";
-
-                this.getStatement().executeUpdate(query);
-                System.out.println("Record deleted");
-        }
-        
-        /**
-         * Deletes records when the condition "WHERE Column = Value" is True if the Value exists
-         * 
-         * @param Table Table to apply changes
-         * @param Column Column to check for the condition
-         * @param Value Integer to check for the condition
-         * @throws SQLException 
-         */
-        public void DELETE(String Table, String Column, int Value) throws SQLException { //Deletes record
-                if (!valueExists(Table, Column, Value)) {
-                        System.out.println("Record doesn't exist");
-                        return;
+                String query;
+                if (Value instanceof String) {
+                        query = "DELETE FROM " + Table + " WHERE " + Column + " = \'" + Value + "\'";
+                } else {
+                        query = "DELETE FROM " + Table + " WHERE " + Column + " = " + Value;
                 }
 
-                String query = "DELETE FROM " + Table + " WHERE " + Column + " = " + Value;
-
                 this.getStatement().executeUpdate(query);
                 System.out.println("Record deleted");
         }
-        
+
         /**
-         * Deletes records when the condition "WHERE Column = Value" is True if the Value exists
-         * 
+         * Deletes records when the custom
+         * condition is True
+         *
          * @param Table Table to apply changes
-         * @param Column Column to check for the condition
-         * @param Value Double to check for the condition
-         * @throws SQLException 
+         * @param Column Column to check for the
+         * condition
+         * @param c Custom Condition
+         * @throws SQLException
          */
-        public void DELETE(String Table, String Column, double Value) throws SQLException { //Deletes record
-                if (!valueExists(Table, Column, Value)) {
-                        System.out.println("Record doesn't exist");
-                        return;
-                }
-
-                String query = "DELETE FROM " + Table + " WHERE " + Column + " = " + Value;
+        public void DELETE(String Table, String Column, Condition c) throws SQLException { //Deletes record
+                String query = "DELETE FROM " + Table + " WHERE " + c.getCondition();
 
                 this.getStatement().executeUpdate(query);
                 System.out.println("Record deleted");
         }
-        
-        /**
-         * Deletes records when the condition "WHERE Column = Value" is True if the Value exists
-         * 
-         * @param Table Table to apply changes
-         * @param Column Column to check for the condition
-         * @param Value Boolean to check for the condition
-         * @throws SQLException 
-         */
-        public void DELETE(String Table, String Column, boolean Value) throws SQLException { //Deletes record
-                if (!valueExists(Table, Column, Value)) {
-                        System.out.println("Record doesn't exist");
-                        return;
-                }
 
-                String query = "DELETE FROM " + Table + " WHERE " + Column + " = " + Value;
-
-                this.getStatement().executeUpdate(query);
-                System.out.println("Record deleted");
-        }
-        
         /**
-         * Clears the whole Table
-         * 
+         * Clears the whole Table (!)
+         *
          * @param Table Table to clear
-         * @throws SQLException 
+         * @throws SQLException
          */
         public void DELETE(String Table) throws SQLException { //Clears Table
                 String query = "DELETE FROM " + Table;
@@ -430,145 +223,47 @@ public class MADB {
         }
 
         /*===========================================================*/
-        
         /**
-         * Returns ArrayList of Strings when the condition "WHERE Column = Value" is True
-         * 
+         * Returns an Object when the custom
+         * condition is True
+         *
          * @param Table Table to search
-         * @param Column Column to return and search
-         * @param Value String to check for the condition
+         * @param Column Column to return and
+         * search
+         * @param c Custom Condition
          * @return ArrayList
-         * @throws SQLException 
+         * @throws SQLException
          */
-        public ArrayList<String> SELECT(String Table, String Column, String Value) throws SQLException {
-                ArrayList<String> list = new ArrayList<>();
-
-                String query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "= \'" + Value + "\'";
+        public Object SELECT(String Table, String Column, Condition c) throws SQLException {
+                String query = "SELECT " + Column + " FROM " + Table + " WHERE " + c.getCondition();
                 ResultSet rs = this.getStatement().executeQuery(query);
 
-                while (rs.next()) {
-
-                        list.add(rs.getString(1));
-
+                try {
+                        rs.next();
+                        return rs.getObject(Column);
+                } catch (net.ucanaccess.jdbc.UcanaccessSQLException e) {
+                        System.out.println("Element not found");
                 }
-
-                return list;
-        }
-        
-        /**
-         * Returns ArrayList of Integers when the condition "WHERE Column = Value" is True
-         * 
-         * @param Table Table to search
-         * @param Column Column to return and search
-         * @param Value Integer to check for the condition
-         * @return ArrayList
-         * @throws SQLException 
-         */
-        public ArrayList<Integer> SELECT(String Table, String Column, int Value) throws SQLException {
-                ArrayList<Integer> list = new ArrayList<>();
-
-                String query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "= '" + Value;
-                ResultSet rs = this.getStatement().executeQuery(query);
-
-                while (rs.next()) {
-
-                        list.add(rs.getInt(1));
-
-                }
-
-                return list;
-        }
-        
-        /**
-         * Returns ArrayList of Doubles when the condition "WHERE Column = Value" is True
-         * 
-         * @param Table Table to search
-         * @param Column Column to return and search
-         * @param Value Double to check for the condition
-         * @return ArrayList
-         * @throws SQLException 
-         */
-        public ArrayList<Double> SELECT(String Table, String Column, double Value) throws SQLException {
-                ArrayList<Double> list = new ArrayList<>();
-
-                String query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "= '" + Value;
-                ResultSet rs = this.getStatement().executeQuery(query);
-
-                while (rs.next()) {
-
-                        list.add(rs.getDouble(1));
-
-                }
-
-                return list;
-        }
-        
-        /**
-         * Returns ArrayList of Booleans when the condition "WHERE Column = Value" is True
-         * 
-         * @param Table Table to search
-         * @param Column Column to return and search
-         * @param Value Boolean to check for the condition
-         * @return ArrayList
-         * @throws SQLException 
-         */
-        public ArrayList<Boolean> SELECT(String Table, String Column, boolean Value) throws SQLException {
-                ArrayList<Boolean> list = new ArrayList<>();
-
-                String query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "= '" + Value;
-                ResultSet rs = this.getStatement().executeQuery(query);
-
-                while (rs.next()) {
-
-                        list.add(rs.getBoolean(1));
-
-                }
-
-                return list;
+                return null;
         }
 
-        /**
-         * Returns ArrayList of Floats when the condition "WHERE Column = Value" is True
-         * 
-         * @param Table Table to search
-         * @param Column Column to return and search
-         * @param Value Float to check for the condition
-         * @return ArrayList
-         * @throws SQLException 
-         */
-        public ArrayList<Float> SELECT(String Table, String Column, float Value) throws SQLException {
-                ArrayList<Float> list = new ArrayList<>();
-
-                String query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "= '" + Value;
-                ResultSet rs = this.getStatement().executeQuery(query);
-
-                while (rs.next()) {
-
-                        list.add(rs.getFloat(1));
-
-                }
-
-                return list;
-        }
-        
         /**
          * Returns the whole Column
-         * 
+         *
          * @param Table Table to search
-         * @param Column Column to return and search
+         * @param Column Column to return and
+         * search
          * @return ArrayList
-         * @throws SQLException 
+         * @throws SQLException
          */
-        public ArrayList<String> SELECT(String Table, String Column) throws SQLException {
-                ArrayList<String> list = new ArrayList<>();
+        public ArrayList<Object> SELECT(String Table, String Column) throws SQLException {
+                ArrayList<Object> list = new ArrayList<>();
 
                 String query = "SELECT " + Column + " FROM " + Table;
                 ResultSet rs = this.getStatement().executeQuery(query);
 
                 while (rs.next()) {
-
-                        list.add(rs.getString(1));
-
+                        list.add(rs.getObject(Column));
                 }
 
                 return list;
@@ -576,23 +271,24 @@ public class MADB {
 
         /**
          * Returns ArrayList of String[]
-         * 
+         *
          * @param Table Table to search
-         * @param Columns Array of columns to return and search
+         * @param Columns Array of columns to
+         * return and search
          * @return ArrayList
-         * @throws SQLException 
+         * @throws SQLException
          */
-        public ArrayList<String[]> SELECT(String Table, String[] Columns) throws SQLException {
-                ArrayList<String[]> list = new ArrayList<>();
+        public ArrayList<Object[]> SELECT(String Table, String[] Columns) throws SQLException {
+                ArrayList<Object[]> list = new ArrayList<>();
 
                 String query = "SELECT " + Utils.arrayToList(Columns) + " FROM " + Table;
                 ResultSet rs = this.getStatement().executeQuery(query);
 
                 while (rs.next()) {
-                        String[] str = new String[Columns.length];
+                        Object[] str = new Object[Columns.length];
 
                         for (int i = 0; i < Columns.length; i++) {
-                                str[i] = rs.getString(i + 1);
+                                str[i] = rs.getObject(i + 1);
                         }
 
                         list.add(str);
@@ -600,28 +296,29 @@ public class MADB {
 
                 return list;
         }
-        
-        /**
-         * Returns ArrayList of String[] when the condition "WHERE Column = Value" is True
-         * 
-         * @param Table Table to search
-         * @param Columns Array of columns to return and search
-         * @param Column Column to check for the condition
-         * @param Value String to check for the condition
-         * @return ArrayList
-         * @throws SQLException 
-         */
-        public ArrayList<String[]> SELECT(String Table, String[] Columns, String Column, String Value) throws SQLException {
-                ArrayList<String[]> list = new ArrayList<>();
 
-                String query = "SELECT " + Utils.arrayToList(Columns) + " FROM " + Table + " WHERE " + Column + " = \'" + Value + "\'";
+        /**
+         * Returns ArrayList of String[] when the
+         * custom condition is True
+         *
+         * @param Table Table to search
+         * @param Columns Array of columns to
+         * return and search
+         * @param c Custom condition
+         * @return ArrayList
+         * @throws SQLException
+         */
+        public ArrayList<Object[]> SELECT(String Table, String[] Columns, Condition c) throws SQLException {
+                ArrayList<Object[]> list = new ArrayList<>();
+
+                String query = "SELECT " + Utils.arrayToList(Columns) + " FROM " + Table + " WHERE " + c.getCondition();
                 ResultSet rs = this.getStatement().executeQuery(query);
 
                 while (rs.next()) {
-                        String[] str = new String[Columns.length];
+                        Object[] str = new String[Columns.length];
 
                         for (int i = 0; i < Columns.length; i++) {
-                                str[i] = rs.getString(i + 1);
+                                str[i] = rs.getObject(i + 1);
                         }
 
                         list.add(str);
@@ -631,18 +328,24 @@ public class MADB {
         }
 
         /*===========================================================*/
-        
         /**
-         * Searches for the existence of a specific String
-         * 
+         * Searches for the existence of a
+         * specific Value
+         *
          * @param Table Table to search for Value
-         * @param Column Column to search for Value
-         * @param Value String to search
+         * @param Column Column to search for
+         * Value
+         * @param Value Value to search
          * @return Boolean
-         * @throws SQLException 
+         * @throws SQLException
          */
-        public boolean valueExists(String Table, String Column, String Value) throws SQLException {
-                String query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "=\'" + Value + "\'";
+        public boolean valueExists(String Table, String Column, Object Value) throws SQLException {
+                String query;
+                if (Value instanceof String) {
+                        query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "=\'" + Value + "\'";
+                } else {
+                        query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "=" + Value;
+                }
 
                 ResultSet rs = this.getStatement().executeQuery(query);
                 if (rs.next()) {
@@ -652,74 +355,15 @@ public class MADB {
                 return (false);
         }
 
-        /**
-         * Searches for the existence of a specific Integer
-         * 
-         * @param Table Table to search for Value
-         * @param Column Column to search for Value
-         * @param Value Integer to search
-         * @return Boolean
-         * @throws SQLException 
-         */
-        public boolean valueExists(String Table, String Column, int Value) throws SQLException {
-                String query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "=" + Value;
-
-                ResultSet rs = this.getStatement().executeQuery(query);
-                if (rs.next()) {
-                        return true;
-                }
-
-                return (false);
-        }
-        
-        /**
-         * Searches for the existence of a specific Double
-         * 
-         * @param Table Table to search for Value
-         * @param Column Column to search for Value
-         * @param Value Double to search
-         * @return Boolean
-         * @throws SQLException 
-         */
-        public boolean valueExists(String Table, String Column, double Value) throws SQLException {
-                String query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "=" + Value;
-
-                ResultSet rs = this.getStatement().executeQuery(query);
-                if (rs.next()) {
-                        return true;
-                }
-
-                return (false);
-        }
-        
-        /**
-         * Searches for the existence of a specific Boolean
-         * 
-         * @param Table Table to search for Value
-         * @param Column Column to search for Value
-         * @param Value Boolean to search
-         * @return Boolean
-         * @throws SQLException 
-         */
-        public boolean valueExists(String Table, String Column, boolean Value) throws SQLException {
-                String query = "SELECT " + Column + " FROM " + Table + " WHERE " + Column + "=" + Value;
-
-                ResultSet rs = this.getStatement().executeQuery(query);
-                if (rs.next()) {
-                        return true;
-                }
-
-                return (false);
-        }
- 
         /*===========================================================*/
-        
         /**
-         * Returns the number of records that exist in a Table
-         * 
-         * @param Table Table to count records from
+         * Returns the number of records that
+         * exist in a Table
+         *
+         * @param Table Table to count records
+         * from
          * @return Integer
-         * @throws SQLException 
+         * @throws SQLException
          */
         public int numOfRecords(String Table) throws SQLException {
                 ResultSet rs = this.getStatement().executeQuery("SELECT COUNT(*)  FROM " + Table);
@@ -727,14 +371,17 @@ public class MADB {
                 rs.next();
                 return rs.getInt(1);
         }
-        
+
         /**
-         * Returns the number of records that exist in a Column of a Table
-         * 
-         * @param Table Table to count records from
-         * @param Column Column to count records from
+         * Returns the number of records that
+         * exist in a Column of a Table
+         *
+         * @param Table Table to count records
+         * from
+         * @param Column Column to count records
+         * from
          * @return Integer
-         * @throws SQLException 
+         * @throws SQLException
          */
         public int numOfRecords(String Table, String Column) throws SQLException {
                 ResultSet rs = this.getStatement().executeQuery("SELECT COUNT( " + Column + ")  FROM " + Table);
@@ -743,64 +390,30 @@ public class MADB {
                 return rs.getInt(1);
         }
 
+        /**
+         * Returns the number of records that
+         * exist in a Column of a Table based on a
+         * custom condition
+         *
+         * @param Table Table to count records
+         * from
+         * @param Column Column to count records
+         * from
+         * @param c
+         * @return Integer
+         * @throws SQLException
+         */
+        public int numOfRecords(String Table, String Column, Condition c) throws SQLException {
+                String query = "SELECT COUNT( " + Column + ")  FROM " + Table + " WHERE " + c.getCondition();
+
+                ResultSet rs = this.getStatement().executeQuery(query);
+
+                rs.next();
+                return rs.getInt(1);
+        }
+
         /*===========DataBase Utils===========*/
         class Utils {
-
-                private static String arrayToList(int[] arr) {
-                        String s = "";
-
-                        for (int i = 0; i < arr.length; i++) {
-                                if (i == arr.length - 1) {
-                                        s = s.concat("" + arr[i]);
-                                } else {
-                                        s = s.concat(arr[i] + ", ");
-                                }
-                        }
-
-                        return s;
-                }
-
-                private static String arrayToList(float[] arr) {
-                        String s = "";
-
-                        for (int i = 0; i < arr.length; i++) {
-                                if (i == arr.length - 1) {
-                                        s = s.concat("" + arr[i]);
-                                } else {
-                                        s = s.concat(arr[i] + ", ");
-                                }
-                        }
-
-                        return s;
-                }
-
-                private static String arrayToList(double[] arr) {
-                        String s = "";
-
-                        for (int i = 0; i < arr.length; i++) {
-                                if (i == arr.length - 1) {
-                                        s = s.concat("" + arr[i]);
-                                } else {
-                                        s = s.concat(arr[i] + ", ");
-                                }
-                        }
-
-                        return s;
-                }
-
-                private static String arrayToList(boolean[] arr) {
-                        String s = "";
-
-                        for (int i = 0; i < arr.length; i++) {
-                                if (i == arr.length - 1) {
-                                        s = s.concat("" + arr[i]);
-                                } else {
-                                        s = s.concat(arr[i] + ", ");
-                                }
-                        }
-
-                        return s;
-                }
 
                 private static String arrayToList(String[] arr) {
                         String s = "";
@@ -816,28 +429,44 @@ public class MADB {
                         return s;
                 }
 
-                private static String stringToList(String[] arr) {
+                private static String objectToList(Object[] arr) {
                         String s = "";
 
                         for (int i = 0; i < arr.length; i++) {
                                 if (i == arr.length - 1) {
-                                        s = s.concat("\'" + arr[i] + "\'");
+                                        if (arr[i] instanceof String) {
+                                                s = s.concat("\'" + arr[i] + "\'");
+                                        } else {
+                                                s = s.concat(arr[i] + "");
+                                        }
                                 } else {
-                                        s = s.concat("\'" + arr[i] + "\', ");
+                                        if (arr[i] instanceof String) {
+                                                s = s.concat("\'" + arr[i] + "\', ");
+                                        } else {
+                                                s = s.concat(arr[i] + ", ");
+                                        }
                                 }
                         }
 
                         return s;
                 }
 
-                private static String stringToList(ArrayList<String> arr) {
+                private static String objectToList(ArrayList<Object> arr) {
                         String s = "";
 
                         for (int i = 0; i < arr.size(); i++) {
                                 if (i == arr.size() - 1) {
-                                        s = s.concat("\'" + arr.get(i) + "\'");
+                                        if (arr.get(i) instanceof String) {
+                                                s = s.concat("\'" + arr.get(i) + "\'");
+                                        } else {
+                                                s = s.concat(arr.get(i) + "");
+                                        }
                                 } else {
-                                        s = s.concat("\'" + arr.get(i) + "\', ");
+                                        if (arr.get(i) instanceof String) {
+                                                s = s.concat("\'" + arr.get(i) + "\', ");
+                                        } else {
+                                                s = s.concat(arr.get(i) + ", ");
+                                        }
                                 }
                         }
 
@@ -889,19 +518,6 @@ public class MADB {
                                 }
                         }
                         return false;
-                }
-
-                private static String tableColsFormat(ArrayList<String> cols, ArrayList<String> types) {
-                        String s = "";
-                        for (int i = 0; i < cols.size(); i++) {
-                                if (i == cols.size() - 1) {
-                                        s = s.concat(cols.get(i) + " " + types.get(i));
-                                } else {
-                                        s = s.concat(cols.get(i) + " " + types.get(i) + ", ");
-                                }
-
-                        }
-                        return s;
                 }
         }
 }

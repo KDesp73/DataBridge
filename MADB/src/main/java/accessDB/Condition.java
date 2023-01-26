@@ -92,7 +92,11 @@ public class Condition {
                 
                 return Operator + " (" +c.condition + ")";
         }
-
+        
+        public Condition(Condition c1, String Operator, Condition c2){
+                this.condition = c1.getCondition() + " " + createCondition(Operator, c2);
+        }
+        
         public String getCondition() {
                 return condition;
         }
