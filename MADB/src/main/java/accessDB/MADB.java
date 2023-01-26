@@ -175,10 +175,9 @@ public class MADB {
          * condition
          * @throws SQLException
          */
-        public void DELETE(String Table, String Column, Object Value) throws SQLException { //Deletes record
+        public void DELETE(String Table, String Column, Object Value) throws SQLException,  ValueNotFoundException{ //Deletes record
                 if (!valueExists(Table, Column, Value)) {
-                        System.out.println("Record doesn't exist");
-                        return;
+                        throw new ValueNotFoundException("Value not found");
                 }
 
                 String query;

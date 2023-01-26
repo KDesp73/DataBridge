@@ -93,8 +93,15 @@ public class Condition {
                 return Operator + " (" +c.condition + ")";
         }
         
+        /**
+         * Joins two conditions with the selected operator
+         * 
+         * @param c1 First Condition
+         * @param Operator Selected Operator
+         * @param c2 Second Condition
+         */
         public Condition(Condition c1, String Operator, Condition c2){
-                this.condition = c1.getCondition() + " " + createCondition(Operator, c2);
+                this.condition = "(" + c1.getCondition() + ") " + createCondition(Operator, c2);
         }
         
         public String getCondition() {
