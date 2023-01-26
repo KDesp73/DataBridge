@@ -22,7 +22,7 @@ db.INSERT("Table_name", "Column_name", value);
 db.INSERT("Table_name", new String[]{"Column_name_1", "Column_name_2", "Column_name_3"}, new String[]{value1, value2, value3});
 
 //Select the whole column
-ArrayList<String> arr = db.SELECT("Table_name", "Column_name");
+ArrayList<Object> arr = db.SELECT("Table_name", "Column_name");
 
 //Update a value based on the custom condition
 db.UPDATE("Table_name", "Column_name", value, new Condition("Column", Value, Operator.AND, "Other_Column", Other_Value));
