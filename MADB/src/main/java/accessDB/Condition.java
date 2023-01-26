@@ -61,6 +61,17 @@ public class Condition {
                 this.condition = createCondition(Operator, c);
         }
         
+        /**
+         * Joins two conditions with the selected operator
+         * 
+         * @param c1 First Condition
+         * @param Operator Selected Operator
+         * @param c2 Second Condition
+         */
+        public Condition(Condition c1, String Operator, Condition c2){
+                this.condition = "(" + c1.getCondition() + ") " + createCondition(Operator, c2);
+        }
+        
         private String createCondition(String Column, Object Value) {
                 if (Value instanceof String) {
                         return Column + " = \'" + Value + "\'";
@@ -91,17 +102,6 @@ public class Condition {
 //                if(Operator.equals(accessDB.Operator.OR_NOT)) throw new IncorrectOperatorException("OR NOT operator is not accepted here");
                 
                 return Operator + " (" +c.condition + ")";
-        }
-        
-        /**
-         * Joins two conditions with the selected operator
-         * 
-         * @param c1 First Condition
-         * @param Operator Selected Operator
-         * @param c2 Second Condition
-         */
-        public Condition(Condition c1, String Operator, Condition c2){
-                this.condition = "(" + c1.getCondition() + ") " + createCondition(Operator, c2);
         }
         
         public String getCondition() {
