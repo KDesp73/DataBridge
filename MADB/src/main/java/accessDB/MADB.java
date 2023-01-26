@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * Databases (.accdb) with Java
  *
  * @author KDesp73
- * @version 1.0.2
+ * @version 1.0.4
  *
  */
 public class MADB {
