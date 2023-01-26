@@ -63,7 +63,6 @@ git clone https://github.com/KDesp73/MADB
 ```
 
 ## TODO
-* Create custom conditions
 * Make dependency fully public on the Maven repository
 
 ## Contributing
