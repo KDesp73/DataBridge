@@ -25,7 +25,7 @@
 
 package accessDB;
 
-public class Condition<T, G> {
+public class Condition {
         private String condition;
         
         /**
@@ -34,7 +34,7 @@ public class Condition<T, G> {
          * @param Column
          * @param Value 
          */
-        public Condition(String Column, T Value) {
+        public Condition(String Column, Object Value) {
                 this.condition = createCondition(Column, Value);
         }
 
@@ -47,7 +47,7 @@ public class Condition<T, G> {
          * @param SecondColumn
          * @param SecondValue 
          */
-        public Condition(String FirstColumn, T FirstValue, String Operator, String SecondColumn, G SecondValue) {
+        public Condition(String FirstColumn, Object FirstValue, String Operator, String SecondColumn, Object SecondValue) {
                 this.condition =  createCondition(FirstColumn, FirstValue, Operator, SecondColumn, SecondValue);
         }
         
@@ -61,14 +61,14 @@ public class Condition<T, G> {
                 this.condition = createCondition(Operator, c);
         }
         
-        private String createCondition(String Column, T Value) {
+        private String createCondition(String Column, Object Value) {
                 if (Value instanceof String) {
                         return Column + " = \'" + Value + "\'";
                 }
                 return Column + " = " + Value;
         }
         
-        private String createCondition(String FirstColumn, T FirstValue, String Operator, String SecondColumn, G SecondValue) throws IncorrectOperatorException{
+        private String createCondition(String FirstColumn, Object FirstValue, String Operator, String SecondColumn, Object SecondValue) throws IncorrectOperatorException{
                 if(Operator.equals(accessDB.Operator.NOT)) throw new IncorrectOperatorException("NOT operator is NOT accepted here");
                 
                 if (FirstValue instanceof String && SecondValue instanceof String) {
