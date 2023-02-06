@@ -23,7 +23,7 @@
 */
 
 
-package accessDB;
+package kdesp73.madb;
 
 public class Condition {
         private String condition;
@@ -80,7 +80,7 @@ public class Condition {
         }
         
         private String createCondition(String FirstColumn, Object FirstValue, String Operator, String SecondColumn, Object SecondValue) throws IncorrectOperatorException{
-                if(Operator.equals(accessDB.Operator.NOT)) throw new IncorrectOperatorException("NOT operator is NOT accepted here");
+                if(Operator.equals(kdesp73.madb.Operator.NOT)) throw new IncorrectOperatorException("NOT operator is NOT accepted here");
                 
                 if (FirstValue instanceof String && SecondValue instanceof String) {
                         return FirstColumn + " = \'" + FirstValue + "\' " + Operator + " " + SecondColumn  + " = \'" + SecondValue + "\'";

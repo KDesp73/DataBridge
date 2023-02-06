@@ -1,5 +1,5 @@
 
-package accessDB;
+package kdesp73.madb;
 
 /**
  * 

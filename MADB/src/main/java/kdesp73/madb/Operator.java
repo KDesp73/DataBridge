@@ -23,7 +23,7 @@
 */
 
 
-package accessDB;
+package kdesp73.madb;
 
 public class Operator {
         public static final String OR = "OR";
