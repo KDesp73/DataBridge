@@ -49,8 +49,8 @@ Condition c = new Condition("ColumnA", ValueA, Operator.AND_NOT, "ColumnB", Valu
 
 ```xml
 <dependency>
-    <groupId>MADB</groupId>
-    <artifactId>accessDB</artifactId>
+    <groupId>kdesp73.libs</groupId>
+    <artifactId>MADB</artifactId>
     <version>1.0.4-SNAPSHOT</version>
 </dependency>
 ```
