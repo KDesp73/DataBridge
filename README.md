@@ -49,7 +49,7 @@ Condition c = new Condition("ColumnA", ValueA, Operator.AND_NOT, "ColumnB", Valu
 
 ```xml
 <dependency>
-    <groupId>kdesp73.libs</groupId>
+    <groupId>kdesp73.madb</groupId>
     <artifactId>MADB</artifactId>
     <version>1.0.4-SNAPSHOT</version>
 </dependency>
