@@ -63,7 +63,7 @@ git clone https://github.com/KDesp73/MADB
 ```
 
 ## TODO
-[ ] Make dependency fully public on the Maven repository
+[x] Make dependency fully public on the Maven repository
 
 ## Contributing
 
