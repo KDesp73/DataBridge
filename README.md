@@ -75,7 +75,7 @@ git clone https://github.com/KDesp73/MADB
 ## TODO
 
 - [x] Basic SQL Methods (SELECT, INSERT, UPDATE, DELETE)
-- [] Make dependency fully public on the Maven repository
+- [ ] Make dependency fully public on the Maven repository
 - [x] Add more SQL features
 
 ## Contributing
