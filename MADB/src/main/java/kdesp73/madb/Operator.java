@@ -39,6 +39,7 @@ public class Operator {
         public static final String ALL = "ALL";
         public static final String EXISTS = "EXISTS";
         
+        public static final String EQUALS = "=";
         public static final String GREATER_THAN = ">";
         public static final String LESS_THAN = "<";
         public static final String GREATER_OR_EQUAL_THAN = ">=";
