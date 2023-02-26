@@ -48,6 +48,12 @@ Condition c = new Condition("ColumnA", ValueA, Operator.AND_NOT, "ColumnB", Valu
 * GREATER_OR_EQUAL_THAN
 * LESS_THAN
 * LESS_OR_EQUAL_THAN
+* BETWEEN
+* LIKE
+* IN
+* ANY
+* ALL
+* EXISTS
 
 ## Dependencies
 
