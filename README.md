@@ -61,7 +61,7 @@ Condition c = new Condition("ColumnA", ValueA, Operator.AND_NOT, "ColumnB", Valu
 <dependency>
     <groupId>kdesp73.madb</groupId>
     <artifactId>MADB</artifactId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.6-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -76,7 +76,7 @@ git clone https://github.com/KDesp73/MADB
 
 - [x] Basic SQL Methods (SELECT, INSERT, UPDATE, DELETE)
 - [ ] Make dependency fully public on the Maven repository
-- [x] Add more SQL features
+- [ ] Add more SQL features
 
 ## Contributing
 
