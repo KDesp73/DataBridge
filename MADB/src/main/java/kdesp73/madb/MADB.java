@@ -25,6 +25,7 @@ package kdesp73.madb;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.sql.DriverManager;
 
 /**
  * SQL Methods for managing Microsoft Access
@@ -48,6 +49,11 @@ public class MADB {
          * @throws SQLException
          */
         public MADB(String filepath) throws SQLException {
+                try{
+                        Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+                }catch(ClassNotFoundException e) {
+                }
+                
                 String url = "jdbc:ucanaccess://" + filepath;
                 this.filepath = filepath;
                 conn = DriverManager.getConnection(url);
