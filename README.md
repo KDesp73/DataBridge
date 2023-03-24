@@ -61,7 +61,7 @@ Condition c = new Condition("ColumnA", ValueA, Operator.AND_NOT, "ColumnB", Valu
 <dependency>
     <groupId>kdesp73.madb</groupId>
     <artifactId>MADB</artifactId>
-    <version>1.0.6-SNAPSHOT</version>
+    <version>1.0.7-SNAPSHOT</version>
 </dependency>
 ```
 
