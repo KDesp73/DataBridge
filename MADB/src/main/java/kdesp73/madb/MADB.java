@@ -183,7 +183,8 @@ public class MADB {
          */
         public void DELETE(String Table, String Column, Object Value) throws SQLException,  ValueNotFoundException{ //Deletes record
                 if (!valueExists(Table, Column, Value)) {
-                        throw new ValueNotFoundException("Value not found");
+                        return;
+                        //throw new ValueNotFoundException("Value not found");
                 }
 
                 String query;
