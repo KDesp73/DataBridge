@@ -32,10 +32,10 @@ import java.sql.DriverManager;
  * Databases (.accdb) with Java
  *
  * @author KDesp73
- * @version 1.0.4
+ * @version 1.0.7
  *
  */
-public class MADB {
+public class MADB implements SQLInterface {
 
         private String filepath;
         private java.sql.Connection conn;
@@ -79,6 +79,7 @@ public class MADB {
          * @throws SQLException
          *
          */
+        @Override
         public void INSERT(String Table, String Column, Object Value) throws SQLException { //Inserts value to specific table and field
                 String query;
                 if (Value instanceof String) {
@@ -102,6 +103,7 @@ public class MADB {
          * ArrayList format
          * @throws SQLException
          */
+        @Override
         public void INSERT(String Table, String[] Columns, ArrayList<Object> Values) throws SQLException { //Inserts value to specific table and field
                 this.getStatement().executeUpdate("INSERT INTO " + Table + "(" + Utils.arrayToList(Columns) + ") VALUES(" + Utils.objectToList(Values) + ")");
         }
@@ -116,6 +118,7 @@ public class MADB {
          * @param Values Values to be inserted
          * @throws SQLException
          */
+        @Override
         public void INSERT(String Table, String[] Columns, Object[] Values) throws SQLException {
                 String query = "INSERT INTO " + Table + "(" + Utils.arrayToList(Columns) + ") VALUES(" + Utils.objectToList(Values) + ")";
 
@@ -135,6 +138,7 @@ public class MADB {
          * @param c Custom Condition
          * @throws SQLException
          */
+        @Override
         public void UPDATE(String Table, String Column, Object Value, Condition c) throws SQLException {
                 String query;
                 if (Value instanceof String) {
@@ -157,6 +161,7 @@ public class MADB {
          * existing one
          * @throws SQLException
          */
+        @Override
         public void UPDATE(String Table, String Column, Object Value) throws SQLException {
                 String query;
                 if (Value instanceof String) {
@@ -181,6 +186,7 @@ public class MADB {
          * condition
          * @throws SQLException
          */
+        @Override
         public void DELETE(String Table, String Column, Object Value) throws SQLException,  ValueNotFoundException{ //Deletes record
                 if (!valueExists(Table, Column, Value)) {
                         return;
@@ -208,6 +214,7 @@ public class MADB {
          * @param c Custom Condition
          * @throws SQLException
          */
+        @Override
         public void DELETE(String Table, String Column, Condition c) throws SQLException { //Deletes record
                 String query = "DELETE FROM " + Table + " WHERE " + c.getCondition();
 
@@ -221,6 +228,7 @@ public class MADB {
          * @param Table Table to clear
          * @throws SQLException
          */
+        @Override
         public void DELETE(String Table) throws SQLException { //Clears Table
                 String query = "DELETE FROM " + Table;
                 this.getStatement().executeUpdate(query);
@@ -240,6 +248,7 @@ public class MADB {
          * @return ArrayList
          * @throws SQLException
          */
+        @Override
         public Object SELECT(String Table, String Column, Condition c) throws SQLException {
                 String query = "SELECT " + Column + " FROM " + Table + " WHERE " + c.getCondition();
                 ResultSet rs = this.getStatement().executeQuery(query);
@@ -262,6 +271,7 @@ public class MADB {
          * @return ArrayList
          * @throws SQLException
          */
+        @Override
         public ArrayList<Object> SELECT(String Table, String Column) throws SQLException {
                 ArrayList<Object> list = new ArrayList<>();
 
@@ -284,6 +294,7 @@ public class MADB {
          * @return ArrayList
          * @throws SQLException
          */
+        @Override
         public ArrayList<Object[]> SELECT(String Table, String[] Columns) throws SQLException {
                 ArrayList<Object[]> list = new ArrayList<>();
 
@@ -314,6 +325,7 @@ public class MADB {
          * @return ArrayList
          * @throws SQLException
          */
+        @Override
         public ArrayList<Object[]> SELECT(String Table, String[] Columns, Condition c) throws SQLException {
                 ArrayList<Object[]> list = new ArrayList<>();
 
@@ -345,6 +357,7 @@ public class MADB {
          * @return Boolean
          * @throws SQLException
          */
+        @Override
         public boolean valueExists(String Table, String Column, Object Value) throws SQLException {
                 String query;
                 if (Value instanceof String) {
@@ -371,6 +384,7 @@ public class MADB {
          * @return Integer
          * @throws SQLException
          */
+        @Override
         public int numOfRecords(String Table) throws SQLException {
                 ResultSet rs = this.getStatement().executeQuery("SELECT COUNT(*)  FROM " + Table);
 
@@ -389,6 +403,7 @@ public class MADB {
          * @return Integer
          * @throws SQLException
          */
+        @Override
         public int numOfRecords(String Table, String Column) throws SQLException {
                 ResultSet rs = this.getStatement().executeQuery("SELECT COUNT( " + Column + ")  FROM " + Table);
 
@@ -409,6 +424,7 @@ public class MADB {
          * @return Integer
          * @throws SQLException
          */
+        @Override
         public int numOfRecords(String Table, String Column, Condition c) throws SQLException {
                 String query = "SELECT COUNT( " + Column + ")  FROM " + Table + " WHERE " + c.getCondition();
 
