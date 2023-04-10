@@ -1,16 +1,18 @@
 
-# MADB - Java Methods to Manage a Microsoft Access Database (.accdb)
+# MADB - High Level API to Manage a Microsoft Access Database (.accdb)
+
+> Using the ucanaccess library
 
 ## Tutorial
 
-1) Import MADB in your project as a dependency (see [Releases](https://github.com/KDesp73/MADB/releases/tag/MADBv.1.0.4) for .jar file)
-2) Create MADB object
+1. Import MADB in your project as a dependency (see [Releases](https://github.com/KDesp73/MADB/releases/tag/MADBv.1.0.4) for .jar file)
+2. Create MADB object
 
-```java
-MADB db = new MADB([your_db_directory]);
-```
+    ```java
+    MADB db = new MADB([your_db_directory]);
+    ```
 
-3) Now through this object you have access to all of the SQL Methods (INSERT, SELECT, UPDATE etc)
+3. Now through this object you have access to all of the SQL Methods (INSERT, SELECT, UPDATE etc)
 
 ## Examples
 
@@ -89,6 +91,10 @@ Please adhere to this project's [Code of Conduct](https://github.com/KDesp73/MAD
 ## Authors
 
 - [@KDesp73](https://github.com/KDesp73)
+
+## Credits
+
+[ucanaccess library](https://ucanaccess.sourceforge.net/site.html)
 
 
 ## License
