@@ -76,7 +76,7 @@
                 <repository>
                         <id>github</id>
                         <name>GitHub KDesp73 Apache Maven Packages</name>
-                        <url>https://maven.pkg.github.com/KDesp73/MADB</url>
+                        <url>https://maven.pkg.github.com/KDesp73/DataBridge</url>
                 </repository>
         </distributionManagement>
 
