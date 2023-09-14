@@ -1,4 +1,4 @@
-package kdesp73.madb.helpers;
+package kdesp73.databridge.helpers;
 
 import java.util.HashMap;
 import java.util.List;

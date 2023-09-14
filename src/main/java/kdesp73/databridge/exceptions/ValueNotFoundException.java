@@ -1,5 +1,5 @@
 
-package kdesp73.madb.exceptions;
+package kdesp73.databridge.exceptions;
 
 /**
  *

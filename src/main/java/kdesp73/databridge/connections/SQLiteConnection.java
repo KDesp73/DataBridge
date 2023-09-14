@@ -1,4 +1,4 @@
-package kdesp73.madb.connections;
+package kdesp73.databridge.connections;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
