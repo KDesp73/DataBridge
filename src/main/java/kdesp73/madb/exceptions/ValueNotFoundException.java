@@ -1,11 +1,11 @@
 
-package kdesp73.madb;
+package kdesp73.madb.exceptions;
 
 /**
  *
  * @author KDesp
  */
-class ValueNotFoundException extends RuntimeException{
+public class ValueNotFoundException extends RuntimeException{
         public ValueNotFoundException(String err){
                 super(err);
         }

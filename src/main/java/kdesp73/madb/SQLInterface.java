@@ -3,6 +3,8 @@ package kdesp73.madb;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import kdesp73.madb.exceptions.ValueNotFoundException;
+
 public interface SQLInterface {
 
     /**
