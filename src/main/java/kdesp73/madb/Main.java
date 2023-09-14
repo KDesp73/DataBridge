@@ -1,40 +1,53 @@
 package kdesp73.madb;
 
 import java.sql.ResultSet;
+import java.util.List;
 
+import kdesp73.madb.builders.QueryBuilder;
+import kdesp73.madb.builders.ResultProcessor;
+import kdesp73.madb.builders.ResultRow;
 import kdesp73.madb.connections.MSAccessConnection;
 
 public class Main {
 	public static void main(String[] args) {
 		String dbUrl = "jdbc:ucanaccess:///home/konstantinos/personal/repos/java/Watchlist-Wizard/MovieManager/data/MoviesDatabase.accdb";
-        String dbUsername = "";
-        String dbPassword = "";
+		String dbUsername = "";
+		String dbPassword = "";
 
-        // Create an instance of MSAccessConnection
-        MSAccessConnection msAccessConnection = new MSAccessConnection();
+		// Create an instance of MSAccessConnection
+		MSAccessConnection msAccessConnection = new MSAccessConnection();
 
-        try {
-            // Connect to the Microsoft Access database
-            msAccessConnection.connect(dbUrl, dbUsername, dbPassword);
+		try {
+			// Connect to the Microsoft Access database
+			msAccessConnection.connect(dbUrl, dbUsername, dbPassword);
 
-            // Execute a sample query
-            String query = "SELECT * FROM Settings";
-            ResultSet resultSet = msAccessConnection.executeQuery(query);
+			QueryBuilder qb = new QueryBuilder();
+			ResultProcessor rp = new ResultProcessor();
 
-            // Process the query results
-            while (resultSet.next()) {
-                // Retrieve data from the result set
+			// Execute a sample query
+			String query = qb.select().from("Settings").build();
+			System.out.println(query);
+			ResultSet resultSet = msAccessConnection.executeQuery(query);
 
-                String name = resultSet.getString("Theme");
+			List<ResultRow> table = rp.toList(resultSet);
 
-                // Do something with the data (e.g., print it)
-                System.out.println("Theme: " + name);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            // Close the database connection when done
-            msAccessConnection.close();
-        }
+			for (ResultRow row : table) {
+				String font = row.get("Font");
+				String theme = row.get("Theme");
+
+				// Perform operations with the data
+				System.out.println("Font: " + font + ", Theme: " + theme);
+			}
+
+			System.out.println("");
+
+			rp.printTable(table);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// Close the database connection when done
+			msAccessConnection.close();
+		}
 	}
 }
