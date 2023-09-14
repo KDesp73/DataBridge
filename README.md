@@ -1,5 +1,7 @@
 # DataBridge
 
+> previously called `MADB`
+
 A multi-driver database connection tool equipped with a query builder and a ResultSet parser and visualizer
 
 ## Supported Databases
