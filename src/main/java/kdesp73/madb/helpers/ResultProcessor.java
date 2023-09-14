@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultProcessor {
+	/**
+	 * Transforms the ResultSet object to a List of ResultRow (custom). No column argments are needed.
+	 * @param resultSet
+	 * @return
+	 */
 	public List<ResultRow> toList(ResultSet resultSet) {
         List<ResultRow> resultList = new ArrayList<>();
         try {
@@ -34,6 +39,12 @@ public class ResultProcessor {
         return resultList;
     }
 
+	/**
+	 * Transforms the ResultSet object to a List of ResultRow (custom)
+	 * @param resultSet
+	 * @param columns
+	 * @return
+	 */
     public List<ResultRow> toList(ResultSet resultSet, List<String> columns) {
         List<ResultRow> resultList = new ArrayList<>();
         try {
@@ -51,6 +62,11 @@ public class ResultProcessor {
         return resultList;
     }
 
+	/**
+	 * Prints the table based on the transformed ResultSet while also specifying which columns to print.
+	 * @param resultList
+	 * @param columns
+	 */
 	public void printTable(List<ResultRow> resultList, List<String> columns) {
         if (resultList.isEmpty()) {
             System.out.println("No data found.");
@@ -101,7 +117,10 @@ public class ResultProcessor {
     }
 
 
-    // Overloaded printTable method for dynamic column widths
+    /**
+	 * Prints the table based on the transformed ResultSet
+	 * @param resultList
+	 */
     public void printTable(List<ResultRow> resultList) {
         if (resultList.isEmpty()) {
             System.out.println("No data found.");
