@@ -10,7 +10,7 @@ public class QueryBuilder {
     private String condition;
     private List<String> values;
 
-    public QueryBuilder() {
+	public QueryBuilder() {
         columns = new ArrayList<>();
         values = new ArrayList<>();
     }
@@ -19,7 +19,11 @@ public class QueryBuilder {
         query = new StringBuilder();
     }
 
-    // SELECT operation
+    /**
+	 * Appends the SELECT operator to the query
+	 * @param columns to select
+	 * @return QueryBuilder
+	 */
     public QueryBuilder select(String... columns) {
         initializeQuery();
         query.append("SELECT ");
@@ -31,27 +35,44 @@ public class QueryBuilder {
         return this;
     }
 
-    // FROM clause
-    public QueryBuilder from(String table) {
+ 	/**
+	 * Appends the FROM operator to the query
+	 * @param table to select from
+	 * @return QueryBuilder
+	 */
+	public QueryBuilder from(String table) {
         this.table = table;
         query.append(" FROM ").append(table);
         return this;
     }
 
-    // WHERE clause
-    public QueryBuilder where(String condition) {
+	/**
+	 * Appends the WHERE operator to the query
+	 * @param condition boolean sql condition
+	 * @return QueryBuilder
+	 */
+	public QueryBuilder where(String condition) {
         this.condition = condition;
         query.append(" WHERE ").append(condition);
         return this;
     }
 
-    // INSERT operation
-    public QueryBuilder insertInto(String table) {
+	/**
+	 * Appends the INSERT INTO operator to the query
+	 * @param table to insert data into
+	 * @return QueryBuilder
+	 */
+	public QueryBuilder insertInto(String table) {
         initializeQuery();
         query.append("INSERT INTO ").append(table);
         return this;
     }
 
+	/**
+	 * Append multiple columns inside parenthesis
+	 * @param columns to add inside parenthesis
+	 * @return QueryBuilder
+	 */
     public QueryBuilder columns(String... columns) {
         this.columns.clear();
         for (String column : columns) {
@@ -61,6 +82,11 @@ public class QueryBuilder {
         return this;
     }
 
+	/**
+	 * Append multiple values inside parenthesis
+	 * @param values to add inside parenthesis
+	 * @return QueryBuilder
+	 */
     public QueryBuilder values(String... values) {
         this.values.clear();
         for (String value : values) {
@@ -70,7 +96,11 @@ public class QueryBuilder {
         return this;
     }
 
-    // UPDATE operation
+    /**
+	 * Append the UPDATE operator to the query
+	 * @param table to perform the update
+	 * @return QueryBuilder
+	 */
     public QueryBuilder update(String table) {
         initializeQuery();
         this.table = table;
@@ -78,21 +108,34 @@ public class QueryBuilder {
         return this;
     }
 
-    public QueryBuilder set(String column, String value) {
+	/**
+	 * Append the SET operator along with a column and a value
+	 * @param column
+	 * @param value
+	 * @return QueryBuilder
+	 */
+	public QueryBuilder set(String column, String value) {
         query.append(" SET ").append(column).append(" = '").append(value).append("'");
         return this;
     }
 
-    // DELETE operation
-    public QueryBuilder deleteFrom(String table) {
+	/**
+	 * Append the DELETE FROM operator
+	 * @param table to delete from
+	 * @return QueryBuilder
+	 */
+	public QueryBuilder deleteFrom(String table) {
         initializeQuery();
         this.table = table;
         query.append("DELETE FROM ").append(table);
         return this;
     }
 
-    // Build and get the SQL query string
-    public String build() {
+	/**
+	 * Build the SQL query
+	 * @return String
+	 */
+	public String build() {
         if (query == null) {
             throw new IllegalStateException("Incomplete query construction.");
         }

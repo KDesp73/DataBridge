@@ -9,9 +9,15 @@ import java.sql.SQLException;
 public class SQLiteConnection implements DatabaseConnection {
     private Connection connection;
 
-    @Override
+    /**
+	 * Creates the connection with the database
+	 * @param url driver connector (jdbc:sqlitie://) + path to database
+	 * @param username
+	 * @param password
+	 */
+	@Override
     public void connect(String url, String username, String password) {
-		if(!url.contains("jdbc:sqlite:")){
+		if(!url.contains("jdbc:sqlite://")){
 			url = "jdbc:sqlite:" + url;
 		}
 
@@ -24,6 +30,11 @@ public class SQLiteConnection implements DatabaseConnection {
         }
     }
 
+	/**
+	 * Executes the SQL query if it's valid
+	 * @param query
+	 * @return ResultSet
+	 */
     @Override
     public ResultSet executeQuery(String query) {
         try {
@@ -35,6 +46,9 @@ public class SQLiteConnection implements DatabaseConnection {
         }
     }
 
+	/**
+	 * Close the connection with the database
+	 */
     @Override
     public void close() {
         try {

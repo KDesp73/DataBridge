@@ -9,6 +9,12 @@ import java.sql.SQLException;
 public class MSAccessConnection implements DatabaseConnection {
     private Connection connection;
 
+	/**
+	 * Creates the connection with the database
+	 * @param url driver connector (jdbc:ucanaccess://) + path to database
+	 * @param username
+	 * @param password
+	 */
     @Override
     public void connect(String url, String username, String password) {
 		if(!url.contains("jdbc:ucanaccess://")){
@@ -24,6 +30,11 @@ public class MSAccessConnection implements DatabaseConnection {
         }
     }
 
+	/**
+	 * Executes the SQL query if it's valid
+	 * @param query
+	 * @return ResultSet
+	 */
     @Override
     public ResultSet executeQuery(String query) {
         try {
@@ -35,6 +46,9 @@ public class MSAccessConnection implements DatabaseConnection {
         }
     }
 
+	/**
+	 * Close the connection with the database
+	 */
     @Override
     public void close() {
         try {
