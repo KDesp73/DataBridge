@@ -1,4 +1,6 @@
-# Name
+# DataBridge
+
+A multi-driver database connection tool equipped with a query builder and a ResultSet parser and visualizer
 
 ## Supported Databases
 
@@ -133,9 +135,9 @@ rp.printTable(table);
 
 Contributions are always welcome!
 
-See [Contributing.md](https://github.com/KDesp73/MADB/blob/main/Contributing.md) for ways to get started.
+See [Contributing.md](https://github.com/KDesp73/DataBridge/blob/main/Contributing.md) for ways to get started.
 
-Please adhere to this project's [Code of Conduct](https://github.com/KDesp73/MADB/blob/main/CODE_OF_CONDUCT.md).
+Please adhere to this project's [Code of Conduct](https://github.com/KDesp73/DataBridge/blob/main/CODE_OF_CONDUCT.md).
 
 ## Authors
 
