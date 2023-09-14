@@ -146,7 +146,7 @@ rp.printTable(table);
 </dependency>
 ```
 
-Add this to your pom.xml file and the download the jar into the `.m2/repository/kdesp73/databridge/2.0.0/` folder
+Add this to your pom.xml file and then download the jar into the `.m2/repository/kdesp73/databridge/2.0.0/` folder
 
 ## Contributing
 
