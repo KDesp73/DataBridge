@@ -16,9 +16,9 @@ public class SQLiteConnection implements DatabaseConnection {
 		}
 
 		try {
-            // Connect to the SQLite database
+			Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(url, username, password);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to connect to SQLite database.");
         }

@@ -3,10 +3,10 @@ package kdesp73.madb;
 import java.sql.ResultSet;
 import java.util.List;
 
-import kdesp73.madb.builders.QueryBuilder;
-import kdesp73.madb.builders.ResultProcessor;
-import kdesp73.madb.builders.ResultRow;
 import kdesp73.madb.connections.MSAccessConnection;
+import kdesp73.madb.helpers.QueryBuilder;
+import kdesp73.madb.helpers.ResultProcessor;
+import kdesp73.madb.helpers.ResultRow;
 
 public class Main {
 	public static void main(String[] args) {

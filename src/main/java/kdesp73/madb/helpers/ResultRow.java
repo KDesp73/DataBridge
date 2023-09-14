@@ -1,4 +1,4 @@
-package kdesp73.madb.builders;
+package kdesp73.madb.helpers;
 
 import java.util.HashMap;
 import java.util.List;
