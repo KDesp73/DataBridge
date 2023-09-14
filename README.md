@@ -132,6 +132,17 @@ ResultPrecessor rp = new ResultProcessor();
 rp.printTable(table);
 ```
 
+## Dependency
+
+```xml
+<dependency>
+	<groupId>kdesp73</groupId>
+	<artifactId>databridge</artifactId>
+	<version>2.0.0</version>
+</dependency>
+```
+
+Add this to your pom.xml file and the download the jar into the `.m2/repository/kdesp73/databridge/2.0.0/` folder
 
 ## Contributing
 
