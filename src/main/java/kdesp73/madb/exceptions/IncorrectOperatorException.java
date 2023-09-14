@@ -1,11 +1,11 @@
 
-package kdesp73.madb;
+package kdesp73.madb.exceptions;
 
 /**
- * 
+ *
  * @author KDesp73
  */
-class IncorrectOperatorException extends RuntimeException{
+public class IncorrectOperatorException extends RuntimeException{
         public IncorrectOperatorException(String err){
                 super(err);
         }

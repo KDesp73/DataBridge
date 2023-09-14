@@ -10,7 +10,7 @@
                 <maven.compiler.source>17</maven.compiler.source>
                 <maven.compiler.target>17</maven.compiler.target>
         </properties>
-        
+
         <build>
                 <pluginManagement>
                         <plugins>
@@ -22,13 +22,20 @@
                         </plugins>
                 </pluginManagement>
         </build>
-        
+
         <dependencies>
-                <dependency>
+				<!-- Drivers-->
+				<dependency>
                         <groupId>net.sf.ucanaccess</groupId>
                         <artifactId>ucanaccess</artifactId>
                         <version>4.0.4</version>
                 </dependency>
+				<dependency>
+					<groupId>org.xerial</groupId>
+					<artifactId>sqlite-jdbc</artifactId>
+					<version>3.43.0.0</version>
+				  </dependency>
+
                 <dependency>
                         <groupId>org.seleniumhq.selenium</groupId>
                         <artifactId>selenium-java</artifactId>
@@ -62,9 +69,9 @@
                         <type>jar</type>
                 </dependency>
         </dependencies>
-        
-        
-        
+
+
+
         <distributionManagement>
                 <repository>
                         <id>github</id>
@@ -73,7 +80,6 @@
                 </repository>
         </distributionManagement>
 
-                
+
         <name>MADB</name>
-        <description>Data absence tolerance</description>
 </project>

@@ -1,3 +1,3 @@
-MADB/target/
+target/*
 
-/MADB/nbproject/
+nbproject/
