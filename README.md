@@ -1,84 +1,133 @@
+# Name
 
-# MADB - High Level API to Manage a Microsoft Access Database (.accdb)
+## Supported Databases
 
-> Using the ucanaccess library
+- Microsoft Access Database
+- SQLite
 
-## Tutorial
+More soon to be added
 
-1. Import MADB in your project as a dependency (see [Releases](https://github.com/KDesp73/MADB/releases/tag/MADBv.1.0.4) for .jar file)
-2. Create MADB object
+## Example Usage
 
-    ```java
-    MADB db = new MADB([your_db_directory]);
-    ```
-
-3. Now through this object you have access to all of the SQL Methods (INSERT, SELECT, UPDATE etc)
-
-## Examples
+### Create your own connector
 
 ```java
-//Insert value at the specific column
-db.INSERT("Table_name", "Column_name", value);
+public class PostgresConnection implements DatabaseConnection{
+	// Implement the necessary methods
 
-//Insert multiple values in multiple columns
-db.INSERT("Table_name", new String[]{"Column_name_1", "Column_name_2", "Column_name_3"}, new String[]{value1, value2, value3});
+	public void connect(String url, String username, String password){
+		// implementation
+	}
 
-//Select the whole column
-ArrayList<Object> arr = db.SELECT("Table_name", "Column_name");
+	ResultSet executeQuery(String query){
+		// implementation
+	}
 
-//Update a value based on the custom condition
-db.UPDATE("Table_name", "Column_name", value, new Condition("Column", Value, Operator.AND, "Other_Column", Other_Value));
+	void close(){
+		// implementation
+	}
 
-//Delete a row based on the custom condition
-db.DELETE("Table_name", "Column_name", new Condition("Column_name", Value));
+}
 ```
 
-## Creating Conditions
+*See the library's DatabaseConnections for help*
 
-Example - Create the condition: ColumnA = ValueA AND NOT ColumnB = ValueB
+### QueryBuilder
+
 ```java
-Condition c = new Condition("ColumnA", ValueA, Operator.AND_NOT, "ColumnB", ValueB);
+public static void main(String[] args) {
+        QueryBuilder queryBuilder = new QueryBuilder();
+
+        // SELECT query
+        String selectQuery = queryBuilder.select("id", "name")
+                .from("users")
+                .where("age > 30")
+                .build();
+
+        // INSERT query
+        String insertQuery = queryBuilder.insertInto("products")
+                .columns("name", "price")
+                .values("Product 1", "10.99")
+                .build();
+
+        // UPDATE query
+        String updateQuery = queryBuilder.update("products")
+                .set("price", "15.99")
+                .where("id = 1")
+                .build();
+
+        // DELETE query
+        String deleteQuery = queryBuilder.deleteFrom("orders")
+                .where("customer_id = 5")
+                .build();
+
+        System.out.println("SELECT query: " + selectQuery);
+        System.out.println("INSERT query: " + insertQuery);
+        System.out.println("UPDATE query: " + updateQuery);
+        System.out.println("DELETE query: " + deleteQuery);
+    }
 ```
 
-## Available Operators
-* OR
-* AND
-* NOT
-* AND_NOT
-* OR_NOT
-* GREATER_THAN
-* GREATER_OR_EQUAL_THAN
-* LESS_THAN
-* LESS_OR_EQUAL_THAN
-* BETWEEN
-* LIKE
-* IN
-* ANY
-* ALL
-* EXISTS
+### Create a connection with the Database
 
-## Dependencies
+```java
+public static void main(String[] args) {
+	String dbUrl = "jdbc:ucanaccess://" + "path_to_the_db";
+	String dbUsername = ""; // if necessary
+	String dbPassword = ""; // if necessary
 
-```xml
-<dependency>
-    <groupId>kdesp73.madb</groupId>
-    <artifactId>MADB</artifactId>
-    <version>1.0.7-SNAPSHOT</version>
-</dependency>
+	// Create an instance of MSAccessConnection
+	MSAccessConnection msAccessConnection = new MSAccessConnection();
+
+	try {
+		msAccessConnection.connect(dbUrl, dbUsername, dbPassword);
+
+		// Execute your query
+
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		msAccessConnection.close();
+	}
+}
 ```
 
+### ResultProcessor
 
-## Clone
+This class helps the user at accessing the data from the ResultSet object in a more intuitive way
 
-```bash
-git clone https://github.com/KDesp73/MADB
+#### toList
+
+```java
+QueryBuilder qb = new QueryBuilder();
+ResultPrecessor rp = new ResultProcessor();
+
+String query = "SELECT * FROM Settings";
+// or
+String query1 = qb.select().from("Settings").build();
+
+ResultSet rs = msAccessConnection.executeQuery(query);
+
+List<ResultRow> table = rp.toList(resultSet);
+
+for(ResultRow row : table) {
+	String id = row.get("id");
+	String theme = row.get("theme");
+
+	// Perform operations with the data
+}
 ```
 
-## TODO
+#### printTable
 
-- [x] Basic SQL Methods (SELECT, INSERT, UPDATE, DELETE)
-- [ ] Make dependency fully public on the Maven repository
-- [ ] Add more SQL features
+Continuing the previous exaple...
+
+```java
+ResultPrecessor rp = new ResultProcessor();
+
+rp.printTable(table);
+```
+
 
 ## Contributing
 
