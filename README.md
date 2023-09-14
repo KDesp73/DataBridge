@@ -143,8 +143,8 @@ Please adhere to this project's [Code of Conduct](https://github.com/KDesp73/MAD
 
 ## Credits
 
-[ucanaccess library](https://ucanaccess.sourceforge.net/site.html)
-
+- [ucanaccess](https://ucanaccess.sourceforge.net/site.html)
+- [sqlite-jdbc](https://github.com/xerial/sqlite-jdbc)
 
 ## License
 
