@@ -4,7 +4,7 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "DataBridge Documentation"
 PROJECT_NUMBER         = 2.0
-PROJECT_BRIEF          = ""
+PROJECT_BRIEF          = "A multi-driver database connection tool equipped with a query builder and a ResultSet parser and visualizer"
 OUTPUT_DIRECTORY       = ./docs
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English

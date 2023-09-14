@@ -11,7 +11,7 @@ public class SQLiteConnection implements DatabaseConnection {
 
     /**
 	 * Creates the connection with the database
-	 * @param url driver connector (jdbc:sqlitie://) + path to database
+	 * @param url driver connector (jdbc:sqlite://) + path to database
 	 * @param username
 	 * @param password
 	 */
