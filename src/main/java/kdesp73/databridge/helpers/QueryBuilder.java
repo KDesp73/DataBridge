@@ -69,7 +69,7 @@ public class QueryBuilder {
     }
 
 	/**
-	 * Append multiple columns inside parenthesis
+	 * Appends multiple columns inside parenthesis
 	 * @param columns to add inside parenthesis
 	 * @return QueryBuilder
 	 */
@@ -83,7 +83,7 @@ public class QueryBuilder {
     }
 
 	/**
-	 * Append multiple values inside parenthesis
+	 * Appends multiple values inside parenthesis
 	 * @param values to add inside parenthesis
 	 * @return QueryBuilder
 	 */
@@ -97,7 +97,7 @@ public class QueryBuilder {
     }
 
     /**
-	 * Append the UPDATE operator to the query
+	 * Appends the UPDATE operator to the query
 	 * @param table to perform the update
 	 * @return QueryBuilder
 	 */
@@ -109,7 +109,7 @@ public class QueryBuilder {
     }
 
 	/**
-	 * Append the SET operator along with a column and a value
+	 * Appends the SET operator along with a column and a value
 	 * @param column
 	 * @param value
 	 * @return QueryBuilder
@@ -120,7 +120,7 @@ public class QueryBuilder {
     }
 
 	/**
-	 * Append the DELETE FROM operator
+	 * Appends the DELETE FROM operator
 	 * @param table to delete from
 	 * @return QueryBuilder
 	 */
