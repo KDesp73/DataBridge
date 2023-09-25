@@ -25,7 +25,6 @@ public class QueryBuilder {
 	 * @return QueryBuilder
 	 */
     public QueryBuilder select(String... columns) {
-        initializeQuery();
         query.append("SELECT ");
         if (columns.length == 0) {
             query.append("*");
@@ -63,7 +62,6 @@ public class QueryBuilder {
 	 * @return QueryBuilder
 	 */
 	public QueryBuilder insertInto(String table) {
-        initializeQuery();
         query.append("INSERT INTO ").append(table);
         return this;
     }
@@ -87,11 +85,14 @@ public class QueryBuilder {
 	 * @param values to add inside parenthesis
 	 * @return QueryBuilder
 	 */
-    public QueryBuilder values(String... values) {
+    public QueryBuilder values(Object... values) {
         this.values.clear();
-        for (String value : values) {
-            this.values.add("'" + value + "'");
-        }
+        for (Object value : values) {
+			if(value instanceof String)
+				this.values.add("'" + value + "'");
+			else
+				this.values.add(value.toString());
+		}
         query.append(" VALUES (").append(String.join(", ", this.values)).append(")");
         return this;
     }
@@ -102,7 +103,6 @@ public class QueryBuilder {
 	 * @return QueryBuilder
 	 */
     public QueryBuilder update(String table) {
-        initializeQuery();
         this.table = table;
         query.append("UPDATE ").append(table);
         return this;
@@ -114,8 +114,11 @@ public class QueryBuilder {
 	 * @param value
 	 * @return QueryBuilder
 	 */
-	public QueryBuilder set(String column, String value) {
-        query.append(" SET ").append(column).append(" = '").append(value).append("'");
+	public QueryBuilder set(String column, Object value) {
+		if(value instanceof String)
+			query.append(" SET ").append(column).append(" = '").append(value).append("'");
+		else
+			query.append(" SET ").append(column).append(" = ").append(value);
         return this;
     }
 
@@ -125,7 +128,6 @@ public class QueryBuilder {
 	 * @return QueryBuilder
 	 */
 	public QueryBuilder deleteFrom(String table) {
-        initializeQuery();
         this.table = table;
         query.append("DELETE FROM ").append(table);
         return this;
@@ -139,6 +141,9 @@ public class QueryBuilder {
         if (query == null) {
             throw new IllegalStateException("Incomplete query construction.");
         }
-        return query.toString();
+
+		String queryString = query.toString();
+		initializeQuery();
+		return queryString;
     }
 }
