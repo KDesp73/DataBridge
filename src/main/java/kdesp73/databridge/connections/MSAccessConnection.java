@@ -37,7 +37,19 @@ public class MSAccessConnection implements DatabaseConnection {
 	 */
     @Override
     public ResultSet executeQuery(String query) {
-        try {
+        if(query.contains("INSERT") || query.contains("insert") || query.contains("UPDATE") || query.contains("update") || query.contains("DELETE") || query.contains("delete")){
+			try {
+				PreparedStatement statement = connection.prepareStatement(query);
+				statement.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new RuntimeException("Error executing query: " + e.getMessage());
+			}
+
+			return null;
+		}
+
+		try {
             PreparedStatement statement = connection.prepareStatement(query);
             return statement.executeQuery();
         } catch (SQLException e) {
