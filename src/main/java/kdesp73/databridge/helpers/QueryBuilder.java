@@ -11,6 +11,7 @@ public class QueryBuilder {
     private List<String> values;
 
 	public QueryBuilder() {
+		initializeQuery();
         columns = new ArrayList<>();
         values = new ArrayList<>();
     }
