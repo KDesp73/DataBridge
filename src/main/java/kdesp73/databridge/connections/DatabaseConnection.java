@@ -19,11 +19,17 @@ public interface DatabaseConnection {
 	ResultSet executeQuery(String query);
 
 	/**
-	 * Executes the SQL query if it's valid (For INSERT, UPDATE, DELETE etc)
+	 * Executes the SQL query if it's valid (For DMLs)
 	 * @param query
 	 * @return
 	 */
 	int executeUpdate(String query);
+
+	/**
+	 * Executes the SQL query if it's valid (For DDLs)
+	 * @param query
+	 */
+	void execute(String query);
 
 	/**
 	 * Close the connection with the database
