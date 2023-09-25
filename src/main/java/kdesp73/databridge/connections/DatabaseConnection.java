@@ -12,11 +12,18 @@ public interface DatabaseConnection {
 	public void connect(String url, String username, String password);
 
 	/**
-	 * Executes the SQL query if it's valid
+	 * Executes the SQL query if it's valid (For SELECT)
 	 * @param query
 	 * @return ResultSet
 	 */
 	ResultSet executeQuery(String query);
+
+	/**
+	 * Executes the SQL query if it's valid (For INSERT, UPDATE, DELETE etc)
+	 * @param query
+	 * @return
+	 */
+	int executeUpdate(String query);
 
 	/**
 	 * Close the connection with the database

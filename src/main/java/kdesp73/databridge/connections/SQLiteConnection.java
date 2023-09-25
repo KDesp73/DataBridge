@@ -31,6 +31,25 @@ public class SQLiteConnection implements DatabaseConnection {
     }
 
 	/**
+	 * Executes the SQL query if it's valid (For INSERT, UPDATE, DELETE etc)
+	 */
+	@Override
+	public int executeUpdate(String query) {
+		try (PreparedStatement statement = connection.prepareStatement(query)) {
+			if (query.toLowerCase().contains("insert") || query.toLowerCase().contains("update")
+					|| query.toLowerCase().contains("delete")) {
+				return statement.executeUpdate();
+			} else {
+				throw new IllegalArgumentException("Only INSERT, UPDATE, and DELETE statements are allowed.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// You can handle SQLException differently based on your needs.
+			throw new RuntimeException("Error executing query: " + e.getMessage());
+		}
+	}
+
+	/**
 	 * Executes the SQL query if it's valid
 	 * @param query
 	 * @return ResultSet
