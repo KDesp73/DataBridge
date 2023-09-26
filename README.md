@@ -31,6 +31,14 @@ public class PostgresConnection implements DatabaseConnection{
 		// implementation
 	}
 
+	public ResultSet executeUpdate(String query){
+		// implementation
+	}
+	
+	public ResultSet execute(String query){
+		// implementation
+	}
+	
 	public void close(){
 		// implementation
 	}
@@ -142,11 +150,11 @@ rp.printTable(table);
 <dependency>
 	<groupId>kdesp73</groupId>
 	<artifactId>databridge</artifactId>
-	<version>2.0.0</version>
+	<version>2.0.7</version>
 </dependency>
 ```
 
-Add this to your pom.xml file and then download the jar into the `.m2/repository/kdesp73/databridge/2.0.0/` folder
+Add this to your pom.xml file and then download the jar into the `.m2/repository/kdesp73/databridge/2.0.7/` folder
 
 ## Contributing
 

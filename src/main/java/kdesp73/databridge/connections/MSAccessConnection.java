@@ -46,7 +46,6 @@ public class MSAccessConnection implements DatabaseConnection {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			// You can handle SQLException differently based on your needs.
 			throw new RuntimeException("Error executing query: " + e.getMessage());
 		}
 	}
@@ -67,7 +66,6 @@ public class MSAccessConnection implements DatabaseConnection {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			// You can handle SQLException differently based on your needs.
 			throw new RuntimeException("Error executing query: " + e.getMessage());
 		}
 	}
@@ -81,7 +79,9 @@ public class MSAccessConnection implements DatabaseConnection {
 		try (Statement statement = connection.createStatement()) {
 			if (query.toLowerCase().contains("create") ||
 					query.toLowerCase().contains("alter") ||
-					query.toLowerCase().contains("drop")) {
+					query.toLowerCase().contains("drop") ||
+					query.toLowerCase().contains("rename") ||
+					query.toLowerCase().contains("truncate")) {
 				statement.execute(query);
 				System.out.println("DDL statement executed successfully.");
 			} else {
@@ -89,7 +89,6 @@ public class MSAccessConnection implements DatabaseConnection {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			// You can handle SQLException differently based on your needs.
 			throw new RuntimeException("Error executing DDL statement: " + e.getMessage());
 		}
 	}

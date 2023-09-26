@@ -13,30 +13,40 @@ public class ResultProcessor {
 	 * @return
 	 */
 	public List<ResultRow> toList(ResultSet resultSet) {
-        List<ResultRow> resultList = new ArrayList<>();
-        try {
-            ResultSetMetaData metaData = resultSet.getMetaData();
-            int columnCount = metaData.getColumnCount();
+		throw new RuntimeException("Faulty impementation");
 
-            List<String> columnNames = new ArrayList<>();
-            for (int i = 1; i <= columnCount; i++) {
-                columnNames.add(metaData.getColumnName(i));
-            }
+		// try{
+		// 	if(resultSet == null || resultSet.isClosed()){
+		// 		throw new RuntimeException("ResultSet is closed");
+		// 	}
+		// } catch (SQLException e){
+		// 	e.printStackTrace();
+		// }
 
-            while (resultSet.next()) {
-                ResultRow row = new ResultRow();
-                row.setColumnNames(columnNames); // Set column names for each row
-                for (int i = 1; i <= columnCount; i++) {
-                    String columnName = metaData.getColumnName(i);
-                    row.put(columnName, resultSet.getString(columnName));
-                }
-                resultList.add(row);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error processing ResultSet: " + e.getMessage());
-        }
-        return resultList;
+		// List<ResultRow> resultList = new ArrayList<>();
+        // try {
+        //     ResultSetMetaData metaData = resultSet.getMetaData();
+        //     int columnCount = metaData.getColumnCount();
+
+        //     List<String> columnNames = new ArrayList<>();
+        //     for (int i = 1; i <= columnCount; i++) {
+        //         columnNames.add(metaData.getColumnName(i));
+        //     }
+
+        //     while (resultSet.next()) {
+        //         ResultRow row = new ResultRow();
+        //         row.setColumnNames(columnNames); // Set column names for each row
+        //         for (int i = 1; i <= columnCount; i++) {
+        //             String columnName = metaData.getColumnName(i);
+        //             row.put(columnName, resultSet.getString(columnName));
+        //         }
+        //         resultList.add(row);
+        //     }
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        //     throw new RuntimeException("Error processing ResultSet: " + e.getMessage());
+        // }
+        // return resultList;
     }
 
 	/**
@@ -46,20 +56,22 @@ public class ResultProcessor {
 	 * @return
 	 */
     public List<ResultRow> toList(ResultSet resultSet, List<String> columns) {
-        List<ResultRow> resultList = new ArrayList<>();
-        try {
-            while (resultSet.next()) {
-                ResultRow row = new ResultRow();
-                for (String column : columns) {
-                    row.put(column, resultSet.getString(column));
-                }
-                resultList.add(row);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error processing ResultSet: " + e.getMessage());
-        }
-        return resultList;
+		throw new RuntimeException("Faulty implementation");
+
+		// List<ResultRow> resultList = new ArrayList<>();
+        // try {
+        //     while (resultSet.next()) {
+        //         ResultRow row = new ResultRow();
+        //         for (String column : columns) {
+        //             row.put(column, resultSet.getString(column));
+        //         }
+        //         resultList.add(row);
+        //     }
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        //     throw new RuntimeException("Error processing ResultSet: " + e.getMessage());
+        // }
+        // return resultList;
     }
 
 	/**
