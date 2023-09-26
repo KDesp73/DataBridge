@@ -31,14 +31,14 @@ public class PostgresConnection implements DatabaseConnection{
 		// implementation
 	}
 
-	public ResultSet executeUpdate(String query){
+	public int executeUpdate(String query){
 		// implementation
 	}
-	
-	public ResultSet execute(String query){
+
+	public void execute(String query){
 		// implementation
 	}
-	
+
 	public void close(){
 		// implementation
 	}
