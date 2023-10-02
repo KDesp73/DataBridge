@@ -3,10 +3,10 @@
 # General Configuration
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "DataBridge Documentation"
-PROJECT_NUMBER         = 2.0
+PROJECT_NUMBER         = 2.0.7
 PROJECT_BRIEF          = "A multi-driver database connection tool equipped with a query builder and a ResultSet parser and visualizer"
 OUTPUT_DIRECTORY       = ./docs
-CREATE_SUBDIRS         = NO
+CREATE_SUBDIRS         = YES
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
 REPEAT_BRIEF           = YES
@@ -69,8 +69,8 @@ HTML_DYNAMIC_SECTIONS  = NO
 HTML_INDEX_NUM_ENTRIES = 100
 GENERATE_DOCSET        = NO
 DOCSET_FEEDNAME        = "Your Docset Feedname"
-DOCSET_BUNDLE_ID       = com.yourcompany.yourproject
-DOCSET_PUBLISHER_ID    = com.yourcompany
+DOCSET_BUNDLE_ID       = kdesp73.databridge
+DOCSET_PUBLISHER_ID    = kdesp73
 DOCSET_PUBLISHER_NAME  = "KDesp73"
 GENERATE_HTMLHELP      = NO
 GENERATE_CHI           = NO

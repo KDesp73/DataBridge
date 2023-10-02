@@ -21,7 +21,7 @@ public interface DatabaseConnection {
 	/**
 	 * Executes the SQL query if it's valid (For DMLs)
 	 * @param query
-	 * @return
+	 * @return int Number of rows affected by the update
 	 */
 	int executeUpdate(String query);
 

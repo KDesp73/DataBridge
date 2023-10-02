@@ -34,6 +34,8 @@ public class MSAccessConnection implements DatabaseConnection {
 
 	/**
 	 * Executes the SQL query if it's valid (For DMLs)
+	 * @param query
+	 * @return int The number of rows affected
 	 */
 	@Override
 	public int executeUpdate(String query) {
@@ -79,9 +81,7 @@ public class MSAccessConnection implements DatabaseConnection {
 		try (Statement statement = connection.createStatement()) {
 			if (query.toLowerCase().contains("create") ||
 					query.toLowerCase().contains("alter") ||
-					query.toLowerCase().contains("drop") ||
-					query.toLowerCase().contains("rename") ||
-					query.toLowerCase().contains("truncate")) {
+					query.toLowerCase().contains("drop")) {
 				statement.execute(query);
 				System.out.println("DDL statement executed successfully.");
 			} else {
