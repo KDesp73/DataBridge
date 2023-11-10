@@ -149,7 +149,7 @@ rp.printTable(table);
 ```xml
 <dependency>
 	<groupId>kdesp73</groupId>
-	<artifactId>databridge</artifactId>
+	<artifactId>DataBridge</artifactId>
 	<version>2.0.7</version>
 </dependency>
 ```
