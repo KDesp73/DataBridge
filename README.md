@@ -18,9 +18,8 @@ More soon to be added
 ## Example Usage
 
 ### Create your own connector
+
 <div class="mockup-code">
-
-
 ```java
 public class PostgresConnection implements DatabaseConnection{
 	// Implement the necessary methods
@@ -47,8 +46,8 @@ public class PostgresConnection implements DatabaseConnection{
 
 }
 ```
-
 </div>
+
 
 *See the library's DatabaseConnections for help*
 
