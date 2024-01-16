@@ -19,8 +19,6 @@ More soon to be added
 
 ### Create your own connector
 
-<div class="mockup-code">
-
 ```java
 public class PostgresConnection implements DatabaseConnection{
 	// Implement the necessary methods
@@ -47,14 +45,10 @@ public class PostgresConnection implements DatabaseConnection{
 
 }
 ```
-</div>
-
 
 *See the library's DatabaseConnections for help*
 
 ### QueryBuilder
-
-<div class="mockup-code">
 
 ```java
 public static void main(String[] args) {
@@ -113,8 +107,6 @@ public static void main(String[] args) {
 	}
 }
 ```
-
-</div>
 
 ### ResultProcessor
 
