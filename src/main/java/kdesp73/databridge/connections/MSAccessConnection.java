@@ -13,7 +13,7 @@ public class MSAccessConnection implements DatabaseConnection {
 	/**
 	 * Creates the connection with the database
 	 *
-	 * @param url      driver connector (jdbc:ucanaccess://) + path to database
+	 * @param url driver connector (jdbc:ucanaccess://) + path to database
 	 * @param username
 	 * @param password
 	 */

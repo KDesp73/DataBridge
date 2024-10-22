@@ -4,47 +4,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QueryBuilder {
-    private StringBuilder query;
-    private List<String> columns;
-    private String table;
-    private String condition;
-    private List<String> values;
+	private StringBuilder query;
+	private List<String> columns;
+	private String table;
+	private String condition;
+	private List<String> values;
 
 	public QueryBuilder() {
 		initializeQuery();
-        columns = new ArrayList<>();
-        values = new ArrayList<>();
-    }
+		columns = new ArrayList<>();
+		values = new ArrayList<>();
+	}
 
-    private void initializeQuery() {
-        query = new StringBuilder();
-    }
+	private void initializeQuery() {
+		query = new StringBuilder();
+	}
 
-    /**
+	/**
 	 * Appends the SELECT operator to the query
 	 * @param columns to select
 	 * @return QueryBuilder
 	 */
-    public QueryBuilder select(String... columns) {
-        query.append("SELECT ");
-        if (columns.length == 0) {
-            query.append("*");
-        } else {
-            query.append(String.join(", ", columns));
-        }
-        return this;
-    }
+	public QueryBuilder select(String... columns) {
+		query.append("SELECT ");
+		if (columns.length == 0) {
+			query.append("*");
+		} else {
+			query.append(String.join(", ", columns));
+		}
+		return this;
+	}
 
- 	/**
+	/**
 	 * Appends the FROM operator to the query
 	 * @param table to select from
 	 * @return QueryBuilder
 	 */
 	public QueryBuilder from(String table) {
-        this.table = table;
-        query.append(" FROM ").append(table);
-        return this;
-    }
+		this.table = table;
+		query.append(" FROM ").append(table);
+		return this;
+	}
 
 	/**
 	 * Appends the WHERE operator to the query
@@ -52,10 +52,10 @@ public class QueryBuilder {
 	 * @return QueryBuilder
 	 */
 	public QueryBuilder where(String condition) {
-        this.condition = condition;
-        query.append(" WHERE ").append(condition);
-        return this;
-    }
+		this.condition = condition;
+		query.append(" WHERE ").append(condition);
+		return this;
+	}
 
 	/**
 	 * Appends the INSERT INTO operator to the query
@@ -63,51 +63,51 @@ public class QueryBuilder {
 	 * @return QueryBuilder
 	 */
 	public QueryBuilder insertInto(String table) {
-        query.append("INSERT INTO ").append(table);
-        return this;
-    }
+		query.append("INSERT INTO ").append(table);
+		return this;
+	}
 
 	/**
 	 * Appends multiple columns inside parenthesis
 	 * @param columns to add inside parenthesis
 	 * @return QueryBuilder
 	 */
-    public QueryBuilder columns(String... columns) {
-        this.columns.clear();
-        for (String column : columns) {
-            this.columns.add(column);
-        }
-        query.append(" (").append(String.join(", ", columns)).append(")");
-        return this;
-    }
+	public QueryBuilder columns(String... columns) {
+		this.columns.clear();
+		for (String column : columns) {
+			this.columns.add(column);
+		}
+		query.append(" (").append(String.join(", ", columns)).append(")");
+		return this;
+	}
 
 	/**
 	 * Appends multiple values inside parenthesis
 	 * @param values to add inside parenthesis
 	 * @return QueryBuilder
 	 */
-    public QueryBuilder values(Object... values) {
-        this.values.clear();
-        for (Object value : values) {
+	public QueryBuilder values(Object... values) {
+		this.values.clear();
+		for (Object value : values) {
 			if(value instanceof String)
 				this.values.add("'" + value + "'");
 			else
 				this.values.add(value.toString());
 		}
-        query.append(" VALUES (").append(String.join(", ", this.values)).append(")");
-        return this;
-    }
+		query.append(" VALUES (").append(String.join(", ", this.values)).append(")");
+		return this;
+	}
 
-    /**
+	/**
 	 * Appends the UPDATE operator to the query
 	 * @param table to perform the update
 	 * @return QueryBuilder
 	 */
-    public QueryBuilder update(String table) {
-        this.table = table;
-        query.append("UPDATE ").append(table);
-        return this;
-    }
+	public QueryBuilder update(String table) {
+		this.table = table;
+		query.append("UPDATE ").append(table);
+		return this;
+	}
 
 	/**
 	 * Appends the SET operator along with a column and a value
@@ -120,8 +120,8 @@ public class QueryBuilder {
 			query.append(" SET ").append(column).append(" = '").append(value).append("'");
 		else
 			query.append(" SET ").append(column).append(" = ").append(value);
-        return this;
-    }
+		return this;
+	}
 
 	/**
 	 * Appends the DELETE FROM operator
@@ -129,22 +129,22 @@ public class QueryBuilder {
 	 * @return QueryBuilder
 	 */
 	public QueryBuilder deleteFrom(String table) {
-        this.table = table;
-        query.append("DELETE FROM ").append(table);
-        return this;
-    }
+		this.table = table;
+		query.append("DELETE FROM ").append(table);
+		return this;
+	}
 
 	/**
 	 * Build the SQL query
 	 * @return String
 	 */
 	public String build() {
-        if (query == null) {
-            throw new IllegalStateException("Incomplete query construction.");
-        }
+		if (query == null) {
+			throw new IllegalStateException("Incomplete query construction.");
+		}
 
 		String queryString = query.toString();
 		initializeQuery();
 		return queryString;
-    }
+	}
 }
