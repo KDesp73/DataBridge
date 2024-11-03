@@ -149,29 +149,28 @@ public class PostgresConnection implements DatabaseConnection {
 		}
 	}
 
-	public void callProcedure(String functionName, Object... params) {
-		StringBuilder sql = new StringBuilder("{ call ").append(functionName).append("(");
+	public void callProcedure(String procedureName, Object... params) {
+		StringBuilder sql = new StringBuilder("CALL ").append(procedureName).append("(");
 
-		// Add commas for each parameter placeholder, if any
 		for (int i = 0; i < params.length; i++) {
 			sql.append("?");
 			if (i < params.length - 1) {
 				sql.append(", ");
 			}
 		}
+		sql.append(")");
 
-		sql.append(") }");
-
-		try (CallableStatement stmt = this.connection.prepareCall(sql.toString())) {
-			// Set each parameter
+		try (CallableStatement stmt = connection.prepareCall(sql.toString())) {
 			for (int i = 0; i < params.length; i++) {
-				stmt.setObject(i + 1, params[i]);  // Parameters start from index 1
+				stmt.setObject(i + 1, params[i]);  // Parameters start from index 1 in JDBC
 			}
 
 			stmt.execute();
 
 		} catch (SQLException e) {
+			System.err.println("Error executing procedure: " + procedureName);
 			e.printStackTrace();
 		}
 	}
+
 }
