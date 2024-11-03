@@ -107,11 +107,7 @@ public class PostgresConnection implements DatabaseConnection {
 	}
 
 	public Object callFunction(String functionName, int returnType, Object... params) {
-		StringBuilder sql = new StringBuilder("{ ? = call ").append(functionName);
-
-		if (params.length > 0) {
-			sql.append("(");
-		}
+		StringBuilder sql = new StringBuilder("{ ? = call ").append(functionName).append("(");
 
 		// Add commas for each parameter placeholder, if any
 		for (int i = 0; i < params.length; i++) {
@@ -121,11 +117,7 @@ public class PostgresConnection implements DatabaseConnection {
 			}
 		}
 
-		if (params.length > 0) {
-			sql.append(")");
-		}
-
-		sql.append("}");
+		sql.append(") }");
 
 		try (CallableStatement stmt = this.connection.prepareCall(sql.toString())) {
 			// Register the return parameter with the specified return type
