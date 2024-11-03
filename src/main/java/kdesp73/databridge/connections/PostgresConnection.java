@@ -149,6 +149,35 @@ public class PostgresConnection implements DatabaseConnection {
 		}
 	}
 
+	public ResultSet callFunction(String functionName, Object... params) {
+		ResultSet rs = null;
+		StringBuilder sql = new StringBuilder("SELECT * FROM ").append(functionName).append("(");
+
+		// Append placeholders for parameters
+		for (int i = 0; i < params.length; i++) {
+			sql.append("?");
+			if (i < params.length - 1) {
+				sql.append(", ");
+			}
+		}
+		sql.append(")");
+
+		PreparedStatement stmt = null; // Declare PreparedStatement outside the try-with-resources
+		try {
+			stmt = connection.prepareStatement(sql.toString());
+			// Set the parameters
+			for (int i = 0; i < params.length; i++) {
+				stmt.setObject(i + 1, params[i]); // Parameters start from index 1 in JDBC
+			}
+
+			rs = stmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return rs; // Note: The caller is responsible for closing the ResultSet and PreparedStatement
+	}
+
 	public void callProcedure(String procedureName, Object... params) {
 		StringBuilder sql = new StringBuilder("CALL ").append(procedureName).append("(");
 
