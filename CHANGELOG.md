@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Added SQLogger
 
+### Changed
+
+- updated version to 2.0.10
+
 
 ## [2.0.9] - 2024-11-03 
 
