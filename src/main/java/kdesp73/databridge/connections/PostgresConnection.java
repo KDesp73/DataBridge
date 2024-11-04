@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import kdesp73.databridge.helpers.SQLogger;
 
 public class PostgresConnection implements DatabaseConnection {
 
@@ -30,7 +31,7 @@ public class PostgresConnection implements DatabaseConnection {
 			Class.forName("org.postgresql.Driver");
 			connection = DriverManager.getConnection(url, username, password);
 		} catch (SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Connection to Postgres Database failed", e);
 			throw new RuntimeException("Failed to connect to PostgreSQL database.");
 		}
 	}
@@ -48,7 +49,7 @@ public class PostgresConnection implements DatabaseConnection {
 				throw new IllegalArgumentException("Only INSERT, UPDATE, and DELETE statements are allowed.");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Error execuring query", e);
 			throw new RuntimeException("Error executing query: " + e.getMessage());
 		}
 	}
@@ -65,7 +66,7 @@ public class PostgresConnection implements DatabaseConnection {
 				throw new IllegalArgumentException("Only SELECT statements are allowed.");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Failed executing query", e);
 			throw new RuntimeException("Error executing query: " + e.getMessage());
 		}
 	}
@@ -86,7 +87,7 @@ public class PostgresConnection implements DatabaseConnection {
 				throw new IllegalArgumentException("Only CREATE, ALTER, DROP and SET statements are allowed.");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Error executing DDL statement", e);
 			throw new RuntimeException("Error executing DDL statement: " + e.getMessage());
 		}
 	}
@@ -101,7 +102,7 @@ public class PostgresConnection implements DatabaseConnection {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Failed closing database connectio", e);
 			throw new RuntimeException("Error closing database connection: " + e.getMessage());
 		}
 	}
@@ -144,7 +145,7 @@ public class PostgresConnection implements DatabaseConnection {
 					stmt.getObject(1);
 			};
 		} catch (SQLException e) {
-			e.printStackTrace();
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Failed calling function " + functionName, e);
 			return null;
 		}
 	}
@@ -172,7 +173,8 @@ public class PostgresConnection implements DatabaseConnection {
 
 			rs = stmt.executeQuery();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Failed calling function " + functionName, e);
+			return null;
 		}
 
 		return rs; // Note: The caller is responsible for closing the ResultSet and PreparedStatement
@@ -197,8 +199,7 @@ public class PostgresConnection implements DatabaseConnection {
 			stmt.execute();
 
 		} catch (SQLException e) {
-			System.err.println("Error executing procedure: " + procedureName);
-			e.printStackTrace();
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Failed calling procedure " + procedureName, e);
 		}
 	}
 
