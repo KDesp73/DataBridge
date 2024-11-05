@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.sql.Types;
 import kdesp73.databridge.helpers.SQLogger;
 
-public class PostgresConnection implements AutoCloseable, DatabaseConnection {
+public class PostgresConnection implements DatabaseConnection {
 
 	public Connection connection;
 

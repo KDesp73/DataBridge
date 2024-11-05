@@ -2,7 +2,7 @@ package kdesp73.databridge.connections;
 
 import java.sql.ResultSet;
 
-public interface DatabaseConnection {
+public interface DatabaseConnection extends AutoCloseable{
 	/**
 	 * Creates the connection with the database
 	 * @param url driver connector + path to database
