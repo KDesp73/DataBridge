@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
-- made PostgresConnection implement Autocloseable
+- DatabaseConnection extends AutoCloseable
 
 
 ## [2.0.10] - 2024-11-04 
