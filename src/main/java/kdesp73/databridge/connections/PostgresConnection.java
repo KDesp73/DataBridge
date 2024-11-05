@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.sql.Types;
 import kdesp73.databridge.helpers.SQLogger;
 
-public class PostgresConnection implements DatabaseConnection {
+public class PostgresConnection implements AutoCloseable, DatabaseConnection {
 
 	public Connection connection;
 
@@ -102,7 +102,7 @@ public class PostgresConnection implements DatabaseConnection {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Failed closing database connectio", e);
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Failed closing database connection", e);
 			throw new RuntimeException("Error closing database connection: " + e.getMessage());
 		}
 	}
@@ -146,7 +146,7 @@ public class PostgresConnection implements DatabaseConnection {
 			};
 		} catch (SQLException e) {
 			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Failed calling function " + functionName, e);
-			return null;
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 
@@ -174,7 +174,7 @@ public class PostgresConnection implements DatabaseConnection {
 			rs = stmt.executeQuery();
 		} catch (SQLException e) {
 			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Failed calling function " + functionName, e);
-			return null;
+			throw new RuntimeException(e.getMessage());
 		}
 
 		return rs; // Note: The caller is responsible for closing the ResultSet and PreparedStatement
@@ -200,6 +200,7 @@ public class PostgresConnection implements DatabaseConnection {
 
 		} catch (SQLException e) {
 			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Failed calling procedure " + procedureName, e);
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 

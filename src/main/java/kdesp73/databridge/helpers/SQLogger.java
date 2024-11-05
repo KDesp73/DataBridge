@@ -119,11 +119,11 @@ public class SQLogger {
 		}
 
 		if (logToStderr()) {
-			System.err.println(msg);
+			System.err.println(msg + "\n");
 		}
 
 		if (logToFile()) {
-			appendToFile(msg + "\n");
+			appendToFile(msg + "\n\n");
 		}
 	}
 
