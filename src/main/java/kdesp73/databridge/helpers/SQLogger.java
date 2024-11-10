@@ -11,157 +11,134 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-/**
- *
- * @author kdesp73
- */
 public class SQLogger {
 
-	private static String VERSION = "0.0.1";
+	private static final String VERSION = "0.0.2";
+	private static final String LOG_FILE = "sqlogger.log";
+	private static SQLogger instance;
+
+	private LogLevel logLevel;
+	private LogType logType;
 
 	public enum LogLevel {
 		NONE, INFO, WARN, ERRO, ALL
-	};
+	}
 
 	public enum LogType {
 		FILE, STDERR, ALL
-	};
+	}
 
 	public enum SQLOperation {
-		INSERT, UPDATE, DELETE, SELECT, CREATE, DROP
-	};
+		INSERT, UPDATE, DELETE, SELECT, CREATE, DROP, ALTER, TRUNCATE, RENAME,
+		GRANT, REVOKE, MERGE, EXPLAIN, WITH, LOCK, SAVEPOINT, ROLLBACK, COMMIT
+	}
 
-	private static String LOG_FILE = "sqlogger.log";
-	private LogLevel logLevel;
-	private LogType logType;
-	private static SQLogger instance;
-
-	public SQLogger(LogLevel logLevel, LogType logType) {
+	private SQLogger(LogLevel logLevel, LogType logType) {
 		this.logLevel = logLevel;
 		this.logType = logType;
 	}
 
-	public SQLogger(LogLevel logLevel) {
-		this.logLevel = logLevel;
-		this.logType = LogType.ALL;
-	}
-
 	public static SQLogger getLogger(LogLevel logLevel, LogType logType) {
-		SQLogger.instance = new SQLogger(logLevel, logType);
-
-		return SQLogger.instance;
+		if (instance == null) {
+			instance = new SQLogger(logLevel, logType);
+		}
+		return instance;
 	}
 
 	public static SQLogger getLogger(LogLevel logLevel) {
-		SQLogger.instance = new SQLogger(
-			logLevel,
-			(SQLogger.instance == null)
-				? SQLogger.LogType.ALL
-				: SQLogger.instance.logType
-		);
-
-		return SQLogger.instance;
+		if (instance == null) {
+			instance = new SQLogger(logLevel, LogType.ALL);
+		}
+		return instance;
 	}
 
 	public static SQLogger getLogger() {
-		if (SQLogger.instance == null) {
-			SQLogger.instance = new SQLogger(LogLevel.ALL, LogType.ALL);
+		if (instance == null) {
+			instance = new SQLogger(LogLevel.ALL, LogType.ALL);
 		}
-
-		return SQLogger.instance;
+		return instance;
 	}
 
 	public static void printSelf() {
-		var logger = SQLogger.getLogger();
-		System.out.println("[SQLogger v" + SQLogger.VERSION + "]");
+		SQLogger logger = getLogger();
+		System.out.println("[SQLogger v" + VERSION + "]");
 		System.out.println("  LogLevel: " + logger.logLevel);
 		System.out.println("  LogType: " + logger.logType);
-		System.out.println("  LogFile: " + SQLogger.LOG_FILE);
+		System.out.println("  LogFile: " + LOG_FILE);
 	}
 
-	private boolean logToStderr() {
+	private boolean shouldLog(LogLevel level) {
+		return this.logLevel.ordinal() <= level.ordinal();
+	}
+
+	private boolean shouldLogToStderr() {
 		return this.logType == LogType.STDERR || this.logType == LogType.ALL;
 	}
 
-	private boolean logToFile() {
+	private boolean shouldLogToFile() {
 		return this.logType == LogType.FILE || this.logType == LogType.ALL;
 	}
 
 	private static String getCurrentTimestamp() {
 		Instant now = Instant.now();
-
 		LocalDateTime dateTime = LocalDateTime.ofInstant(now, ZoneId.systemDefault());
-
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		return dateTime.format(formatter);
 	}
 
 	private boolean appendToFile(String msg) {
 		try {
-			File f = new File(SQLogger.LOG_FILE);
-			if (!f.exists()) {
-				Path newFilePath = Paths.get(SQLogger.LOG_FILE);
-				Files.createFile(newFilePath);
-			}
-
-			Files.write(Paths.get(SQLogger.LOG_FILE),
-				msg.getBytes(),
-				StandardOpenOption.APPEND);
+			Files.write(Paths.get(LOG_FILE),
+				msg.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 			return true;
 		} catch (IOException ex) {
+			System.err.println("Failed to write to log file: " + ex.getMessage());
 			return false;
 		}
 	}
 
-	public void log(String msg) {
-		if (this.logLevel == LogLevel.NONE) {
-			return;
-		}
-
-		if (logToStderr()) {
-			System.err.println(msg + "\n");
-		}
-
-		if (logToFile()) {
-			appendToFile(msg + "\n\n");
-		}
-	}
-
 	private String formatEntry(String msg, Exception ex) {
-		return "[ERRO " + SQLogger.getCurrentTimestamp() + "] " + msg + " ( " + ex.getMessage() + " )";
-	}
-
-	public void log(String msg, Exception ex) {
-		if (this.logLevel.ordinal() < LogLevel.ERRO.ordinal()) {
-			return;
-		}
-
-		log(formatEntry(msg, ex));
+		return String.format("[ERRO %s] %s ( %s )", getCurrentTimestamp(), msg, ex.getMessage());
 	}
 
 	private String formatEntry(String msg, SQLOperation op, Object obj) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("[SQL  ");
-		sb.append(SQLogger.getCurrentTimestamp());
-		sb.append("] ");
-		sb.append(op);
+		sb.append(String.format("[SQL  %s] %s", getCurrentTimestamp(), op));
 		if (obj != null) {
-			sb.append(" for ");
-			sb.append(obj.toString());
+			sb.append(" for ").append(obj);
 		}
 		if (msg != null) {
-			sb.append(" ( ");
-			sb.append(msg);
-			sb.append(" )");
+			sb.append(" ( ").append(msg).append(" )");
 		}
 		return sb.toString();
 	}
 
-	public void logSQL(String msg, SQLOperation op, Object obj) {
+	public void log(LogLevel lvl, String msg) {
+		if (!shouldLog(lvl)) {
+			return;
+		}
+		if (shouldLogToStderr()) {
+			System.err.println(msg);
+		}
+		if (shouldLogToFile()) {
+			appendToFile(msg + "\n\n");
+		}
+	}
+
+	public void log(LogLevel lvl, String msg, Exception ex) {
+		if (!shouldLog(lvl)) {
+			return;
+		}
+		log(lvl, formatEntry(msg, ex));
+	}
+
+	public void logSQL(LogLevel lvl, String msg, SQLOperation op, Object obj) {
+		if (!shouldLog(lvl)) {
+			return;
+		}
 		if (op == null) {
 			return;
 		}
-
-		log(formatEntry(msg, op, obj));
+		log(lvl, formatEntry(msg, op, obj));
 	}
 }
