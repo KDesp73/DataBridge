@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import kdesp73.databridge.helpers.SQLogger.LogLevel;
+import kdesp73.databridge.helpers.SQLogger.LogType;
 
 public class Adapter {
 
@@ -35,7 +37,7 @@ public class Adapter {
                     
                     field.set(object, value);
                 } catch (SQLException e) {
-					SQLogger.getLogger().log(null, e);
+					SQLogger.getLogger(LogLevel.ERRO, LogType.FILE).log("Field " + fieldName + "", e);
 				}
             }
 

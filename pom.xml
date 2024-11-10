@@ -25,7 +25,7 @@
 
 	<dependencies>
 		<!-- Drivers -->
-		<dependency>
+<!--		<dependency>
 			<groupId>net.sf.ucanaccess</groupId>
 			<artifactId>ucanaccess</artifactId>
 			<version>5.0.1</version>
@@ -36,15 +36,17 @@
 			<version>3.43.0.0</version>
 		</dependency>
 		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.7.4</version>
+		</dependency>-->
+		
+		
+		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
 			<scope>test</scope>
 			<version>2.44.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>42.7.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.opera</groupId>

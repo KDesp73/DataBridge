@@ -18,13 +18,7 @@ public class SchemaManager {
 
 	public void setup() throws SQLException {
 		try {
-			connection.execute("""
-							   CREATE TABLE IF NOT EXISTS schema_changelog (
-							       version_number INT PRIMARY KEY,
-							       migration_description VARCHAR(255),
-							       applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-							       checksum CHAR(32)
-							   );""");
+			connection.execute("CREATE TABLE IF NOT EXISTS schema_changelog (version_number INT PRIMARY KEY,migration_description VARCHAR(255), applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,checksum CHAR(32));");
 		} catch (SQLException ex) {
 			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Failed creating schema_changelog table", ex);
 			throw new SQLException(ex);

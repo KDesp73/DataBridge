@@ -26,7 +26,7 @@ public class SQLiteConnection implements DatabaseConnection {
 	 */
 	@Override
 	public void connect(String url, String username, String password) throws SQLException {
-		if (!url.contains("jdbc:sqlite://")) {
+		if (!"jdbc:sqlite::memory:".equals(url) && !url.contains("jdbc:sqlite://")) {
 			url = "jdbc:sqlite://" + url;
 		}
 		try {

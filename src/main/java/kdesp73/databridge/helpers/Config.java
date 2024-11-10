@@ -104,6 +104,7 @@ public class Config {
 
 	public LogLevel getLogLevel() {
 		String level = getString("log.level");
+		if(level == null) return LogLevel.ALL;
 		try {
 			return LogLevel.valueOf(level);
 		} catch (IllegalArgumentException e) {
