@@ -33,9 +33,10 @@ public interface DatabaseConnection extends AutoCloseable {
     /**
      * Executes a DDL SQL query (e.g., CREATE, ALTER, DROP).
      * @param query the SQL query string.
+	 * @return 
      * @throws SQLException if a database access error occurs or the query is invalid.
      */
-    void execute(String query) throws SQLException;
+    boolean execute(String query) throws SQLException;
 
     /**
      * Closes the database connection.

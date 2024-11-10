@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import kdesp73.databridge.connections.DatabaseConnection;
+import kdesp73.databridge.connections.PostgresConnection;
 import kdesp73.databridge.helpers.SQLogger.LogLevel;
 
 public class Config {
@@ -88,8 +90,16 @@ public class Config {
 		return getString("db.password");
 	}
 
-	public int getDbRetry() {
-		return getInt("db.retry");
+	public boolean getDbRetry() {
+		return getBoolean("db.retry");
+	}
+	
+	public int getDbRetryTimes() {
+		return getInt("db.retry.times");
+	}
+	
+	public int getDbRetryDelay() {
+		return getInt("db.retry.delay");
 	}
 
 	public LogLevel getLogLevel() {
@@ -124,7 +134,9 @@ public class Config {
 		defaultProperties.setProperty("db.url", "jdbc:postgresql://localhost:5432/mydatabase");
 		defaultProperties.setProperty("db.user", "myuser");
 		defaultProperties.setProperty("db.password", "mypassword");
-		defaultProperties.setProperty("db.retry", "3");
+		defaultProperties.setProperty("db.retry", "true");
+		defaultProperties.setProperty("db.retry.times", "3");
+		defaultProperties.setProperty("db.retry.delay", "1000");
 
 		defaultProperties.setProperty("log.level", "INFO");
 		defaultProperties.setProperty("log.file", "logs/application.log");

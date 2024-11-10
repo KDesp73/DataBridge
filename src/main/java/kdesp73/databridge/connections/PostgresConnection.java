@@ -1,17 +1,19 @@
 package kdesp73.databridge.connections;
 
 import java.sql.*;
+import kdesp73.databridge.helpers.Again;
 import kdesp73.databridge.helpers.SQLogger;
 import kdesp73.databridge.helpers.SQLogger.LogLevel;
 
 public class PostgresConnection implements DatabaseConnection {
+
 	private Connection connection;
 
 	@Override
 	public Connection get() {
 		return this.connection;
 	}
-	
+
 	@Override
 	public void connect(String url, String username, String password) throws SQLException {
 		if (!url.startsWith("jdbc:postgresql://")) {
@@ -28,22 +30,29 @@ public class PostgresConnection implements DatabaseConnection {
 
 	@Override
 	public int executeUpdate(String query) throws SQLException {
-		try (PreparedStatement statement = connection.prepareStatement(query)) {
-			return statement.executeUpdate();
-		}
+		return Again.retryWithDelay(() -> {
+			try (PreparedStatement statement = connection.prepareStatement(query)) {
+				return statement.executeUpdate();
+			}
+		}, Again.retries(), Again.delay());
+
 	}
 
 	@Override
 	public ResultSet executeQuery(String query) throws SQLException {
-		PreparedStatement statement = connection.prepareStatement(query);
-		return statement.executeQuery();
+		return Again.retryWithDelay(() -> {
+			PreparedStatement statement = connection.prepareStatement(query);
+			return statement.executeQuery();
+		}, Again.retries(), Again.delay());
 	}
 
 	@Override
-	public void execute(String query) throws SQLException {
-		try (Statement statement = connection.createStatement()) {
-			statement.execute(query);
-		}
+	public boolean execute(String query) throws SQLException {
+		return Again.retryWithDelay(() -> {
+			try (Statement statement = connection.createStatement()) {
+				return statement.execute(query);
+			}
+		}, Again.retries(), Again.delay());
 	}
 
 	@Override
@@ -55,11 +64,11 @@ public class PostgresConnection implements DatabaseConnection {
 
 	/**
 	 * Calls a Postgresql function that returns a table / records
- 	 * 
-	 * @param functionName 
+	 *
+	 * @param functionName
 	 * @param params
 	 * @return ResultSet NOTE: caller is responsible for closing the ResultSet
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public ResultSet callFunction(String functionName, Object... params) throws SQLException {
 		validateConnection();
@@ -87,12 +96,12 @@ public class PostgresConnection implements DatabaseConnection {
 
 	/**
 	 * Calls a Postgresql function that returns a value
-	 * 
+	 *
 	 * @param functionName
 	 * @param returnType
 	 * @param params
 	 * @return
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public Object callFunctionValue(String functionName, int returnType, Object... params) throws SQLException {
 		validateConnection();

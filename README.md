@@ -12,6 +12,7 @@ You can find it [here](https://kdesp73.github.io/DataBridge-Documentation)
 
 - Microsoft Access Database
 - SQLite
+- Postgresql
 
 More soon to be added
 
@@ -20,26 +21,26 @@ More soon to be added
 ### Create your own connector
 
 ```java
-public class PostgresConnection implements DatabaseConnection{
+public class MariaDBConnection implements DatabaseConnection{
 	// Implement the necessary methods
 
-	public void connect(String url, String username, String password){
+	public void connect(String url, String username, String password) throws SQLException {
 		// implementation
 	}
 
-	public ResultSet executeQuery(String query){
+	public ResultSet executeQuery(String query) throws SQLException {
 		// implementation
 	}
 
-	public int executeUpdate(String query){
+	public int executeUpdate(String query) throws SQLException {
 		// implementation
 	}
 
-	public void execute(String query){
+	public void execute(String query) throws SQLException {
 		// implementation
 	}
 
-	public void close(){
+	public void close() throws SQLException {
 		// implementation
 	}
 
