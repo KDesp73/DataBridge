@@ -58,13 +58,20 @@ public class SQLogger {
 		}
 		return instance;
 	}
+	
+	private static String logFile() {
+		Config c = Config.getInstance();
+		if(c == null || c.getLogFile() == null ||c.getLogFile().isBlank()) return LOG_FILE;
+		
+		return c.getLogFile();
+	}
 
 	public static void printSelf() {
 		SQLogger logger = getLogger();
 		System.out.println("[SQLogger v" + VERSION + "]");
 		System.out.println("  LogLevel: " + logger.logLevel);
 		System.out.println("  LogType: " + logger.logType);
-		System.out.println("  LogFile: " + LOG_FILE);
+		System.out.println("  LogFile: " + logFile());
 	}
 
 	private boolean shouldLog(LogLevel level) {
@@ -88,7 +95,7 @@ public class SQLogger {
 
 	private boolean appendToFile(String msg) {
 		try {
-			Files.write(Paths.get(LOG_FILE),
+			Files.write(Paths.get(logFile()),
 				msg.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 			return true;
 		} catch (IOException ex) {

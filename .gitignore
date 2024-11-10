@@ -10,3 +10,4 @@ docs/
 .changelog
 .idea
 src/main/java/Main.java
+config.properties
