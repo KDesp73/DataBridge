@@ -5,6 +5,11 @@ import java.sql.*;
 public class MSAccessConnection implements DatabaseConnection {
     private Connection connection;
 
+	@Override
+	public Connection get() {
+		return this.connection;
+	}
+	
     /**
      * Creates the connection with the database.
      *

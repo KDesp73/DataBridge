@@ -8,6 +8,11 @@ public class PostgresConnection implements DatabaseConnection {
 	private Connection connection;
 
 	@Override
+	public Connection get() {
+		return this.connection;
+	}
+	
+	@Override
 	public void connect(String url, String username, String password) throws SQLException {
 		if (!url.startsWith("jdbc:postgresql://")) {
 			url = "jdbc:postgresql://" + url;

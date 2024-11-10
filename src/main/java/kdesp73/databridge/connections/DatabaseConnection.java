@@ -1,5 +1,6 @@
 package kdesp73.databridge.connections;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -42,4 +43,6 @@ public interface DatabaseConnection extends AutoCloseable {
      */
 	@Override
     void close() throws SQLException;
+	
+	Connection get();
 }

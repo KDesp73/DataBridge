@@ -10,6 +10,11 @@ import java.sql.Statement;
 public class SQLiteConnection implements DatabaseConnection {
     private Connection connection;
 
+	@Override
+	public Connection get() {
+		return this.connection;
+	}
+	
     /**
      * Establishes a connection to the SQLite database.
      *
