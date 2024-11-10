@@ -19,6 +19,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Updated SQLogger
 - Updated version to 2.0.12
 
+### Removed
+
+- Removed jdbc drivers from pom.xml
+
 ### Fixed
 
 - More robust connections
