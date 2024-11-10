@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultMapper {
+public class Adapter {
 
     /**
      * Maps a ResultSet to a List of objects of the specified class type.
@@ -18,7 +18,7 @@ public class ResultMapper {
      * @throws IllegalAccessException If there is an issue accessing class fields.
      * @throws InstantiationException If the class cannot be instantiated.
      */
-    public static <T> List<T> mapResultSet(ResultSet resultSet, Class<T> clazz) throws SQLException, IllegalAccessException, InstantiationException {
+    public static <T> List<T> load(ResultSet resultSet, Class<T> clazz) throws SQLException, IllegalAccessException, InstantiationException {
         List<T> resultList = new ArrayList<>();
 
         Field[] fields = clazz.getDeclaredFields();
@@ -35,7 +35,7 @@ public class ResultMapper {
                     
                     field.set(object, value);
                 } catch (SQLException e) {
-					
+					SQLogger.getLogger().log(null, e);
 				}
             }
 
