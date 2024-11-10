@@ -93,36 +93,22 @@ public class Config {
 	public boolean getDbRetry() {
 		return getBoolean("db.retry");
 	}
-	
+
 	public int getDbRetryTimes() {
 		return getInt("db.retry.times");
 	}
-	
+
 	public int getDbRetryDelay() {
 		return getInt("db.retry.delay");
 	}
 
 	public LogLevel getLogLevel() {
-		return switch (getString("log.level")) {
-			case "NONE" -> {
-				yield LogLevel.NONE;
-			}
-			case "INFO" -> {
-				yield LogLevel.INFO;
-			}
-			case "WARN" -> {
-				yield LogLevel.WARN;
-			}
-			case "ERRO" -> {
-				yield LogLevel.ERRO;
-			}
-			case "ALL" -> {
-				yield LogLevel.ALL;
-			}
-			default -> {
-				yield LogLevel.ALL;
-			}
-		};
+		String level = getString("log.level");
+		try {
+			return LogLevel.valueOf(level);
+		} catch (IllegalArgumentException e) {
+			return LogLevel.ALL; // Default value
+		}
 	}
 
 	public String getLogFile() {

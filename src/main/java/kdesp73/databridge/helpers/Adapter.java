@@ -29,7 +29,7 @@ public class Adapter {
             for (Field field : fields) {
                 String fieldName = field.getName();
                 try {
-                    Object value = resultSet.getObject(fieldName);
+                    Object value = resultSet.getObject(fieldName); // TODO: also work with snake to camel case
                     
                     field.setAccessible(true);
                     
