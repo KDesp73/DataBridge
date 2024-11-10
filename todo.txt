@@ -1,9 +1,9 @@
 TODO: Connection Pooling
 TODO: Schema Management
 TODO: Batch Processing
-TODO: remove drivers from pom.xml
-TODO: update README.md
 DONE: TransactionManager
 DONE: Result Mapping
 DONE: Config Management
 DONE: Error Handling and Retry Mechanism
+DONE: remove drivers from pom.xml
+DONE: update README.md
