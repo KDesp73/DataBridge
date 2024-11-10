@@ -8,105 +8,61 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SQLiteConnection implements DatabaseConnection {
-	private Connection connection;
+    private Connection connection;
 
-	/**
-	 * Creates the connection with the database
-	 * @param url driver connector (jdbc:sqlite://) + path to database
-	 * @param username
-	 * @param password
-	 */
-	@Override
-	public void connect(String url, String username, String password) {
-		if(!url.contains("jdbc:sqlite://")){
-			url = "jdbc:sqlite://" + url;
-		}
+    /**
+     * Establishes a connection to the SQLite database.
+     *
+     * @param url      Driver URL (jdbc:sqlite://) + path to database.
+     * @param username Unused for SQLite.
+     * @param password Unused for SQLite.
+     */
+    @Override
+    public void connect(String url, String username, String password) throws SQLException {
+        if (!url.contains("jdbc:sqlite://")) {
+            url = "jdbc:sqlite://" + url;
+        }
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection(url);
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("SQLite driver not found. Check https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc/3.47.0.0 to get the latest version", e);
+        }
+    }
 
-		try {
-			Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection(url, username, password);
-		} catch (SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Failed to connect to SQLite database.");
-		}
-	}
+    @Override
+    public int executeUpdate(String query) throws SQLException {
+        if (!query.toLowerCase().matches("^(insert|update|delete).*")) {
+            throw new IllegalArgumentException("Only INSERT, UPDATE, and DELETE statements are allowed.");
+        }
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            return statement.executeUpdate();
+        }
+    }
 
-	/**
-	 * Executes the SQL query if it's valid (For INSERT, UPDATE, DELETE etc)
-	 */
-	@Override
-	public int executeUpdate(String query) {
-		try (PreparedStatement statement = connection.prepareStatement(query)) {
-			if (query.toLowerCase().contains("insert") || query.toLowerCase().contains("update")
-					|| query.toLowerCase().contains("delete")) {
-				return statement.executeUpdate();
-			} else {
-				throw new IllegalArgumentException("Only INSERT, UPDATE, and DELETE statements are allowed.");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			// You can handle SQLException differently based on your needs.
-			throw new RuntimeException("Error executing query: " + e.getMessage());
-		}
-	}
+    @Override
+    public ResultSet executeQuery(String query) throws SQLException {
+        if (!query.toLowerCase().startsWith("select")) {
+            throw new IllegalArgumentException("Only SELECT statements are allowed.");
+        }
+        PreparedStatement statement = connection.prepareStatement(query);
+        return statement.executeQuery();
+    }
 
-	/**
-	 * Executes the SQL query if it's valid (For SELECT)
-	 *
-	 * @param query
-	 * @return ResultSet
-	 */
-	@Override
-	public ResultSet executeQuery(String query) {
-		try (PreparedStatement statement = connection.prepareStatement(query)) {
-			if (query.toLowerCase().contains("select")) {
-				return statement.executeQuery();
-			} else {
-				throw new IllegalArgumentException("Only SELECT statements are allowed.");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Error executing query: " + e.getMessage());
-		}
-	}
+    @Override
+    public void execute(String query) throws SQLException {
+        if (!query.toLowerCase().matches("^(create|alter|drop).*")) {
+            throw new IllegalArgumentException("Only CREATE, ALTER, and DROP statements are allowed.");
+        }
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(query);
+        }
+    }
 
-	/**
-	 * Executes the SQL query if it's valid (For DDLs)
-	 * @param query
-	 */
-	@Override
-	public void execute(String query) {
-		try (Statement statement = connection.createStatement()) {
-			if (query.toLowerCase().contains("create") ||
-					query.toLowerCase().contains("alter") ||
-					query.toLowerCase().contains("drop")) {
-				statement.execute(query);
-				System.out.println("DDL statement executed successfully.");
-			} else {
-				throw new IllegalArgumentException("Only CREATE, ALTER, and DROP statements are allowed.");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Error executing DDL statement: " + e.getMessage());
-		}
-	}
-	/**
-	 * Executes the SQL query if it's valid
-	 * @param query
-	 * @return ResultSet
-	 */
-	/**
-	 * Close the connection with the database
-	 */
-	@Override
-	public void close() {
-		try {
-			if (connection != null) {
-				connection.close();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Error closing database connection: " + e.getMessage());
-		}
-	}
+    @Override
+    public void close() throws SQLException {
+        if (connection != null && !connection.isClosed()) {
+            connection.close();
+        }
+    }
 }
