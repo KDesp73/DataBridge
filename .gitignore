@@ -9,3 +9,4 @@ docs/
 .project
 .changelog
 .idea
+src/main/java/Main.java
