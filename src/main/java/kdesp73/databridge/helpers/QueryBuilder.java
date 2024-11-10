@@ -1,13 +1,12 @@
 package kdesp73.databridge.helpers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class QueryBuilder {
 	private StringBuilder query;
 	private List<String> columns;
-	private String table;
-	private String condition;
 	private List<String> values;
 
 	public QueryBuilder() {
@@ -41,18 +40,16 @@ public class QueryBuilder {
 	 * @return QueryBuilder
 	 */
 	public QueryBuilder from(String table) {
-		this.table = table;
 		query.append(" FROM ").append(table);
 		return this;
 	}
 
 	/**
 	 * Appends the WHERE operator to the query
-	 * @param condition boolean sql condition
+	 * @param condition Boolean SQL condition
 	 * @return QueryBuilder
 	 */
 	public QueryBuilder where(String condition) {
-		this.condition = condition;
 		query.append(" WHERE ").append(condition);
 		return this;
 	}
@@ -74,9 +71,7 @@ public class QueryBuilder {
 	 */
 	public QueryBuilder columns(String... columns) {
 		this.columns.clear();
-		for (String column : columns) {
-			this.columns.add(column);
-		}
+		this.columns.addAll(Arrays.asList(columns));
 		query.append(" (").append(String.join(", ", columns)).append(")");
 		return this;
 	}
@@ -89,6 +84,7 @@ public class QueryBuilder {
 	public QueryBuilder values(Object... values) {
 		this.values.clear();
 		for (Object value : values) {
+			if(value == null) continue;
 			if(value instanceof String)
 				this.values.add("'" + value + "'");
 			else
@@ -104,7 +100,6 @@ public class QueryBuilder {
 	 * @return QueryBuilder
 	 */
 	public QueryBuilder update(String table) {
-		this.table = table;
 		query.append("UPDATE ").append(table);
 		return this;
 	}
@@ -129,7 +124,6 @@ public class QueryBuilder {
 	 * @return QueryBuilder
 	 */
 	public QueryBuilder deleteFrom(String table) {
-		this.table = table;
 		query.append("DELETE FROM ").append(table);
 		return this;
 	}

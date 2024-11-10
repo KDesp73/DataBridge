@@ -37,7 +37,7 @@ public class PostgresConnection implements DatabaseConnection {
 	}
 
 	/**
-	 * Executes the SQL query for INSERT, UPDATE, DELETE, etc.
+	 * Executes the SQL query for INSERT, UPDATE, DELETE.
 	 */
 	@Override
 	public int executeUpdate(String query) {
@@ -72,20 +72,12 @@ public class PostgresConnection implements DatabaseConnection {
 	}
 
 	/**
-	 * Executes DDL statements such as CREATE, ALTER, DROP
+	 * Executes any SQL statement.
 	 */
 	@Override
 	public void execute(String query) {
 		try (Statement statement = connection.createStatement()) {
-			if (query.toLowerCase().contains("create")
-				|| query.toLowerCase().contains("alter")
-				|| query.toLowerCase().contains("drop")
-				|| query.toLowerCase().contains("set")) {
-				statement.execute(query);
-				System.out.println("DDL statement executed successfully.");
-			} else {
-				throw new IllegalArgumentException("Only CREATE, ALTER, DROP and SET statements are allowed.");
-			}
+			statement.execute(query);
 		} catch (SQLException e) {
 			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Error executing DDL statement", e);
 			throw new RuntimeException("Error executing DDL statement: " + e.getMessage());
@@ -106,7 +98,7 @@ public class PostgresConnection implements DatabaseConnection {
 			throw new RuntimeException("Error closing database connection: " + e.getMessage());
 		}
 	}
-	
+
 	public ResultSet callFunction(String functionName, Object... params) {
 		ResultSet rs = null;
 		StringBuilder sql = new StringBuilder("SELECT * FROM ").append(functionName).append("(");
@@ -120,7 +112,7 @@ public class PostgresConnection implements DatabaseConnection {
 		}
 		sql.append(")");
 
-		PreparedStatement stmt = null; // Declare PreparedStatement outside the try-with-resources
+		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql.toString());
 			// Set the parameters
@@ -134,7 +126,7 @@ public class PostgresConnection implements DatabaseConnection {
 			throw new RuntimeException(e.getMessage());
 		}
 
-		return rs; // Note: The caller is responsible for closing the ResultSet and PreparedStatement
+		return rs; // NOTE: The caller is responsible for closing the ResultSet and PreparedStatement
 	}
 
 	public Object callFunctionValue(String functionName, int returnType, Object... params) {
@@ -203,5 +195,4 @@ public class PostgresConnection implements DatabaseConnection {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
-
 }
