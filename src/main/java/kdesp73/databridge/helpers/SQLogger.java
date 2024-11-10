@@ -141,4 +141,35 @@ public class SQLogger {
 		}
 		log(lvl, formatEntry(msg, op, obj));
 	}
+	
+	public void log(String msg) {
+		if (!shouldLog(Config.getInstance().getLogLevel())) {
+			return;
+		}
+		if (shouldLogToStderr()) {
+			System.err.println(msg);
+		}
+		if (shouldLogToFile()) {
+			appendToFile(msg + "\n\n");
+		}
+	}
+
+	public void log(String msg, Exception ex) {
+		LogLevel lvl = Config.getInstance().getLogLevel();
+		if (!shouldLog(lvl)) {
+			return;
+		}
+		log(lvl, formatEntry(msg, ex));
+	}
+
+	public void logSQL(String msg, SQLOperation op, Object obj) {
+		LogLevel lvl = Config.getInstance().getLogLevel();
+		if (!shouldLog(lvl)) {
+			return;
+		}
+		if (op == null) {
+			return;
+		}
+		log(lvl, formatEntry(msg, op, obj));
+	}
 }

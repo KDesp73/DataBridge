@@ -1,8 +1,8 @@
-TODO: TransactionManager
 TODO: Connection Pooling
-TODO: Result Mapping
 TODO: Error Handling and Retry Mechanism
 TODO: Schema Management
 TODO: Config Management
 TODO: Batch Processing
 TODO: remove drivers from pom.xml
+DONE: TransactionManager
+DONE: Result Mapping

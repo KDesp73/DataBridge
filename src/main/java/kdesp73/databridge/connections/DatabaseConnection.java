@@ -44,5 +44,9 @@ public interface DatabaseConnection extends AutoCloseable {
 	@Override
     void close() throws SQLException;
 	
+	/**
+	 * Returns the plain Connection instance
+	 * @return Connection 
+	 */
 	Connection get();
 }
