@@ -24,7 +24,7 @@ public class CommandPrompt {
 		this.scheman = scheman;
 	}
 
-	public String prompt(String prompt) {
+	private String prompt(String prompt) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.print(prompt);
 		String str = scanner.nextLine();
@@ -44,7 +44,7 @@ public class CommandPrompt {
 
 	}
 
-	public static void clear() {
+	private static void clear() {
 		try {
 			if (System.getProperty("os.name").contains("Windows")) {
 				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
