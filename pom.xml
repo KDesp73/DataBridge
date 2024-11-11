@@ -5,7 +5,7 @@
 
 	<groupId>kdesp73</groupId>
 	<artifactId>DataBridge</artifactId>
-	<version>2.0.12-SNAPSHOT</version>
+	<version>2.0.13-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -41,8 +41,8 @@
 			<artifactId>postgresql</artifactId>
 			<version>42.7.4</version>
 		</dependency>-->
-		
-		
+
+
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
