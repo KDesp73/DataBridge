@@ -119,6 +119,24 @@ public class SQLogger {
 		}
 		return sb.toString();
 	}
+	
+	public void log(LogLevel lvl, String fmt, Object... args) {
+		if (!shouldLog(lvl)) {
+			return;
+		}
+		
+		String msg = String.format(fmt, args);
+		
+		if (!shouldLog(Config.getInstance().getLogLevel())) {
+			return;
+		}
+		if (shouldLogToStderr()) {
+			System.err.println(msg);
+		}
+		if (shouldLogToFile()) {
+			appendToFile(msg + "\n\n");
+		}
+	}
 
 	public void log(LogLevel lvl, String msg) {
 		if (!shouldLog(lvl)) {
@@ -147,6 +165,20 @@ public class SQLogger {
 			return;
 		}
 		log(lvl, formatEntry(msg, op, obj));
+	}
+	
+	public void log(String fmt, Object... args) {
+		String msg = String.format(fmt, args);
+		
+		if (!shouldLog(Config.getInstance().getLogLevel())) {
+			return;
+		}
+		if (shouldLogToStderr()) {
+			System.err.println(msg);
+		}
+		if (shouldLogToFile()) {
+			appendToFile(msg + "\n\n");
+		}
 	}
 	
 	public void log(String msg) {

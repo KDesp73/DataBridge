@@ -12,3 +12,4 @@ docs/
 src/main/java/Main.java
 config.properties
 sync-docs.sh
+migrations
