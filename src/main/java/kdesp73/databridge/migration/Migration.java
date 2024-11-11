@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +35,7 @@ public class Migration implements Comparable {
 	private String downScript;
 	private int version;
 	private String description;
+	private String checksum;
 
 	/**
 	 * Read Migration constructor
@@ -118,6 +121,12 @@ public class Migration implements Comparable {
 			upTag, upScript,
 			downTag, downScript
 		);
+		
+		try {
+			this.checksum = Migration.generateChecksum(this.script);
+		} catch (IOException | NoSuchAlgorithmException ex) {
+			Logger.getLogger(Migration.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
 	/**
@@ -140,6 +149,11 @@ public class Migration implements Comparable {
 			upTag, upScript,
 			downTag, downScript
 		);
+		try {
+			this.checksum = Migration.generateChecksum(this.script);
+		} catch (IOException | NoSuchAlgorithmException ex) {
+			Logger.getLogger(Migration.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
 	@Override
@@ -180,6 +194,21 @@ public class Migration implements Comparable {
 		return description;
 	}
 
+	public static String generateChecksum(String script) throws IOException, NoSuchAlgorithmException {
+		byte[] fileContent = script.getBytes();
+
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		byte[] checksumBytes = md.digest(fileContent);
+
+		// Convert the byte array to a hexadecimal string
+		StringBuilder checksum = new StringBuilder();
+		for (byte b : checksumBytes) {
+			checksum.append(String.format("%02x", b));
+		}
+
+		return checksum.toString();
+	}
+	
 	@Override
 	public int compareTo(Object o) {
 		if (!(o instanceof Migration)) {

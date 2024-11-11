@@ -1,6 +1,10 @@
 package kdesp73.databridge.migration;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,16 +69,21 @@ public class Scheman {
 	public void applyMigration(int versionNumber, String migrationDescription, String migrationScript) throws SQLException {
 		SQLogger
 			.getLogger(LogLevel.INFO, SQLogger.LogType.ALL)
-			.log(Config.getInstance().getLogLevel(), "Running migration v%d (%s)", versionNumber, migrationDescription);
+			.log(Config.getInstance().getLogLevel(), "%s Running migration v%d (%s)", SQLogger.getCurrentTimestamp(), versionNumber, migrationDescription);
 
 		try (Statement statement = connection.get().createStatement()) {
 			statement.execute(migrationScript);
 		}
 
-		String insertMigration = String.format("INSERT INTO %s (%s, %s) VALUES (?, ?)", table, versionCol, descriptionCol);
+		String insertMigration = String.format("INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?)", table, versionCol, descriptionCol, checksumCol);
 		try (PreparedStatement preparedStatement = connection.get().prepareStatement(insertMigration)) {
 			preparedStatement.setInt(1, versionNumber);
 			preparedStatement.setString(2, migrationDescription);
+			try {
+				preparedStatement.setString(3, Migration.generateChecksum(migrationScript));
+			} catch (IOException | NoSuchAlgorithmException ex) {
+				Logger.getLogger(Scheman.class.getName()).log(Level.SEVERE, null, ex);
+			}
 			preparedStatement.executeUpdate();
 		}
 	}
@@ -86,18 +95,18 @@ public class Scheman {
 	 */
 	public void rollbackMigration() throws SQLException {
 		int currentVersion = getCurrentVersion();
+		System.out.println("Current version: " + currentVersion);
 		if (currentVersion > 0) {
 			String downScript = getMigrationDownScript(currentVersion);
-			if (downScript == null) {
-				return;
-			}
 
 			SQLogger
 				.getLogger(LogLevel.INFO, SQLogger.LogType.ALL)
-				.log(Config.getInstance().getLogLevel(), "Rolling back migration v%d", currentVersion);
+				.log(Config.getInstance().getLogLevel(), "%s Rolling back migration v%d", SQLogger.getCurrentTimestamp(), currentVersion);
 
-			try (Statement statement = connection.get().createStatement()) {
-				statement.execute(downScript);
+			if (downScript != null) {
+				try (Statement statement = connection.get().createStatement()) {
+					statement.execute(downScript);
+				}
 			}
 
 			String deleteMigration = String.format("DELETE FROM %s WHERE %s = ?", table, versionCol);
@@ -137,7 +146,7 @@ public class Scheman {
 			for (String path : filePaths) {
 				var migration = new Migration(path);
 
-				if (migration.getVersion() < 0 || migration.getDownScript() == null || migration.getUpScript() == null) {
+				if (migration.getVersion() < 0 || migration.getUpScript() == null) {
 					continue;
 				}
 
@@ -164,5 +173,17 @@ public class Scheman {
 			}
 		}
 		return null;
+	}
+
+	public List<Migration> getMigrations() {
+		return migrations;
+	}
+	
+	public ResultSet selectMigrations() throws SQLException {
+		return this.connection.executeQuery("SELECT * FROM " + table);
+	}
+	
+	public void cli() {
+		new CommandPrompt(this).start();
 	}
 }

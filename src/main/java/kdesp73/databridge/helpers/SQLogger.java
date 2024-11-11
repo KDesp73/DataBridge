@@ -6,10 +6,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLogger {
 
@@ -58,11 +63,13 @@ public class SQLogger {
 		}
 		return instance;
 	}
-	
+
 	private static String logFile() {
 		Config c = Config.getInstance();
-		if(c == null || c.getLogFile() == null ||c.getLogFile().isBlank()) return LOG_FILE;
-		
+		if (c == null || c.getLogFile() == null || c.getLogFile().isBlank()) {
+			return LOG_FILE;
+		}
+
 		return c.getLogFile();
 	}
 
@@ -86,7 +93,7 @@ public class SQLogger {
 		return this.logType == LogType.FILE || this.logType == LogType.ALL;
 	}
 
-	private static String getCurrentTimestamp() {
+	public static String getCurrentTimestamp() {
 		Instant now = Instant.now();
 		LocalDateTime dateTime = LocalDateTime.ofInstant(now, ZoneId.systemDefault());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -119,14 +126,14 @@ public class SQLogger {
 		}
 		return sb.toString();
 	}
-	
+
 	public void log(LogLevel lvl, String fmt, Object... args) {
 		if (!shouldLog(lvl)) {
 			return;
 		}
-		
+
 		String msg = String.format(fmt, args);
-		
+
 		if (!shouldLog(Config.getInstance().getLogLevel())) {
 			return;
 		}
@@ -166,10 +173,10 @@ public class SQLogger {
 		}
 		log(lvl, formatEntry(msg, op, obj));
 	}
-	
+
 	public void log(String fmt, Object... args) {
 		String msg = String.format(fmt, args);
-		
+
 		if (!shouldLog(Config.getInstance().getLogLevel())) {
 			return;
 		}
@@ -180,7 +187,7 @@ public class SQLogger {
 			appendToFile(msg + "\n\n");
 		}
 	}
-	
+
 	public void log(String msg) {
 		if (!shouldLog(Config.getInstance().getLogLevel())) {
 			return;
@@ -210,5 +217,78 @@ public class SQLogger {
 			return;
 		}
 		log(lvl, formatEntry(msg, op, obj));
+	}
+
+	public void logResultSet(ResultSet resultSet) throws SQLException {
+		ResultSetMetaData metaData = resultSet.getMetaData();
+		int columnCount = metaData.getColumnCount();
+
+		List<String> columnNames = new ArrayList<>();
+		List<Integer> columnWidths = new ArrayList<>();
+
+		for (int i = 1; i <= columnCount; i++) {
+			String columnName = metaData.getColumnName(i);
+			columnNames.add(columnName);
+			columnWidths.add(columnName.length());
+		}
+
+		List<List<String>> rows = new ArrayList<>();
+		while (resultSet.next()) {
+			List<String> row = new ArrayList<>();
+			for (int i = 1; i <= columnCount; i++) {
+				String value = resultSet.getString(i);
+				if (value == null) {
+					value = "NULL";
+				}
+				row.add(value);
+
+				columnWidths.set(i - 1, Math.max(columnWidths.get(i - 1), value.length()));
+			}
+			rows.add(row);
+		}
+
+		printTableBorderTop(columnWidths);
+		printRow(columnNames, columnWidths);
+		printTableBorderMiddle(columnWidths);
+		for (List<String> row : rows) {
+			printRow(row, columnWidths);
+		}
+		printTableBorderBottom(columnWidths);
+	}
+
+	private static void printTableBorderTop(List<Integer> columnWidths) {
+		System.out.print("┌");
+		for (int i = 0; i < columnWidths.size(); i++) {
+			int width = columnWidths.get(i);
+			System.out.print("─".repeat(width + 2) + ((i == columnWidths.size()-1) ? "┐" : "┬"));
+		}
+		System.out.println();
+	}
+	
+	private static void printTableBorderBottom(List<Integer> columnWidths) {
+		System.out.print("└");
+		for (int i = 0; i < columnWidths.size(); i++) {
+			int width = columnWidths.get(i);
+			System.out.print("─".repeat(width + 2) + ((i == columnWidths.size()-1) ? "┘" : "┴"));
+		}
+		System.out.println();
+	}
+	
+	private static void printTableBorderMiddle(List<Integer> columnWidths) {
+		System.out.print("├");
+		for (int i = 0; i < columnWidths.size(); i++) {
+			int width = columnWidths.get(i);
+			System.out.print("─".repeat(width + 2) + ((i == columnWidths.size()-1) ? "┤" : "┼"));
+		}
+		System.out.println();
+	}
+
+	private static void printRow(List<String> row, List<Integer> columnWidths) {
+		System.out.print("│");
+		for (int i = 0; i < row.size(); i++) {
+			String value = row.get(i);
+			System.out.printf(" %-" + columnWidths.get(i) + "s │", value);
+		}
+		System.out.println();
 	}
 }

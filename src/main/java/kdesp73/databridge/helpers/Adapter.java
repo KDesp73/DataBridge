@@ -5,45 +5,57 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import kdesp73.databridge.helpers.SQLogger.LogLevel;
 import kdesp73.databridge.helpers.SQLogger.LogType;
 
 public class Adapter {
 
-    /**
-     * Maps a ResultSet to a List of objects of the specified class type.
-     * @param <T> The type of the object to map to.
-     * @param resultSet The ResultSet to map.
-     * @param clazz The class type to map the ResultSet to.
-     * @return A List of objects of the specified class type.
-     * @throws SQLException If there is an issue accessing the ResultSet.
-     * @throws IllegalAccessException If there is an issue accessing class fields.
-     * @throws InstantiationException If the class cannot be instantiated.
-     */
-    public static <T> List<T> load(ResultSet resultSet, Class<T> clazz) throws SQLException, IllegalAccessException, InstantiationException {
-        List<T> resultList = new ArrayList<>();
+	/**
+	 * Maps a ResultSet to a List of objects of the specified class type.
+	 *
+	 * @param <T> The type of the object to map to.
+	 * @param resultSet The ResultSet to map.
+	 * @param clazz The class type to map the ResultSet to.
+	 * @return A List of objects of the specified class type.
+	 */
+	public static <T> List<T> load(ResultSet resultSet, Class<T> clazz) {
+		List<T> resultList = new ArrayList<>();
 
-        Field[] fields = clazz.getDeclaredFields();
+		Field[] fields = clazz.getDeclaredFields();
 
-        while (resultSet.next()) {
-            T object = clazz.newInstance(); 
-			
-            for (Field field : fields) {
-                String fieldName = field.getName();
-                try {
-                    Object value = resultSet.getObject(fieldName); // TODO: also work with snake to camel case
-                    
-                    field.setAccessible(true);
-                    
-                    field.set(object, value);
-                } catch (SQLException e) {
-					SQLogger.getLogger(LogLevel.ERRO, LogType.FILE).log("Field " + fieldName + "", e);
+		try {
+			while (resultSet.next()) {
+				T object = clazz.newInstance();
+				
+				for (Field field : fields) {
+					String fieldName = field.getName();
+					String columnName = toSnakeCase(fieldName);
+					
+					Object value;
+					
+					try {
+						value = resultSet.getObject(columnName);
+					} catch (SQLException e) {
+						value = resultSet.getObject(fieldName);
+					}
+					
+					field.setAccessible(true);
+					field.set(object, value);
+					
 				}
-            }
+				
+				resultList.add(object);
+			}
+		} catch (SQLException | InstantiationException | IllegalAccessException | IllegalArgumentException ex) {
+			SQLogger.getLogger(LogLevel.ERRO, LogType.ALL).log(Config.getInstance().getLogLevel(), "Error while loading ResultSet into List<" + clazz.getName() + ">", ex);
+		}
 
-            resultList.add(object); // Add the object to the result list
-        }
+		return resultList;
+	}
 
-        return resultList;
-    }
+	private static String toSnakeCase(String camelCase) {
+		return camelCase.replaceAll("([a-z])([A-Z]+)", "$1_$2").toLowerCase();
+	}
 }

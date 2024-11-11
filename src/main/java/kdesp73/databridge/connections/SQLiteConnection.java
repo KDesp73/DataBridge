@@ -26,6 +26,7 @@ public class SQLiteConnection implements DatabaseConnection {
 	 */
 	@Override
 	public void connect(String url, String username, String password) throws SQLException {
+		url = System.getProperty("user.dir") + "/" + url;
 		if (!"jdbc:sqlite::memory:".equals(url) && !url.contains("jdbc:sqlite://")) {
 			url = "jdbc:sqlite://" + url;
 		}
