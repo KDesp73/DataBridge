@@ -11,8 +11,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kdesp73.databridge.connections.DatabaseConnection;
+import kdesp73.databridge.helpers.Adapter;
 import kdesp73.databridge.helpers.Config;
 import kdesp73.databridge.helpers.FileUtils;
+import kdesp73.databridge.helpers.QueryBuilder;
 import kdesp73.databridge.helpers.SQLogger;
 import kdesp73.databridge.helpers.SQLogger.LogLevel;
 
@@ -28,12 +30,19 @@ public class Scheman {
 
 	private static String migrationsPath = System.getProperty("user.dir") + "/migrations";
 	private List<Migration> migrations;
+	private List<Migration> changed;
 
 	public Scheman(DatabaseConnection connection) {
 		this.connection = connection;
+		try {
+			setup();
+		} catch (SQLException ex) {
+			Logger.getLogger(Scheman.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		this.changed = new ArrayList<>();
 	}
 
-	public void setup() throws SQLException {
+	private void setup() throws SQLException {
 		try {
 			connection.execute(String.format("CREATE TABLE IF NOT EXISTS %s (%s INT PRIMARY KEY, %s VARCHAR(255), %s TIMESTAMP DEFAULT CURRENT_TIMESTAMP, %s CHAR(32));", table, versionCol, descriptionCol, timestampCol, checksumCol));
 		} catch (SQLException ex) {
@@ -61,29 +70,50 @@ public class Scheman {
 	/**
 	 * Apply a migration to the database.
 	 *
-	 * @param versionNumber
-	 * @param migrationDescription
-	 * @param migrationScript
+	 * @param migration
 	 * @throws java.sql.SQLException
 	 */
-	public void applyMigration(int versionNumber, String migrationDescription, String migrationScript) throws SQLException {
+	public void applyMigration(Migration migration) throws SQLException {
 		SQLogger
 			.getLogger(LogLevel.INFO, SQLogger.LogType.ALL)
-			.log(Config.getInstance().getLogLevel(), "%s Running migration v%d (%s)", SQLogger.getCurrentTimestamp(), versionNumber, migrationDescription);
+			.log(Config.getInstance().getLogLevel(), "%s Running migration v%d (%s)", SQLogger.getCurrentTimestamp(), migration.getVersion(), migration.getDescription());
 
 		try (Statement statement = connection.get().createStatement()) {
-			statement.execute(migrationScript);
+			statement.execute(migration.getUpScript());
 		}
 
 		String insertMigration = String.format("INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?)", table, versionCol, descriptionCol, checksumCol);
 		try (PreparedStatement preparedStatement = connection.get().prepareStatement(insertMigration)) {
-			preparedStatement.setInt(1, versionNumber);
-			preparedStatement.setString(2, migrationDescription);
+			preparedStatement.setInt(1, migration.getVersion());
+			preparedStatement.setString(2, migration.getDescription());
 			try {
-				preparedStatement.setString(3, Migration.generateChecksum(migrationScript));
+				preparedStatement.setString(3, Migration.generateChecksum(migration.getUpScript()));
 			} catch (IOException | NoSuchAlgorithmException ex) {
 				Logger.getLogger(Scheman.class.getName()).log(Level.SEVERE, null, ex);
 			}
+			preparedStatement.executeUpdate();
+		}
+	}
+
+	public void reapplyMigration(Migration migration) throws SQLException {
+		SQLogger
+			.getLogger(LogLevel.INFO, SQLogger.LogType.ALL)
+			.log(Config.getInstance().getLogLevel(), "%s Running migration v%d (%s)", SQLogger.getCurrentTimestamp(), migration.getVersion(), migration.getDescription());
+
+		try (Statement statement = connection.get().createStatement()) {
+			statement.execute(migration.getUpScript());
+		}
+
+		String insertMigration = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE %s = ?", table, versionCol, descriptionCol, checksumCol, versionCol);
+		try (PreparedStatement preparedStatement = connection.get().prepareStatement(insertMigration)) {
+			preparedStatement.setInt(1, migration.getVersion());
+			preparedStatement.setString(2, migration.getDescription());
+			try {
+				preparedStatement.setString(3, Migration.generateChecksum(migration.getUpScript()));
+			} catch (IOException | NoSuchAlgorithmException ex) {
+				Logger.getLogger(Scheman.class.getName()).log(Level.SEVERE, null, ex);
+			}
+			preparedStatement.setInt(4, migration.getVersion());
 			preparedStatement.executeUpdate();
 		}
 	}
@@ -95,25 +125,26 @@ public class Scheman {
 	 */
 	public void rollbackMigration() throws SQLException {
 		int currentVersion = getCurrentVersion();
-		System.out.println("Current version: " + currentVersion);
-		if (currentVersion > 0) {
-			String downScript = getMigrationDownScript(currentVersion);
+		if (currentVersion <= 0) {
+			return;
+		}
 
-			SQLogger
-				.getLogger(LogLevel.INFO, SQLogger.LogType.ALL)
-				.log(Config.getInstance().getLogLevel(), "%s Rolling back migration v%d", SQLogger.getCurrentTimestamp(), currentVersion);
+		String downScript = getMigrationDownScript(currentVersion);
 
-			if (downScript != null) {
-				try (Statement statement = connection.get().createStatement()) {
-					statement.execute(downScript);
-				}
+		SQLogger
+			.getLogger(LogLevel.INFO, SQLogger.LogType.ALL)
+			.log(Config.getInstance().getLogLevel(), "%s Rolling back migration v%d", SQLogger.getCurrentTimestamp(), currentVersion);
+
+		if (downScript != null) {
+			try (Statement statement = connection.get().createStatement()) {
+				statement.execute(downScript);
 			}
+		}
 
-			String deleteMigration = String.format("DELETE FROM %s WHERE %s = ?", table, versionCol);
-			try (PreparedStatement preparedStatement = connection.get().prepareStatement(deleteMigration)) {
-				preparedStatement.setInt(1, currentVersion);
-				preparedStatement.executeUpdate();
-			}
+		String deleteMigration = String.format("DELETE FROM %s WHERE %s = ?", table, versionCol);
+		try (PreparedStatement preparedStatement = connection.get().prepareStatement(deleteMigration)) {
+			preparedStatement.setInt(1, currentVersion);
+			preparedStatement.executeUpdate();
 		}
 	}
 
@@ -123,16 +154,26 @@ public class Scheman {
 	 * @throws java.sql.SQLException
 	 */
 	public void runMigrations() throws SQLException {
-		loadMigrations();
+		checkSums();
 		int currentVersion = getCurrentVersion();
 
 		for (Migration m : this.migrations) {
 			if (currentVersion < m.getVersion()) {
-				int nextVersion = currentVersion + 1;
-				applyMigration(nextVersion, m.getDescription(), m.getUpScript());
-				currentVersion = nextVersion;
+				applyMigration(m);
 			}
 		}
+	}
+
+	/**
+	 * Run all changed migrations.
+	 *
+	 * @throws java.sql.SQLException
+	 */
+	public void rerunMigrations() throws SQLException {
+		for (Migration m : this.changed) {
+			reapplyMigration(m);
+		}
+		this.changed = new ArrayList<>();
 	}
 
 	/**
@@ -178,11 +219,30 @@ public class Scheman {
 	public List<Migration> getMigrations() {
 		return migrations;
 	}
-	
+
 	public ResultSet selectMigrations() throws SQLException {
 		return this.connection.executeQuery("SELECT * FROM " + table);
 	}
-	
+
+	public void checkSums() {
+		loadMigrations();
+		for (Migration m : this.migrations) {
+			String sum = null;
+			try {
+				ResultSet rs = this.connection.executeQuery(new QueryBuilder().select(checksumCol).from(table).where(versionCol + " = " + m.getVersion()).build());
+				sum = Adapter.load(rs, SchemaChangelog.class).get(0).getChecksum();
+			} catch (SQLException ex) {
+				SQLogger.getLogger(LogLevel.ERRO, SQLogger.LogType.FILE).log(Config.getInstance().getLogLevel(), "Failed getting checksum for migration v" + m.getVersion(), ex);
+				continue;
+			}
+
+			if (!sum.equals(m.getChecksumUp())) {
+				System.out.println("Migration v" + m.getVersion() + " has changed");
+				changed.add(m);
+			}
+		}
+	}
+
 	public void cli() {
 		new CommandPrompt(this).start();
 	}

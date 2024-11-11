@@ -17,8 +17,9 @@ import kdesp73.databridge.helpers.SQLogger;
  * @author kdesp73
  */
 public class CommandPrompt {
+
 	private Scheman scheman;
-	
+
 	public CommandPrompt(Scheman scheman) {
 		this.scheman = scheman;
 	}
@@ -29,30 +30,31 @@ public class CommandPrompt {
 		String str = scanner.nextLine();
 		return str;
 	}
-	
+
 	private void help() {
 		System.out.println("Commands");
 		System.out.println("  help           Prints this message");
 		System.out.println("  exit           Exit the cli");
 		System.out.println("  down           Rollback last migration");
 		System.out.println("  up             Run all migrations");
+		System.out.println("  rerun          Re-run changed migrations");
 		System.out.println("  list           List completed migrations");
 		System.out.println("  generate       Generate template migration file");
 		System.out.println("  clear          Clear screen");
-		
+
 	}
-	
+
 	public static void clear() {
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                new ProcessBuilder("clear").inheritIO().start().waitFor();
-            }
-        } catch (Exception e) {
-            System.err.println("Error clearing console: " + e.getMessage());
-        }
-    }
+		try {
+			if (System.getProperty("os.name").contains("Windows")) {
+				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+			} else {
+				new ProcessBuilder("clear").inheritIO().start().waitFor();
+			}
+		} catch (Exception e) {
+			System.err.println("Error clearing console: " + e.getMessage());
+		}
+	}
 
 	public void start() {
 		while (true) {
@@ -73,7 +75,7 @@ public class CommandPrompt {
 						this.scheman.rollbackMigration();
 					} catch (SQLException ex) {
 						System.err.println(ex.getMessage());
-					}	
+					}
 					break;
 				case "list", "ls":
 					try {
@@ -96,6 +98,13 @@ public class CommandPrompt {
 					break;
 				case "clear":
 					clear();
+					break;
+				case "rerun", "rr":
+					try {
+						this.scheman.rerunMigrations();
+					} catch (SQLException ex) {
+						System.err.println(ex.getMessage());
+					}
 					break;
 				default:
 					break;

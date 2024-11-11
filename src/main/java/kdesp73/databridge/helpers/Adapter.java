@@ -38,7 +38,11 @@ public class Adapter {
 					try {
 						value = resultSet.getObject(columnName);
 					} catch (SQLException e) {
-						value = resultSet.getObject(fieldName);
+						try {
+							value = resultSet.getObject(fieldName);
+						} catch (SQLException ex) {
+							continue;
+						}
 					}
 					
 					field.setAccessible(true);
@@ -48,7 +52,7 @@ public class Adapter {
 				
 				resultList.add(object);
 			}
-		} catch (SQLException | InstantiationException | IllegalAccessException | IllegalArgumentException ex) {
+		} catch (SQLException | InstantiationException | IllegalAccessException ex) {
 			SQLogger.getLogger(LogLevel.ERRO, LogType.ALL).log(Config.getInstance().getLogLevel(), "Error while loading ResultSet into List<" + clazz.getName() + ">", ex);
 		}
 

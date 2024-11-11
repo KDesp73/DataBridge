@@ -193,6 +193,22 @@ public class Migration implements Comparable {
 	public String getDescription() {
 		return description;
 	}
+	
+	public String getChecksum() {
+		try {
+			return generateChecksum(this.script);
+		} catch (IOException | NoSuchAlgorithmException ex) {
+			return null;
+		}
+	}
+	
+	public String getChecksumUp() {
+		try {
+			return generateChecksum(this.upScript);
+		} catch (IOException | NoSuchAlgorithmException ex) {
+			return null;
+		}
+	}
 
 	public static String generateChecksum(String script) throws IOException, NoSuchAlgorithmException {
 		byte[] fileContent = script.getBytes();
