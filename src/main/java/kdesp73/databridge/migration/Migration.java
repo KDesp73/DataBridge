@@ -121,7 +121,7 @@ public class Migration implements Comparable {
 			upTag, upScript,
 			downTag, downScript
 		);
-		
+
 		try {
 			this.checksum = Migration.generateChecksum(this.script);
 		} catch (IOException | NoSuchAlgorithmException ex) {
@@ -208,7 +208,7 @@ public class Migration implements Comparable {
 
 		return checksum.toString();
 	}
-	
+
 	@Override
 	public int compareTo(Object o) {
 		if (!(o instanceof Migration)) {
@@ -216,5 +216,20 @@ public class Migration implements Comparable {
 		}
 
 		return this.version - ((Migration) o).version;
+	}
+
+	public static void templateMigration() throws IOException {
+		String content = """
+                   -- @version <version>
+                   -- @desc <description>
+                   
+                   -- @up
+                   <sql script>
+                   
+                   -- @down
+                   <sql script>
+                   """;
+
+		FileUtils.writeFile(System.getProperty("user.dir") + "/migration.sql", content);
 	}
 }
