@@ -232,11 +232,13 @@ public class Scheman {
 			String sum = null;
 			try {
 				ResultSet rs = this.connection.executeQuery(new QueryBuilder().select(checksumCol).from(table).where(versionCol + " = " + m.getVersion()).build());
-				sum = Adapter.load(rs, SchemaChangelog.class).get(0).getChecksum();
+				List<SchemaChangelog> result = Adapter.load(rs, SchemaChangelog.class);
+				sum = (result.isEmpty()) ? null : result.get(0).getChecksum();
 			} catch (SQLException ex) {
 				SQLogger.getLogger(LogLevel.ERRO, SQLogger.LogType.FILE).log(Config.getInstance().getLogLevel(), "Failed getting checksum for migration v" + m.getVersion(), ex);
 				continue;
 			}
+			if(sum == null) continue;
 
 			if (!sum.equals(m.getChecksumUp())) {
 				System.out.println("Migration v" + m.getVersion() + " has changed");

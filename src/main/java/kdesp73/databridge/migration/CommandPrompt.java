@@ -61,53 +61,50 @@ public class CommandPrompt {
 			String command = prompt("scheman > ");
 
 			switch (command.toLowerCase()) {
-				case "exit":
+				case "exit", "quit", "q" -> {
 					return;
-				case "up", "run":
+				}
+				case "up", "run", "r" -> {
 					try {
 						this.scheman.runMigrations();
 					} catch (SQLException ex) {
 						System.err.println(ex.getMessage());
 					}
-					break;
-				case "down", "rollback":
+				}
+				case "down", "rollback" -> {
 					try {
 						this.scheman.rollbackMigration();
 					} catch (SQLException ex) {
 						System.err.println(ex.getMessage());
 					}
-					break;
-				case "list", "ls":
+				}
+				case "list", "ls" -> {
 					try {
 						ResultSet rs = scheman.selectMigrations();
 						SQLogger.getLogger().logResultSet(rs);
 					} catch (SQLException ex) {
 						System.err.println(ex.getMessage());
 					}
-					break;
-				case "help", "?":
-					help();
-					break;
-				case "generate", "gen":
+				}
+				case "help", "?" -> help();
+				case "generate", "gen" -> {
 					try {
 						Migration.templateMigration();
 						System.out.println("File generated");
 					} catch (IOException ex) {
 						System.err.println(ex.getMessage());
 					}
-					break;
-				case "clear":
-					clear();
-					break;
-				case "rerun", "rr":
+				}
+				case "clear" -> clear();
+				case "rerun", "rr" -> {
 					try {
 						this.scheman.rerunMigrations();
 					} catch (SQLException ex) {
 						System.err.println(ex.getMessage());
 					}
-					break;
-				default:
-					break;
+				}
+				default -> {
+				}
 			}
 			System.out.println("");
 		}
