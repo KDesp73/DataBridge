@@ -170,6 +170,8 @@ public class Scheman {
 	 * @throws java.sql.SQLException
 	 */
 	public void rerunMigrations() throws SQLException {
+		if(this.changed.isEmpty()) return;
+		
 		for (Migration m : this.changed) {
 			reapplyMigration(m);
 		}
