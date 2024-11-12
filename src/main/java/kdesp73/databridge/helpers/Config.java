@@ -89,11 +89,6 @@ public class Config {
 	public String getDbPassword() {
 		return getString("db.password");
 	}
-	
-	public String getDbType() {
-		return getString("db.type");
-	}
-
 
 	public boolean getDbRetry() {
 		return getBoolean("db.retry");
@@ -129,7 +124,6 @@ public class Config {
 		defaultProperties.setProperty("db.retry", "true");
 		defaultProperties.setProperty("db.retry.times", "3");
 		defaultProperties.setProperty("db.retry.delay", "1000");
-		defaultProperties.setProperty("db.type", "sqlite3");
 
 		defaultProperties.setProperty("log.level", "INFO");
 		defaultProperties.setProperty("log.file", "logs/application.log");
