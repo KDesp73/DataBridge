@@ -74,12 +74,11 @@ public class Scheman {
 		}
 
 		String downScript = getMigrationDownScript(currentVersion);
-		if (downScript == null) {
-			return;
-		}
 
 		logMigration("Rolling back", new Migration(currentVersion, "Rollback"));
-		executeScript(downScript);
+		if (downScript != null) {
+			executeScript(downScript);
+		}
 
 		String deleteQuery = String.format("DELETE FROM %s WHERE %s = ?", TABLE_NAME, VERSION_COL);
 		try (PreparedStatement preparedStatement = connection.get().prepareStatement(deleteQuery)) {
@@ -175,17 +174,19 @@ public class Scheman {
 
 	private String getMigrationDownScript(int versionNumber) {
 		loadMigrations();
-		return migrations.stream()
-			.filter(migration -> migration.getVersion() == versionNumber)
-			.map(Migration::getDownScript)
-			.findFirst()
-			.orElse(null);
+
+		for (Migration m : this.migrations) {
+			if (m.getVersion() == versionNumber) {
+				return m.getDownScript();
+			}
+		}
+		return null;
 	}
 
 	public void cli() {
 		new CommandPrompt(this).start();
 	}
-	
+
 	public ResultSet selectMigrations() throws SQLException {
 		return this.connection.executeQuery("SELECT * FROM " + TABLE_NAME);
 	}
