@@ -26,7 +26,7 @@ public class SQLogger {
 	private LogType logType;
 
 	public enum LogLevel {
-		NONE, INFO, WARN, ERRO, ALL
+		NONE, ERRO, WARN, INFO, ALL
 	}
 
 	public enum LogType {
