@@ -24,7 +24,7 @@ More soon to be added
 git clone --depth=1 https://github.com/KDesp73/DataBridge
 cd DataBridge
 
-git checkout v2.0.13
+git checkout v2.0.14
 
 mvn clean install
 ```
@@ -35,7 +35,7 @@ mvn clean install
 <dependency>
 	<groupId>kdesp73</groupId>
 	<artifactId>DataBridge</artifactId>
-	<version>2.0.13-SNAPSHOT</version>
+	<version>2.0.14-SNAPSHOT</version>
 </dependency>
 ```
 
