@@ -4,12 +4,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import kdesp73.databridge.connections.DatabaseConnection;
 
-public class TransactionManager {
+public class Transaction {
 
 	private Connection connection;
 	private boolean transactionActive = false;
 
-	public TransactionManager(DatabaseConnection dbConnection) throws SQLException {
+	public Transaction(DatabaseConnection dbConnection) throws SQLException {
 		this.connection = dbConnection.get();
 		this.connection.setAutoCommit(false);
 	}
