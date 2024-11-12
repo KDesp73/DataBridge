@@ -46,6 +46,15 @@ public class Migration implements Comparable {
 		this.file = path;
 		this.loadScript(path);
 	}
+	
+	public Migration(int version, String description) {
+		this.version = version;
+		this.description = description;
+	}
+	
+	public boolean isValid() {
+		return this.version > 0 && this.upScript != null;
+	}
 
 	private static int extractVersion(String line) {
 		String pattern = String.format("--\\s*%s\\s*(.*)", versionTag);

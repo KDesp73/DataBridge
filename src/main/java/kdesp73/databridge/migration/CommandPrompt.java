@@ -104,6 +104,8 @@ public class CommandPrompt {
 					}
 				}
 				default -> {
+					System.err.println("Unknown command: " + command);
+					help();
 				}
 			}
 			System.out.println("");
