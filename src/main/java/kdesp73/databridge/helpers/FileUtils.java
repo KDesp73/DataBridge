@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package kdesp73.databridge.helpers;
 
 import java.io.IOException;
@@ -36,7 +32,7 @@ public class FileUtils {
 
         return filePaths;
     }
-	
+
 	public static List<String> readFile(String filePath) {
 		Path path = Paths.get(filePath);
 		try {
@@ -50,7 +46,7 @@ public class FileUtils {
 		Path path = Paths.get(filePath);
 		java.nio.file.Files.write(path, content);
 	}
-	
+
 	public static void writeFile(String filePath, String content) throws IOException {
 		Path path = Paths.get(filePath);
 		java.nio.file.Files.write(path, content.getBytes());

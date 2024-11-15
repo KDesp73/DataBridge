@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package kdesp73.databridge.migration;
 
 import java.io.IOException;
@@ -46,12 +42,12 @@ public class Migration implements Comparable {
 		this.file = path;
 		this.loadScript(path);
 	}
-	
+
 	public Migration(int version, String description) {
 		this.version = version;
 		this.description = description;
 	}
-	
+
 	public boolean isValid() {
 		return this.version > 0 && this.upScript != null;
 	}
@@ -202,7 +198,7 @@ public class Migration implements Comparable {
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public String getChecksum() {
 		try {
 			return generateChecksum(this.script);
@@ -210,7 +206,7 @@ public class Migration implements Comparable {
 			return null;
 		}
 	}
-	
+
 	public String getChecksumUp() {
 		try {
 			return generateChecksum(this.upScript);
@@ -247,10 +243,10 @@ public class Migration implements Comparable {
 		String content = """
                    -- @version <version>
                    -- @desc <description>
-                   
+
                    -- @up
                    <sql script>
-                   
+
                    -- @down
                    <sql script>
                    """;

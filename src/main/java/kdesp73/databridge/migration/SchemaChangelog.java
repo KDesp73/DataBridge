@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package kdesp73.databridge.migration;
 
 import java.sql.Timestamp;
@@ -43,6 +39,6 @@ public class SchemaChangelog {
 		sb.append('}');
 		return sb.toString();
 	}
-	
-	
+
+
 }

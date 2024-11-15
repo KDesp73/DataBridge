@@ -10,6 +10,8 @@ a simpler way to manage databases in their Java projects.
 
 You can find it [here](https://kdesp73.github.io/DataBridge-Documentation)
 
+Or check out the available examples in [examples/](https://github.com/KDesp73/DataBridge/tree/main/examples)
+
 ## Supported Databases
 
 - Microsoft Access Database
