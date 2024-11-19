@@ -2,6 +2,7 @@ package kdesp73.databridge.connections;
 
 import java.sql.*;
 import kdesp73.databridge.helpers.Again;
+import kdesp73.databridge.helpers.Config;
 import kdesp73.databridge.helpers.SQLogger;
 import kdesp73.databridge.helpers.SQLogger.LogLevel;
 
@@ -52,7 +53,7 @@ public class PostgresConnection implements DatabaseConnection {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException e) {
-            SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log("Postgres Connection Failed", e);
+            SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE).log(Config.getInstance().getLogLevel(), "Postgres Connection Failed", e);
             throw new SQLException("PostgreSQL driver not found. Check https://mvnrepository.com/artifact/org.postgresql/postgresql to get the latest version", e);
         }
     }
@@ -153,7 +154,7 @@ public class PostgresConnection implements DatabaseConnection {
             return stmt.executeQuery();
         } catch (SQLException e) {
             SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE)
-                .log("Error calling function " + functionName, e);
+                .log(Config.getInstance().getLogLevel(), "Error calling function " + functionName, e);
             throw new SQLException(e);
         }
     }
@@ -190,7 +191,7 @@ public class PostgresConnection implements DatabaseConnection {
             return stmt.getObject(1);
         } catch (SQLException e) {
             SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE)
-                .log("Error calling function " + functionName, e);
+                .log(Config.getInstance().getLogLevel(), "Error calling function " + functionName, e);
             throw new SQLException(e);
         }
     }
@@ -222,7 +223,7 @@ public class PostgresConnection implements DatabaseConnection {
             stmt.execute();
         } catch (SQLException e) {
             SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.FILE)
-                .log("Error calling procedure " + procedureName, e);
+                .log(Config.getInstance().getLogLevel(), "Error calling procedure " + procedureName, e);
             throw new SQLException(e);
         }
     }

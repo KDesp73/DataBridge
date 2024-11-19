@@ -33,6 +33,11 @@ import kdesp73.databridge.helpers.SQLogger.LogType;
  */
 public class Adapter {
 
+	/**
+	 * Private constructor to avoid external instantiation
+	 */
+	private Adapter() {}
+
     /**
      * Maps a {@link ResultSet} to a {@link List} of objects of the specified class type.
      * <p>
@@ -46,9 +51,6 @@ public class Adapter {
      * @param clazz The class type to map the {@code ResultSet} to.
      * @return A {@code List} of objects of the specified class type, populated with data
      *         from the {@code ResultSet}.
-     * @throws SQLException If an SQL error occurs while accessing the {@code ResultSet}.
-     * @throws InstantiationException If the class cannot be instantiated.
-     * @throws IllegalAccessException If the class or its constructor is inaccessible.
      */
     public static <T> List<T> load(ResultSet resultSet, Class<T> clazz) {
         List<T> resultList = new ArrayList<>();

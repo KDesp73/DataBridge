@@ -344,4 +344,24 @@ public class Migration implements Comparable {
     public String toShortString() {
         return String.format("%s (%d)", file, version);
     }
+
+	/**
+	 * Generates a template migration file in the current working directory
+	 *
+	 * @throws IOException
+	 */
+	public static void templateMigration() throws IOException {
+		String content = """
+                   -- @version <version>
+                   -- @desc <description>
+
+                   -- @up
+                   <sql script>
+
+                   -- @down
+                   <sql script>
+                   """;
+
+		FileUtils.writeFile(System.getProperty("user.dir") + "/migration.sql", content);
+	}
 }

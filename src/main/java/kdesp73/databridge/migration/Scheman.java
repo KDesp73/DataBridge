@@ -251,4 +251,23 @@ public class Scheman {
             SQLogger.getLogger(LogLevel.ERRO, SQLogger.LogType.FILE).log(Config.getInstance().getLogLevel(), "Error executing script", ex);
         }
     }
+
+	private String getMigrationDownScript(int versionNumber) {
+		loadMigrations();
+
+		for (Migration m : this.migrations) {
+			if (m.getVersion() == versionNumber) {
+				return m.getDownScript();
+			}
+		}
+		return null;
+	}
+
+	public void cli() {
+		new CommandPrompt(this).start();
+	}
+
+	public ResultSet selectMigrations() throws SQLException {
+		return this.connection.executeQuery("SELECT * FROM " + TABLE_NAME);
+	}
 }

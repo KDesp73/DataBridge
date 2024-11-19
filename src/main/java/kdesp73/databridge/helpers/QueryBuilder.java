@@ -10,6 +10,7 @@ import java.util.List;
  * The builder allows appending different parts of the query step-by-step.
  * <p>
  * Example usage:
+ * </p>
  * <pre>
  * QueryBuilder queryBuilder = new QueryBuilder();
  * String query = queryBuilder.select("id", "name")
@@ -17,7 +18,6 @@ import java.util.List;
  *                            .where("id = 1")
  *                            .build();
  * </pre>
- * </p>
  *
  * @author KDesp73
  */
