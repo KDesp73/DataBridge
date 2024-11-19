@@ -1,5 +1,6 @@
 TODO: Connection Pooling
 TODO: Batch Processing
+TODO: migration rerun
 DONE: TransactionManager
 DONE: Result Mapping
 DONE: Config Management
