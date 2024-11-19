@@ -20,9 +20,11 @@ Or check out the available examples in [examples/](https://github.com/KDesp73/Da
 
 More soon to be added
 
-## Maven Dependency
+## Dependency
 
 [Maven Central](https://central.sonatype.com/artifact/io.github.kdesp73/DataBridge)
+
+### Maven
 
 ```xml
 <dependency>
@@ -30,6 +32,12 @@ More soon to be added
 	<artifactId>DataBridge</artifactId>
 	<version>2.0.16</version>
 </dependency>
+```
+
+### Gradle
+
+```
+implementation 'io.github.kdesp73:DataBridge:2.0.16'
 ```
 
 ## Manual Installation
