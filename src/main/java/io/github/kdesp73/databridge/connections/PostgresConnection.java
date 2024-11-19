@@ -1,10 +1,10 @@
-package kdesp73.databridge.connections;
+package io.github.kdesp73.databridge.connections;
 
 import java.sql.*;
-import kdesp73.databridge.helpers.Again;
-import kdesp73.databridge.helpers.Config;
-import kdesp73.databridge.helpers.SQLogger;
-import kdesp73.databridge.helpers.SQLogger.LogLevel;
+import io.github.kdesp73.databridge.helpers.Again;
+import io.github.kdesp73.databridge.helpers.Config;
+import io.github.kdesp73.databridge.helpers.SQLogger;
+import io.github.kdesp73.databridge.helpers.SQLogger.LogLevel;
 
 /**
  * The {@code PostgresConnection} class implements the {@link DatabaseConnection} interface

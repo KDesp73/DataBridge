@@ -1,4 +1,4 @@
-package kdesp73.databridge.connections;
+package io.github.kdesp73.databridge.connections;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

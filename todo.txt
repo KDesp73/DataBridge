@@ -1,6 +1,5 @@
 TODO: Connection Pooling
 TODO: Batch Processing
-TODO: write javadocs
 DONE: TransactionManager
 DONE: Result Mapping
 DONE: Config Management
@@ -9,3 +8,4 @@ DONE: remove drivers from pom.xml
 DONE: update README.md
 DONE: Schema Management
 DONE: Examples
+DONE: write javadocs

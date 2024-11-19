@@ -1,10 +1,10 @@
-package kdesp73.databridge.migration;
+package io.github.kdesp73.databridge.migration;
 
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
-import kdesp73.databridge.helpers.SQLogger;
+import io.github.kdesp73.databridge.helpers.SQLogger;
 
 /**
  * The {@code CommandPrompt} class provides a command-line interface (CLI) for interacting with the database migration system.

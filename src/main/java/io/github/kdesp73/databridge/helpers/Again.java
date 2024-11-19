@@ -1,4 +1,4 @@
-package kdesp73.databridge.helpers;
+package io.github.kdesp73.databridge.helpers;
 
 import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;

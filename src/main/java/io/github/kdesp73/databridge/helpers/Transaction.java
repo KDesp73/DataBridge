@@ -1,8 +1,8 @@
-package kdesp73.databridge.helpers;
+package io.github.kdesp73.databridge.helpers;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import kdesp73.databridge.connections.DatabaseConnection;
+import io.github.kdesp73.databridge.connections.DatabaseConnection;
 
 /**
  * The {@code Transaction} class is responsible for managing database transactions.

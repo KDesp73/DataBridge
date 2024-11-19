@@ -1,4 +1,4 @@
-package kdesp73.databridge.helpers;
+package io.github.kdesp73.databridge.helpers;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package kdesp73.databridge.exceptions;
+package io.github.kdesp73.databridge.exceptions;
 
 /**
  * {@code ValueNotFoundException} is a custom exception that extends {@link RuntimeException}.

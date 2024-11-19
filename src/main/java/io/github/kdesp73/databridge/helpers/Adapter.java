@@ -1,4 +1,4 @@
-package kdesp73.databridge.helpers;
+package io.github.kdesp73.databridge.helpers;
 
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import kdesp73.databridge.helpers.SQLogger.LogLevel;
-import kdesp73.databridge.helpers.SQLogger.LogType;
+import io.github.kdesp73.databridge.helpers.SQLogger.LogLevel;
+import io.github.kdesp73.databridge.helpers.SQLogger.LogType;
 
 /**
  * The {@code Adapter} class provides a utility method for mapping a {@link ResultSet}

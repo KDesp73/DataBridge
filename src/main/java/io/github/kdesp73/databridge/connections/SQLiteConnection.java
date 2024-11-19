@@ -1,7 +1,7 @@
-package kdesp73.databridge.connections;
+package io.github.kdesp73.databridge.connections;
 
 import java.sql.*;
-import kdesp73.databridge.helpers.Again;
+import io.github.kdesp73.databridge.helpers.Again;
 
 /**
  * The {@code SQLiteConnection} class implements the {@link DatabaseConnection} interface

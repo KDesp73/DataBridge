@@ -1,4 +1,4 @@
-package kdesp73.databridge.migration;
+package io.github.kdesp73.databridge.migration;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,13 +7,13 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import kdesp73.databridge.connections.DatabaseConnection;
-import kdesp73.databridge.helpers.Adapter;
-import kdesp73.databridge.helpers.Config;
-import kdesp73.databridge.helpers.FileUtils;
-import kdesp73.databridge.helpers.QueryBuilder;
-import kdesp73.databridge.helpers.SQLogger;
-import kdesp73.databridge.helpers.SQLogger.LogLevel;
+import io.github.kdesp73.databridge.connections.DatabaseConnection;
+import io.github.kdesp73.databridge.helpers.Adapter;
+import io.github.kdesp73.databridge.helpers.Config;
+import io.github.kdesp73.databridge.helpers.FileUtils;
+import io.github.kdesp73.databridge.helpers.QueryBuilder;
+import io.github.kdesp73.databridge.helpers.SQLogger;
+import io.github.kdesp73.databridge.helpers.SQLogger.LogLevel;
 
 /**
  * The Scheman class handles the database schema migrations. It provides methods for applying,

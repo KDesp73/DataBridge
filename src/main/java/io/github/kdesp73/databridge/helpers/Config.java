@@ -1,4 +1,4 @@
-package kdesp73.databridge.helpers;
+package io.github.kdesp73.databridge.helpers;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,9 +8,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import kdesp73.databridge.connections.DatabaseConnection;
-import kdesp73.databridge.connections.PostgresConnection;
-import kdesp73.databridge.helpers.SQLogger.LogLevel;
+import io.github.kdesp73.databridge.connections.DatabaseConnection;
+import io.github.kdesp73.databridge.connections.PostgresConnection;
+import io.github.kdesp73.databridge.helpers.SQLogger.LogLevel;
 
 /**
  * The {@code Config} class is a singleton utility class that loads and saves application

@@ -1,4 +1,4 @@
-package kdesp73.databridge.migration;
+package io.github.kdesp73.databridge.migration;
 
 import java.sql.Timestamp;
 

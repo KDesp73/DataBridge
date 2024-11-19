@@ -1,9 +1,9 @@
-package kdesp73.databridge.connections;
+package io.github.kdesp73.databridge.connections;
 
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import kdesp73.databridge.helpers.Config;
+import io.github.kdesp73.databridge.helpers.Config;
 
 /**
  * The {@code AvailableConnections} enum defines the supported database connections

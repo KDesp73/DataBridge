@@ -1,4 +1,4 @@
-package kdesp73.databridge.helpers;
+package io.github.kdesp73.databridge.helpers;
 
 import java.io.File;
 import java.io.IOException;

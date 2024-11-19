@@ -1,4 +1,4 @@
-package kdesp73.databridge.migration;
+package io.github.kdesp73.databridge.migration;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,8 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import kdesp73.databridge.helpers.FileUtils;
-import kdesp73.databridge.helpers.SQLogger;
+import io.github.kdesp73.databridge.helpers.FileUtils;
+import io.github.kdesp73.databridge.helpers.SQLogger;
 
 /**
  * The Migration class represents a database migration script, which includes
