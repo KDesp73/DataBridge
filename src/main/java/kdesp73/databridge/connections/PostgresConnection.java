@@ -16,7 +16,7 @@ import kdesp73.databridge.helpers.SQLogger.LogLevel;
  * <p>
  * This class also logs errors related to database operations using the {@link SQLogger}.
  *
- * @author kdesp73
+ * @author KDesp73
  */
 public class PostgresConnection implements DatabaseConnection {
 

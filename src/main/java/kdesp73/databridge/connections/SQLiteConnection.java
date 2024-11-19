@@ -16,7 +16,7 @@ import kdesp73.databridge.helpers.Again;
  * or be {@code jdbc:sqlite::memory:} for in-memory databases.
  * </p>
  *
- * @author kdesp73
+ * @author KDesp73
  */
 public class SQLiteConnection implements DatabaseConnection {
 

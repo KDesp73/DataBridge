@@ -25,7 +25,7 @@ import kdesp73.databridge.helpers.Config;
  *   <li>{@code MSACCESS} - MS Access database connection.</li>
  * </ul>
  *
- * @author kdesp73
+ * @author KDesp73
  */
 public enum AvailableConnections {
 

@@ -14,7 +14,7 @@ import java.sql.SQLException;
  * {@link AutoCloseable} to ensure proper resource management by automatically closing
  * the connection when no longer needed.
  *
- * @author kdesp73
+ * @author KDesp73
  */
 public interface DatabaseConnection extends AutoCloseable {
 

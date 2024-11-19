@@ -14,7 +14,7 @@ import kdesp73.databridge.helpers.Again;
  * the driver to be present in the classpath. The connection string must follow the format
  * {@code jdbc:ucanaccess://path_to_database}.
  *
- * @author kdesp73
+ * @author KDesp73
  */
 public class MSAccessConnection implements DatabaseConnection {
 
