@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+
+docs() {
+	rm -rf docs/
+	mkdir -p docs
+	doxygen
+	mv -f docs/html/* docs
+	rm -rf docs/html
+}
+
+help() {
+    cat <<EOF
+USAGE
+  ./configure <commands>
+
+COMMANDS
+  help			Prints this message
+  docs			Generate documentation
+  deploy		Deploy library to Maven Central
+  build			Build the jar
+  install		Install locally
+EOF
+}
+
+deploy() {
+	mvn clean && mvn validate && mvn verify && mvn deploy
+}
+
+build() {
+	mvn clean package
+}
+
+install() {
+	mvn clean install
+}
+
+if [ $# == 0 ]; then
+	help
+	exit 0
+fi
+
+for arg in "$@"; do
+	case "$arg" in
+		"help") help ;;
+		"docs") docs ;;
+		"deploy") deploy ;;
+		"build") build ;;
+		"install") install ;;
+		*)
+			echo "Unknown command : " "$arg" 1>&2
+			help
+			exit 1
+	esac
+done
+
+
