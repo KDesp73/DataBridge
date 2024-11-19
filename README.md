@@ -35,7 +35,7 @@ mvn clean install
 
 ```xml
 <dependency>
-	<groupId>kdesp73</groupId>
+	<groupId>io.github.kdesp73</groupId>
 	<artifactId>DataBridge</artifactId>
 	<version>2.0.14-SNAPSHOT</version>
 </dependency>

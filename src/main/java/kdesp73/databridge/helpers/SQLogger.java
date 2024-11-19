@@ -264,7 +264,7 @@ public class SQLogger {
 		}
 		System.out.println();
 	}
-	
+
 	private static void printTableBorderBottom(List<Integer> columnWidths) {
 		System.out.print("└");
 		for (int i = 0; i < columnWidths.size(); i++) {
@@ -273,7 +273,7 @@ public class SQLogger {
 		}
 		System.out.println();
 	}
-	
+
 	private static void printTableBorderMiddle(List<Integer> columnWidths) {
 		System.out.print("├");
 		for (int i = 0; i < columnWidths.size(); i++) {
