@@ -37,7 +37,7 @@ mvn clean install
 <dependency>
 	<groupId>io.github.kdesp73</groupId>
 	<artifactId>DataBridge</artifactId>
-	<version>2.0.14-SNAPSHOT</version>
+	<version>2.0.14</version>
 </dependency>
 ```
 
