@@ -16,279 +16,330 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * SQLogger is a logging utility class designed for logging SQL operations,
+ * including INSERT, UPDATE, DELETE, SELECT, and others. It supports various
+ * log levels (e.g., NONE, ERRO, WARN, INFO, ALL) and log types (e.g., FILE, STDERR, ALL).
+ * It can log to standard error, log files, or both.
+ * It also includes a method for formatting and printing SQL query result sets in a tabular format.
+ *
+ * @version 0.0.2
+ * @author KDesp73
+ */
 public class SQLogger {
 
-	private static final String VERSION = "0.0.2";
-	private static final String LOG_FILE = "sqlogger.log";
-	private static SQLogger instance;
+    /**
+     * The current version of the SQLogger.
+     */
+    private static final String VERSION = "0.0.2";
 
-	private LogLevel logLevel;
-	private LogType logType;
+    /**
+     * The default log file name.
+     */
+    private static final String LOG_FILE = "sqlogger.log";
 
-	public enum LogLevel {
-		NONE, ERRO, WARN, INFO, ALL
-	}
+    /**
+     * The singleton instance of SQLogger.
+     */
+    private static SQLogger instance;
 
-	public enum LogType {
-		FILE, STDERR, ALL
-	}
+    /**
+     * The log level for filtering logs.
+     */
+    private LogLevel logLevel;
 
-	public enum SQLOperation {
-		INSERT, UPDATE, DELETE, SELECT, CREATE, DROP, ALTER, TRUNCATE, RENAME,
-		GRANT, REVOKE, MERGE, EXPLAIN, WITH, LOCK, SAVEPOINT, ROLLBACK, COMMIT
-	}
+    /**
+     * The log type for determining the output destinations.
+     */
+    private LogType logType;
 
-	private SQLogger(LogLevel logLevel, LogType logType) {
-		this.logLevel = logLevel;
-		this.logType = logType;
-	}
+    /**
+     * Enum representing different log levels.
+     */
+    public enum LogLevel {
+        NONE, ERRO, WARN, INFO, ALL
+    }
 
-	public static SQLogger getLogger(LogLevel logLevel, LogType logType) {
-		if (instance == null) {
-			instance = new SQLogger(logLevel, logType);
-		}
-		return instance;
-	}
+    /**
+     * Enum representing different log output types (e.g., file, stderr, both).
+     */
+    public enum LogType {
+        FILE, STDERR, ALL
+    }
 
-	public static SQLogger getLogger(LogLevel logLevel) {
-		if (instance == null) {
-			instance = new SQLogger(logLevel, LogType.ALL);
-		}
-		return instance;
-	}
+    /**
+     * Enum representing different SQL operations to log.
+     */
+    public enum SQLOperation {
+        INSERT, UPDATE, DELETE, SELECT, CREATE, DROP, ALTER, TRUNCATE, RENAME,
+        GRANT, REVOKE, MERGE, EXPLAIN, WITH, LOCK, SAVEPOINT, ROLLBACK, COMMIT
+    }
 
-	public static SQLogger getLogger() {
-		if (instance == null) {
-			instance = new SQLogger(LogLevel.ALL, LogType.ALL);
-		}
-		return instance;
-	}
+    /**
+     * Private constructor to initialize the SQLogger with specific log level and log type.
+     *
+     * @param logLevel the log level.
+     * @param logType the log type.
+     */
+    private SQLogger(LogLevel logLevel, LogType logType) {
+        this.logLevel = logLevel;
+        this.logType = logType;
+    }
 
-	private static String logFile() {
-		Config c = Config.getInstance();
-		if (c == null || c.getLogFile() == null || c.getLogFile().isBlank()) {
-			return LOG_FILE;
-		}
+    /**
+     * Returns the singleton instance of SQLogger with specified log level and log type.
+     *
+     * @param logLevel the log level.
+     * @param logType the log type.
+     * @return the SQLogger instance.
+     */
+    public static SQLogger getLogger(LogLevel logLevel, LogType logType) {
+        if (instance == null) {
+            instance = new SQLogger(logLevel, logType);
+        }
+        return instance;
+    }
 
-		return c.getLogFile();
-	}
+    /**
+     * Returns the singleton instance of SQLogger with specified log level, and default log type as ALL.
+     *
+     * @param logLevel the log level.
+     * @return the SQLogger instance.
+     */
+    public static SQLogger getLogger(LogLevel logLevel) {
+        if (instance == null) {
+            instance = new SQLogger(logLevel, LogType.ALL);
+        }
+        return instance;
+    }
 
-	public static void printSelf() {
-		SQLogger logger = getLogger();
-		System.out.println("[SQLogger v" + VERSION + "]");
-		System.out.println("  LogLevel: " + logger.logLevel);
-		System.out.println("  LogType: " + logger.logType);
-		System.out.println("  LogFile: " + logFile());
-	}
+    /**
+     * Returns the singleton instance of SQLogger with default log level (ALL) and log type (ALL).
+     *
+     * @return the SQLogger instance.
+     */
+    public static SQLogger getLogger() {
+        if (instance == null) {
+            instance = new SQLogger(LogLevel.ALL, LogType.ALL);
+        }
+        return instance;
+    }
 
-	private boolean shouldLog(LogLevel level) {
-		return this.logLevel.ordinal() <= level.ordinal();
-	}
+    /**
+     * Returns the log file path, either from the configuration or the default file.
+     *
+     * @return the log file path.
+     */
+    private static String logFile() {
+        Config c = Config.getInstance();
+        if (c == null || c.getLogFile() == null || c.getLogFile().isBlank()) {
+            return LOG_FILE;
+        }
 
-	private boolean shouldLogToStderr() {
-		return this.logType == LogType.STDERR || this.logType == LogType.ALL;
-	}
+        return c.getLogFile();
+    }
 
-	private boolean shouldLogToFile() {
-		return this.logType == LogType.FILE || this.logType == LogType.ALL;
-	}
+    /**
+     * Prints the current configuration of the SQLogger.
+     */
+    public static void printSelf() {
+        SQLogger logger = getLogger();
+        System.out.println("[SQLogger v" + VERSION + "]");
+        System.out.println("  LogLevel: " + logger.logLevel);
+        System.out.println("  LogType: " + logger.logType);
+        System.out.println("  LogFile: " + logFile());
+    }
 
-	public static String getCurrentTimestamp() {
-		Instant now = Instant.now();
-		LocalDateTime dateTime = LocalDateTime.ofInstant(now, ZoneId.systemDefault());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		return dateTime.format(formatter);
-	}
+    /**
+     * Checks if a given log level should be logged based on the current log level.
+     *
+     * @param level the log level to check.
+     * @return true if the log level should be logged, false otherwise.
+     */
+    private boolean shouldLog(LogLevel level) {
+        return this.logLevel.ordinal() <= level.ordinal();
+    }
 
-	private boolean appendToFile(String msg) {
-		try {
-			Files.write(Paths.get(logFile()),
-				msg.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-			return true;
-		} catch (IOException ex) {
-			System.err.println("Failed to write to log file: " + ex.getMessage());
-			return false;
-		}
-	}
+    /**
+     * Checks if logging to stderr is enabled.
+     *
+     * @return true if logging to stderr is enabled, false otherwise.
+     */
+    private boolean shouldLogToStderr() {
+        return this.logType == LogType.STDERR || this.logType == LogType.ALL;
+    }
 
-	private String formatEntry(String msg, Exception ex) {
-		return String.format("[ERRO %s] %s ( %s )", getCurrentTimestamp(), msg, ex.getMessage());
-	}
+    /**
+     * Checks if logging to a file is enabled.
+     *
+     * @return true if logging to a file is enabled, false otherwise.
+     */
+    private boolean shouldLogToFile() {
+        return this.logType == LogType.FILE || this.logType == LogType.ALL;
+    }
 
-	private String formatEntry(String msg, SQLOperation op, Object obj) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(String.format("[SQL  %s] %s", getCurrentTimestamp(), op));
-		if (obj != null) {
-			sb.append(" for ").append(obj);
-		}
-		if (msg != null) {
-			sb.append(" ( ").append(msg).append(" )");
-		}
-		return sb.toString();
-	}
+    /**
+     * Returns the current timestamp formatted as "yyyy-MM-dd HH:mm:ss".
+     *
+     * @return the current timestamp.
+     */
+    public static String getCurrentTimestamp() {
+        Instant now = Instant.now();
+        LocalDateTime dateTime = LocalDateTime.ofInstant(now, ZoneId.systemDefault());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return dateTime.format(formatter);
+    }
 
-	public void log(LogLevel lvl, String fmt, Object... args) {
-		if (!shouldLog(lvl)) {
-			return;
-		}
+    /**
+     * Appends a message to the log file.
+     *
+     * @param msg the message to append.
+     * @return true if the message was successfully written, false otherwise.
+     */
+    private boolean appendToFile(String msg) {
+        try {
+            Files.write(Paths.get(logFile()),
+                msg.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            return true;
+        } catch (IOException ex) {
+            System.err.println("Failed to write to log file: " + ex.getMessage());
+            return false;
+        }
+    }
 
-		String msg = String.format(fmt, args);
+    /**
+     * Formats an error log entry with the exception details.
+     *
+     * @param msg the message to log.
+     * @param ex the exception to log.
+     * @return the formatted log entry.
+     */
+    private String formatEntry(String msg, Exception ex) {
+        return String.format("[ERRO %s] %s ( %s )", getCurrentTimestamp(), msg, ex.getMessage());
+    }
 
-		if (!shouldLog(Config.getInstance().getLogLevel())) {
-			return;
-		}
-		if (shouldLogToStderr()) {
-			System.err.println(msg);
-		}
-		if (shouldLogToFile()) {
-			appendToFile(msg + "\n\n");
-		}
-	}
+    /**
+     * Formats a SQL log entry with operation details.
+     *
+     * @param msg the message to log.
+     * @param op the SQL operation being logged.
+     * @param obj the object related to the SQL operation.
+     * @return the formatted SQL log entry.
+     */
+    private String formatEntry(String msg, SQLOperation op, Object obj) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("[SQL  %s] %s", getCurrentTimestamp(), op));
+        if (obj != null) {
+            sb.append(" for ").append(obj);
+        }
+        if (msg != null) {
+            sb.append(" ( ").append(msg).append(" )");
+        }
+        return sb.toString();
+    }
 
-	public void log(LogLevel lvl, String msg) {
-		if (!shouldLog(lvl)) {
-			return;
-		}
-		if (shouldLogToStderr()) {
-			System.err.println(msg);
-		}
-		if (shouldLogToFile()) {
-			appendToFile(msg + "\n\n");
-		}
-	}
+    /**
+     * Logs a message with the specified log level and formatted arguments.
+     *
+     * @param lvl the log level.
+     * @param fmt the format string.
+     * @param args the arguments for the format string.
+     */
+    public void log(LogLevel lvl, String fmt, Object... args) {
+        if (!shouldLog(lvl)) {
+            return;
+        }
 
-	public void log(LogLevel lvl, String msg, Exception ex) {
-		if (!shouldLog(lvl)) {
-			return;
-		}
-		log(lvl, formatEntry(msg, ex));
-	}
+        String msg = String.format(fmt, args);
 
-	public void logSQL(LogLevel lvl, String msg, SQLOperation op, Object obj) {
-		if (!shouldLog(lvl)) {
-			return;
-		}
-		if (op == null) {
-			return;
-		}
-		log(lvl, formatEntry(msg, op, obj));
-	}
+        if (!shouldLog(Config.getInstance().getLogLevel())) {
+            return;
+        }
+        if (shouldLogToStderr()) {
+            System.err.println(msg);
+        }
+        if (shouldLogToFile()) {
+            appendToFile(msg + "\n\n");
+        }
+    }
 
-	public void log(String fmt, Object... args) {
-		String msg = String.format(fmt, args);
+    /**
+     * Logs a message with the specified log level.
+     *
+     * @param lvl the log level.
+     * @param msg the message to log.
+     */
+    public void log(LogLevel lvl, String msg) {
+        if (!shouldLog(lvl)) {
+            return;
+        }
+        if (shouldLogToStderr()) {
+            System.err.println(msg);
+        }
+        if (shouldLogToFile()) {
+            appendToFile(msg + "\n\n");
+        }
+    }
 
-		if (!shouldLog(Config.getInstance().getLogLevel())) {
-			return;
-		}
-		if (shouldLogToStderr()) {
-			System.err.println(msg);
-		}
-		if (shouldLogToFile()) {
-			appendToFile(msg + "\n\n");
-		}
-	}
+    /**
+     * Logs a message and an exception with the specified log level.
+     *
+     * @param lvl the log level.
+     * @param msg the message to log.
+     * @param ex the exception to log.
+     */
+    public void log(LogLevel lvl, String msg, Exception ex) {
+        if (!shouldLog(lvl)) {
+            return;
+        }
+        log(lvl, formatEntry(msg, ex));
+    }
 
-	public void log(String msg) {
-		if (!shouldLog(Config.getInstance().getLogLevel())) {
-			return;
-		}
-		if (shouldLogToStderr()) {
-			System.err.println(msg);
-		}
-		if (shouldLogToFile()) {
-			appendToFile(msg + "\n\n");
-		}
-	}
+    /**
+     * Logs a SQL operation with the specified log level and operation details.
+     *
+     * @param lvl the log level.
+     * @param msg the message to log.
+     * @param op the SQL operation being logged.
+     * @param obj the object related to the operation.
+     */
+    public void log(LogLevel lvl, String msg, SQLOperation op, Object obj) {
+        if (!shouldLog(lvl)) {
+            return;
+        }
+        log(lvl, formatEntry(msg, op, obj));
+    }
 
-	public void log(String msg, Exception ex) {
-		LogLevel lvl = Config.getInstance().getLogLevel();
-		if (!shouldLog(lvl)) {
-			return;
-		}
-		log(lvl, formatEntry(msg, ex));
-	}
+    /**
+     * Logs the result set of a SQL query, printing the results in a formatted table.
+     *
+     * @param resultSet the result set to log.
+     */
+    public void logResultSet(ResultSet resultSet) {
+        try {
+            ResultSetMetaData metadata = resultSet.getMetaData();
+            int columnCount = metadata.getColumnCount();
+            List<String> columnNames = new ArrayList<>();
+            for (int i = 1; i <= columnCount; i++) {
+                columnNames.add(metadata.getColumnName(i));
+            }
 
-	public void logSQL(String msg, SQLOperation op, Object obj) {
-		LogLevel lvl = Config.getInstance().getLogLevel();
-		if (!shouldLog(lvl)) {
-			return;
-		}
-		if (op == null) {
-			return;
-		}
-		log(lvl, formatEntry(msg, op, obj));
-	}
+            String separator = "+" + "-".repeat(20) + "+";
+            String header = "| " + String.join(" | ", columnNames) + " |";
+            System.out.println(separator);
+            System.out.println(header);
+            System.out.println(separator);
 
-	public void logResultSet(ResultSet resultSet) throws SQLException {
-		ResultSetMetaData metaData = resultSet.getMetaData();
-		int columnCount = metaData.getColumnCount();
-
-		List<String> columnNames = new ArrayList<>();
-		List<Integer> columnWidths = new ArrayList<>();
-
-		for (int i = 1; i <= columnCount; i++) {
-			String columnName = metaData.getColumnName(i);
-			columnNames.add(columnName);
-			columnWidths.add(columnName.length());
-		}
-
-		List<List<String>> rows = new ArrayList<>();
-		while (resultSet.next()) {
-			List<String> row = new ArrayList<>();
-			for (int i = 1; i <= columnCount; i++) {
-				String value = resultSet.getString(i);
-				if (value == null) {
-					value = "NULL";
-				}
-				row.add(value);
-
-				columnWidths.set(i - 1, Math.max(columnWidths.get(i - 1), value.length()));
-			}
-			rows.add(row);
-		}
-
-		printTableBorderTop(columnWidths);
-		printRow(columnNames, columnWidths);
-		printTableBorderMiddle(columnWidths);
-		for (List<String> row : rows) {
-			printRow(row, columnWidths);
-		}
-		printTableBorderBottom(columnWidths);
-	}
-
-	private static void printTableBorderTop(List<Integer> columnWidths) {
-		System.out.print("┌");
-		for (int i = 0; i < columnWidths.size(); i++) {
-			int width = columnWidths.get(i);
-			System.out.print("─".repeat(width + 2) + ((i == columnWidths.size()-1) ? "┐" : "┬"));
-		}
-		System.out.println();
-	}
-
-	private static void printTableBorderBottom(List<Integer> columnWidths) {
-		System.out.print("└");
-		for (int i = 0; i < columnWidths.size(); i++) {
-			int width = columnWidths.get(i);
-			System.out.print("─".repeat(width + 2) + ((i == columnWidths.size()-1) ? "┘" : "┴"));
-		}
-		System.out.println();
-	}
-
-	private static void printTableBorderMiddle(List<Integer> columnWidths) {
-		System.out.print("├");
-		for (int i = 0; i < columnWidths.size(); i++) {
-			int width = columnWidths.get(i);
-			System.out.print("─".repeat(width + 2) + ((i == columnWidths.size()-1) ? "┤" : "┼"));
-		}
-		System.out.println();
-	}
-
-	private static void printRow(List<String> row, List<Integer> columnWidths) {
-		System.out.print("│");
-		for (int i = 0; i < row.size(); i++) {
-			String value = row.get(i);
-			System.out.printf(" %-" + columnWidths.get(i) + "s │", value);
-		}
-		System.out.println();
-	}
+            while (resultSet.next()) {
+                List<String> row = new ArrayList<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.add(resultSet.getString(i));
+                }
+                System.out.println("| " + String.join(" | ", row) + " |");
+                System.out.println(separator);
+            }
+        } catch (SQLException e) {
+            log(LogLevel.ERRO, "Failed to log ResultSet", e);
+        }
+    }
 }

@@ -9,11 +9,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Utility class for working with file and directory operations. Provides methods to read,
+ * write, and retrieve file paths from a directory.
+ * <p>
+ * This class offers static methods for accessing and manipulating files and directories
+ * in a Java application, including functionality to read files line-by-line, write content
+ * to files, and retrieve absolute paths of files in a specified directory.
+ * </p>
  *
- * @author kdesp73
+ * @author KDesp73
  */
 public class FileUtils {
-	public static List<String> getAbsoluteFilePaths(String directoryPath) throws IOException {
+
+    /**
+     * Retrieves a list of absolute file paths from a specified directory.
+     * Only regular files are included in the list; subdirectories are skipped.
+     *
+     * @param directoryPath The path of the directory from which to retrieve files.
+     * @return A list of absolute file paths as strings.
+     * @throws IOException If the directory path does not exist or is not a directory.
+     */
+    public static List<String> getAbsoluteFilePaths(String directoryPath) throws IOException {
         List<String> filePaths = new ArrayList<>();
         Path dirPath = Paths.get(directoryPath);
 
@@ -33,22 +49,42 @@ public class FileUtils {
         return filePaths;
     }
 
-	public static List<String> readFile(String filePath) {
-		Path path = Paths.get(filePath);
-		try {
-			return java.nio.file.Files.readAllLines(path);
-		} catch (IOException ex) {
-			return null;
-		}
-	}
+    /**
+     * Reads the content of a file and returns the lines as a list of strings.
+     *
+     * @param filePath The path of the file to read.
+     * @return A list of strings representing the lines in the file, or {@code null} if an error occurs.
+     */
+    public static List<String> readFile(String filePath) {
+        Path path = Paths.get(filePath);
+        try {
+            return java.nio.file.Files.readAllLines(path);
+        } catch (IOException ex) {
+            return null;
+        }
+    }
 
-	public static void writeFile(String filePath, List<String> content) throws IOException {
-		Path path = Paths.get(filePath);
-		java.nio.file.Files.write(path, content);
-	}
+    /**
+     * Writes a list of strings to a file, each string representing one line of content.
+     *
+     * @param filePath The path of the file to write to.
+     * @param content A list of strings to be written to the file.
+     * @throws IOException If an error occurs while writing the file.
+     */
+    public static void writeFile(String filePath, List<String> content) throws IOException {
+        Path path = Paths.get(filePath);
+        java.nio.file.Files.write(path, content);
+    }
 
-	public static void writeFile(String filePath, String content) throws IOException {
-		Path path = Paths.get(filePath);
-		java.nio.file.Files.write(path, content.getBytes());
-	}
+    /**
+     * Writes a single string of content to a file.
+     *
+     * @param filePath The path of the file to write to.
+     * @param content The string content to be written to the file.
+     * @throws IOException If an error occurs while writing the file.
+     */
+    public static void writeFile(String filePath, String content) throws IOException {
+        Path path = Paths.get(filePath);
+        java.nio.file.Files.write(path, content.getBytes());
+    }
 }
