@@ -1,15 +1,12 @@
-target/*
+target
 .vscode/
 nbproject/
 *.jar
 *.zip
 .settings/
-docs/
 .classpath
 .project
 .changelog
 .idea
-src/main/java/Main.java
 config.properties
-sync-docs.sh
 migrations

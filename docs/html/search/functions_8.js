@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['load_0',['load',['../db/dd8/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Adapter.html#a4f6580b67e6b7ff5b8ec42447941d47d',1,'io::github::kdesp73::databridge::helpers::Adapter']]],
+  ['log_1',['log',['../d6/db5/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1SQLogger.html#a8e51c4621231005fe342322150381376',1,'io.github.kdesp73.databridge.helpers.SQLogger.log(LogLevel lvl, String fmt, Object... args)'],['../d6/db5/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1SQLogger.html#acc274933659e6eb31dbcc467061aae1d',1,'io.github.kdesp73.databridge.helpers.SQLogger.log(LogLevel lvl, String msg)'],['../d6/db5/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1SQLogger.html#a581e28e28952e5a9d74dc44ce9371a4a',1,'io.github.kdesp73.databridge.helpers.SQLogger.log(LogLevel lvl, String msg, Exception ex)'],['../d6/db5/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1SQLogger.html#a2a1fd8f178e6b276c69682009c73b774',1,'io.github.kdesp73.databridge.helpers.SQLogger.log(LogLevel lvl, String msg, SQLOperation op, Object obj)']]],
+  ['logresultset_2',['logResultSet',['../d6/db5/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1SQLogger.html#a87fb6b685f3240b07510ba816bb7957c',1,'io::github::kdesp73::databridge::helpers::SQLogger']]]
+];
