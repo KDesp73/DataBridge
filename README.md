@@ -28,7 +28,7 @@ More soon to be added
 <dependency>
 	<groupId>io.github.kdesp73</groupId>
 	<artifactId>DataBridge</artifactId>
-	<version>2.0.15</version>
+	<version>2.0.16</version>
 </dependency>
 ```
 
@@ -38,7 +38,7 @@ More soon to be added
 git clone --depth=1 https://github.com/KDesp73/DataBridge
 cd DataBridge
 
-git checkout <latest>
+git checkout 2.0.16
 
 mvn clean install
 ```
