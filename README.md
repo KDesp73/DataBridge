@@ -20,18 +20,9 @@ Or check out the available examples in [examples/](https://github.com/KDesp73/Da
 
 More soon to be added
 
-## Installation
-
-```bash
-git clone --depth=1 https://github.com/KDesp73/DataBridge
-cd DataBridge
-
-git checkout v2.0.14
-
-mvn clean install
-```
-
 ## Maven Dependency
+
+[Maven Central](https://central.sonatype.com/artifact/io.github.kdesp73/DataBridge)
 
 ```xml
 <dependency>
@@ -39,6 +30,17 @@ mvn clean install
 	<artifactId>DataBridge</artifactId>
 	<version>2.0.14</version>
 </dependency>
+```
+
+## Manual Installation
+
+```bash
+git clone --depth=1 https://github.com/KDesp73/DataBridge
+cd DataBridge
+
+git checkout <latest>
+
+mvn clean install
 ```
 
 ## Contributing
