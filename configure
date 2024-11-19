@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+lognexec() {
+	echo "$@"
+	"$@"
+}
 
 docs() {
 	rm -rf docs/
@@ -28,11 +32,11 @@ deploy() {
 }
 
 build() {
-	mvn clean package
+	lognexec mvn clean package
 }
 
 install() {
-	mvn clean install
+	lognexec mvn clean install
 }
 
 if [ $# == 0 ]; then
