@@ -1,61 +1,215 @@
 #!/usr/bin/env bash
 
+RED="\033[31m"
+GREEN="\033[32m"
+CYAN="\033[36m"
+RESET="\033[0m"
+
+DRY_RUN=false
+
 lognexec() {
-	echo "$@"
-	"$@"
+    echo -e "${CYAN}" "$@" "${RESET}"
+    if [ "$DRY_RUN" = false ]; then
+        "$@" || {
+            echo -e "${RED}Command failed: " "$@" "${RESET}" >&2
+            exit 1
+        }
+    fi
 }
 
 docs() {
-	rm -rf docs/
-	mkdir -p docs
-	doxygen
-	mv -f docs/html/* docs
-	rm -rf docs/html
+    echo -e "${CYAN}Generating documentation...${RESET}"
+    if ! command -v doxygen >/dev/null; then
+        echo -e "${RED}Error: 'doxygen' is not installed.${RESET}" >&2
+        exit 1
+    fi
+
+    rm -rf docs/
+    mkdir -p docs
+    lognexec doxygen
+    mv -f docs/html/* docs 2>/dev/null || true
+    rm -rf docs/html
+    echo -e "${GREEN}Documentation generated in ./docs${RESET}"
 }
 
 help() {
     cat <<EOF
 USAGE
-  ./configure <commands>
+  ./configure [OPTIONS] <commands>
+
+OPTIONS
+  --dry-run      Print commands without executing them
 
 COMMANDS
-  help			Prints this message
-  docs			Generate documentation
-  deploy		Deploy library to Maven Central
-  build			Build the jar
-  install		Install locally
+  help           Prints this message
+  docs           Generate documentation
+  deploy         Deploy library to Maven Central
+  build          Build the jar
+  install        Install locally
+  version		 Update the project version (First release with changelogger)
 EOF
 }
 
 deploy() {
-	mvn clean && mvn validate && mvn verify && mvn deploy
+    echo -e "${CYAN}Deploying to Maven Central...${RESET}"
+    lognexec mvn clean
+    lognexec mvn validate
+    lognexec mvn verify
+    lognexec mvn deploy
+    echo -e "${GREEN}Deployment completed.${RESET}"
 }
 
 build() {
-	lognexec mvn clean package
+    echo -e "${CYAN}Building the project...${RESET}"
+    lognexec mvn clean package
+    echo -e "${GREEN}Build completed.${RESET}"
 }
 
 install() {
-	lognexec mvn clean install
+    echo -e "${CYAN}Installing locally...${RESET}"
+    lognexec mvn clean install
+    echo -e "${GREEN}Installation completed.${RESET}"
 }
 
-if [ $# == 0 ]; then
-	help
-	exit 0
+update_version_pom() {
+    local pom_file="pom.xml"
+    local new_version="$1"
+
+    if [ ! -f "$pom_file" ]; then
+        echo -e "$RED" "Error: $pom_file not found." "$RESET" >&2
+        exit 1
+    fi
+
+    if [[ -z "$new_version" ]]; then
+        echo "Usage: $0 <new-version>" >&2
+        exit 1
+    fi
+
+    # Use sed to update the <version> tag in the pom.xml
+    sed -i.bak -E "s|<version>[^<]+</version>|<version>$new_version</version>|" "$pom_file"
+
+    if grep -q "<version>$new_version</version>" "$pom_file"; then
+        echo -e "$GREEN""Version updated successfully to $new_version in $pom_file." "$RESET"
+    else
+        echo -e "$RED" "Error: Failed to update the version." "$RESET" >&2
+        mv "$pom_file.bak" "$pom_file"  # Restore original file on failure
+        exit 1
+    fi
+
+    # Remove backup file if the update succeeded
+    rm -f "$pom_file.bak"
+}
+
+update_version_readme() {
+    local file="README.md"
+    local new_version="$1"
+
+    # Check if the file exists
+    if [[ ! -f "$file" ]]; then
+        echo -e "$RED""Error: File '$file' not found." "$RESET" >&2
+        return 1
+    fi
+
+    # Check if a new version is provided
+    if [[ -z "$new_version" ]]; then
+        echo -e "$RED""Error: No version specified." "$RESET" >&2
+        echo "Usage: update_version_readme <new_version>" >&2
+        return 1
+    fi
+
+    # Update Maven dependency version
+    sed -i.bak -E "s|<version>[0-9]+\.[0-9]+\.[0-9]+</version>|<version>$new_version</version>|" "$file"
+
+    # Update Gradle implementation version
+    sed -i.bak -E "s|implementation 'io.github.kdesp73:DataBridge:[0-9]+\.[0-9]+\.[0-9]+'|implementation 'io.github.kdesp73:DataBridge:$new_version'|" "$file"
+
+    # Update Git checkout command
+    sed -i.bak -E "s|git checkout [0-9]+\.[0-9]+\.[0-9]+|git checkout $new_version|" "$file"
+
+    # Verify updates
+    if grep -q "<version>$new_version</version>" "$file" && \
+       grep -q "implementation 'io.github.kdesp73:DataBridge:$new_version'" "$file" && \
+       grep -q "git checkout $new_version" "$file"; then
+        echo -e "$GREEN""Version updated successfully to $new_version in $file." "$RESET"
+        rm -f "$file.bak"  # Remove backup if successful
+    else
+        echo -e "$RED""Error: Failed to update one or more instances of the version in $file. Restoring backup." "$RESET" >&2
+        mv "$file.bak" "$file"  # Restore original file on failure
+        return 1
+    fi
+}
+
+update_version_doxyfile() {
+    local file="Doxyfile"
+    local new_version="$1"
+
+    # Define colors for output
+    RED="\033[0;31m"
+    GREEN="\033[0;32m"
+    RESET="\033[0m"
+
+    # Check if the file exists
+    if [[ ! -f "$file" ]]; then
+        echo -e "$RED""Error: File '$file' not found." "$RESET" >&2
+        return 1
+    fi
+
+    # Check if a new version is provided
+    if [[ -z "$new_version" ]]; then
+        echo -e "$RED""Error: No version specified." "$RESET" >&2
+        echo "Usage: update_version_doxyfile <new_version>" >&2
+        return 1
+    fi
+
+    # Update the version in the PROJECT_NUMBER field
+    sed -i.bak -E "s|^(PROJECT_NUMBER[[:space:]]*=[[:space:]]*)[0-9]+\.[0-9]+\.[0-9]+|\1$new_version|" "$file"
+
+    # Verify if the replacement was successful
+    if grep -q "PROJECT_NUMBER[[:space:]]*=[[:space:]]*$new_version" "$file"; then
+        echo -e "$GREEN""Version updated successfully to $new_version in $file." "$RESET"
+        rm -f "$file.bak"  # Remove backup if successful
+    else
+        echo -e "$RED""Error: Failed to update the version in $file. Restoring backup." "$RESET" >&2
+        mv "$file.bak" "$file"  # Restore original file on failure
+        return 1
+    fi
+}
+
+version() {
+	v=$(changelogger get version)
+
+	# README.md
+	update_version_readme "$v"
+	
+	# pom.xml
+	update_version_pom "$v"
+
+	# doxyfile
+	update_version_doxyfile "$v"
+}
+
+if [[ "$1" == "--dry-run" ]]; then
+    DRY_RUN=true
+    shift
+fi
+
+if [ $# -eq 0 ]; then
+    help
+    exit 0
 fi
 
 for arg in "$@"; do
-	case "$arg" in
-		"help") help ;;
-		"docs") docs ;;
-		"deploy") deploy ;;
-		"build") build ;;
-		"install") install ;;
-		*)
-			echo "Unknown command : " "$arg" 1>&2
-			help
-			exit 1
-	esac
+    case "$arg" in
+        "help") help ;;
+        "docs") docs ;;
+        "deploy") deploy ;;
+        "build") build ;;
+        "version") version ;;
+        "install") install ;;
+        *)
+            echo -e "${RED}Unknown command: $arg${RESET}" >&2
+            help
+            exit 1
+            ;;
+    esac
 done
-
-
