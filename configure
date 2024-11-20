@@ -176,6 +176,10 @@ update_version_doxyfile() {
 }
 
 version() {
+	if [ "$DRY_RUN" == true ] ; then 
+		return
+	fi
+
 	v=$(changelogger get version)
 
 	# README.md
