@@ -1,9 +1,9 @@
 target
-.vscode/
-nbproject/
+.vscode
+nbproject
 *.jar
 *.zip
-.settings/
+.settings
 .classpath
 .project
 .changelog
