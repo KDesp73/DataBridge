@@ -10,3 +10,4 @@ nbproject/
 .idea
 config.properties
 migrations
+.version-conf
