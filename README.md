@@ -46,7 +46,7 @@ implementation 'io.github.kdesp73:DataBridge:2.0.16'
 git clone --depth=1 https://github.com/KDesp73/DataBridge
 cd DataBridge
 
-git checkout 2.0.16
+git checkout v2.0.16
 
 mvn clean install
 ```
