@@ -16,6 +16,18 @@ try(DatabaseConnection conn = AvailableConnection.SQLITE.getConnection()) {
 }
 ```
 
+```java
+try(PostgresConnection conn = AvailableConnection.POSTGRES.getConnection()) {
+	ResultSet rs = conn.callFunction("function_name", param1, param2, param3, ...);
+
+	SQLogger.logResultSet(rs);
+
+	rs.close();
+} catch(SQLException e) {
+	e.printStackTrace();
+}
+```
+
 ## Using plain connections
 
 ```java
