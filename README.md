@@ -17,6 +17,7 @@ Or check out the available examples in [examples/](https://github.com/KDesp73/Da
 - Microsoft Access Database
 - SQLite
 - Postgresql
+- Oracle (Untested)
 
 More soon to be added
 
