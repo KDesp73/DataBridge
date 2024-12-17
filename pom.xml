@@ -5,7 +5,7 @@
 
 	<groupId>io.github.kdesp73</groupId>
 	<artifactId>DataBridge</artifactId>
-	<version>2.0.16</version>
+	<version>2.0.17</version>
 	<packaging>jar</packaging>
 
 	<name>DataBridge</name>
@@ -53,6 +53,13 @@
 	</properties>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/io.github.cdimascio/java-dotenv -->
+		<dependency>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>java-dotenv</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>

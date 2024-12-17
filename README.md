@@ -31,14 +31,14 @@ More soon to be added
 <dependency>
 	<groupId>io.github.kdesp73</groupId>
 	<artifactId>DataBridge</artifactId>
-	<version>2.0.16</version>
+	<version>2.0.17</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```
-implementation 'io.github.kdesp73:DataBridge:2.0.16'
+implementation 'io.github.kdesp73:DataBridge:2.0.17'
 ```
 
 ## Manual Installation
@@ -47,7 +47,7 @@ implementation 'io.github.kdesp73:DataBridge:2.0.16'
 git clone --depth=1 https://github.com/KDesp73/DataBridge
 cd DataBridge
 
-git checkout v2.0.16
+git checkout v2.0.17
 
 mvn clean install
 ```
