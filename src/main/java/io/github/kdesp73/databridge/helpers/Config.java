@@ -66,7 +66,7 @@ public class Config {
 	}
 
 	/**
-	 * Generates a default configuration file in the {@code src/resources} directory.
+	 * Generates a default configuration file in the {@code src/main/resources} directory.
 	 */
 	public static void generate() {
 		Properties defaultProperties = new Properties();
@@ -91,7 +91,6 @@ public class Config {
 		}
 	}
 
-	// Other existing methods remain unchanged...
 	public String getString(String key) {
 		return properties.getProperty(key);
 	}
@@ -116,6 +115,11 @@ public class Config {
 		}
 	}
 
+	/**
+	 * Gets the log level from the configuration
+	 *
+	 * @return The log level
+	 */
 	public LogLevel getLogLevel() {
 		String level = getString("log.level");
 		if(level == null) return LogLevel.ALL;
@@ -126,9 +130,15 @@ public class Config {
 		}
 	}
 
+	/**
+	 * Gets log file from the configuration.
+	 *
+	 * @return The log file
+	 */
 	public String getLogFile() {
 		return getString("log.file");
 	}
+
 	/**
 	 * Gets the database URL from the configuration.
 	 *
