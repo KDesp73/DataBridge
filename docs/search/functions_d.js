@@ -4,6 +4,5 @@ var searchData=
   ['scheman_1',['Scheman',['../d3/de3/classio_1_1github_1_1kdesp73_1_1databridge_1_1migration_1_1Scheman.html#a2acdc1f60b0db9d8d6c15ccdf73d3505',1,'io::github::kdesp73::databridge::migration::Scheman']]],
   ['select_2',['select',['../d8/dbb/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1QueryBuilder.html#a2aae36be2f0c4e83b87db3b2342fb5e0',1,'io::github::kdesp73::databridge::helpers::QueryBuilder']]],
   ['set_3',['set',['../d8/dbb/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1QueryBuilder.html#a9c4f68d198dff99e7237d790ce45e7aa',1,'io::github::kdesp73::databridge::helpers::QueryBuilder']]],
-  ['setproperty_4',['setProperty',['../db/d86/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Config.html#a994129a3fbf1dd11a35066c9e1f695d2',1,'io::github::kdesp73::databridge::helpers::Config']]],
-  ['start_5',['start',['../dc/d21/classio_1_1github_1_1kdesp73_1_1databridge_1_1migration_1_1CommandPrompt.html#a21a7a13520d9ca4a8702438b8e0651a2',1,'io::github::kdesp73::databridge::migration::CommandPrompt']]]
+  ['start_4',['start',['../dc/d21/classio_1_1github_1_1kdesp73_1_1databridge_1_1migration_1_1CommandPrompt.html#a21a7a13520d9ca4a8702438b8e0651a2',1,'io::github::kdesp73::databridge::migration::CommandPrompt']]]
 ];

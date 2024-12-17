@@ -1,14 +1,14 @@
 var searchData=
 [
-  ['saveconfig_0',['saveConfig',['../db/d86/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Config.html#accf4d03cea3102fb2a5e25bb00f80a90',1,'io::github::kdesp73::databridge::helpers::Config']]],
-  ['schemachangelog_1',['SchemaChangelog',['../d2/d15/classio_1_1github_1_1kdesp73_1_1databridge_1_1migration_1_1SchemaChangelog.html',1,'io::github::kdesp73::databridge::migration']]],
-  ['scheman_2',['Scheman',['../d3/de3/classio_1_1github_1_1kdesp73_1_1databridge_1_1migration_1_1Scheman.html',1,'io.github.kdesp73.databridge.migration.Scheman'],['../d3/de3/classio_1_1github_1_1kdesp73_1_1databridge_1_1migration_1_1Scheman.html#a2acdc1f60b0db9d8d6c15ccdf73d3505',1,'io.github.kdesp73.databridge.migration.Scheman.Scheman()']]],
-  ['select_3',['select',['../d8/dbb/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1QueryBuilder.html#a2aae36be2f0c4e83b87db3b2342fb5e0',1,'io::github::kdesp73::databridge::helpers::QueryBuilder']]],
-  ['set_4',['set',['../d8/dbb/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1QueryBuilder.html#a9c4f68d198dff99e7237d790ce45e7aa',1,'io::github::kdesp73::databridge::helpers::QueryBuilder']]],
-  ['setproperty_5',['setProperty',['../db/d86/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Config.html#a994129a3fbf1dd11a35066c9e1f695d2',1,'io::github::kdesp73::databridge::helpers::Config']]],
-  ['sqlite_6',['SQLITE',['../d0/d43/enumio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1AvailableConnections.html#abdaff540dd7b2f5ae0f1f9f24ecf38c2',1,'io::github::kdesp73::databridge::connections::AvailableConnections']]],
-  ['sqliteconnection_7',['SQLiteConnection',['../dd/dc6/classio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1SQLiteConnection.html',1,'io::github::kdesp73::databridge::connections']]],
-  ['sqlogger_8',['SQLogger',['../d6/db5/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1SQLogger.html',1,'io::github::kdesp73::databridge::helpers']]],
-  ['sqloperation_9',['SQLOperation',['../d3/d0e/enumio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1SQLogger_1_1SQLOperation.html',1,'io::github::kdesp73::databridge::helpers::SQLogger']]],
-  ['start_10',['start',['../dc/d21/classio_1_1github_1_1kdesp73_1_1databridge_1_1migration_1_1CommandPrompt.html#a21a7a13520d9ca4a8702438b8e0651a2',1,'io::github::kdesp73::databridge::migration::CommandPrompt']]]
+  ['readfile_0',['readFile',['../de/de9/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1FileUtils.html#a2d63b23b7c40ff98b4faa691117e3bb0',1,'io::github::kdesp73::databridge::helpers::FileUtils']]],
+  ['rerunmigrations_1',['rerunMigrations',['../d3/de3/classio_1_1github_1_1kdesp73_1_1databridge_1_1migration_1_1Scheman.html#a7eed37a425a76b26e990577e56256a07',1,'io::github::kdesp73::databridge::migration::Scheman']]],
+  ['reset_2',['reset',['../d8/dbb/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1QueryBuilder.html#afca6f63703005365689fa0abd92ce618',1,'io::github::kdesp73::databridge::helpers::QueryBuilder']]],
+  ['retries_3',['retries',['../da/da1/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Again.html#aeb068419778780f97491b5a3de748f34',1,'io::github::kdesp73::databridge::helpers::Again']]],
+  ['retryabletask_4',['RetryableTask',['../d3/d92/interfaceio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Again_1_1RetryableTask.html',1,'io::github::kdesp73::databridge::helpers::Again']]],
+  ['retrywithdelay_5',['retryWithDelay',['../da/da1/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Again.html#ae90e0a3545df37dc9c1e4e40929f0fa4',1,'io::github::kdesp73::databridge::helpers::Again']]],
+  ['retrywithexponentialbackoff_6',['retryWithExponentialBackoff',['../da/da1/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Again.html#a7ce6c4a1f98095da749fcf16e3427128',1,'io::github::kdesp73::databridge::helpers::Again']]],
+  ['rollback_7',['rollback',['../de/d0d/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Transaction.html#a70e63088a82c38c5522daab11cbcc700',1,'io::github::kdesp73::databridge::helpers::Transaction']]],
+  ['rollbackmigration_8',['rollbackMigration',['../d3/de3/classio_1_1github_1_1kdesp73_1_1databridge_1_1migration_1_1Scheman.html#a17de94acf3b59e3b93c257449442dfeb',1,'io::github::kdesp73::databridge::migration::Scheman']]],
+  ['runmigrations_9',['runMigrations',['../d3/de3/classio_1_1github_1_1kdesp73_1_1databridge_1_1migration_1_1Scheman.html#a20d953ed281c011035db82a2616326e0',1,'io::github::kdesp73::databridge::migration::Scheman']]],
+  ['runtimeexception_10',['RuntimeException',['../db/d95/classRuntimeException.html',1,'']]]
 ];

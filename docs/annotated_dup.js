@@ -8,6 +8,7 @@ var annotated_dup =
               [ "AvailableConnections", "d0/d43/enumio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1AvailableConnections.html", "d0/d43/enumio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1AvailableConnections" ],
               [ "DatabaseConnection", "dc/d45/interfaceio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1DatabaseConnection.html", "dc/d45/interfaceio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1DatabaseConnection" ],
               [ "MSAccessConnection", "d6/d49/classio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1MSAccessConnection.html", "d6/d49/classio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1MSAccessConnection" ],
+              [ "OracleConnection", "d2/da4/classio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1OracleConnection.html", "d2/da4/classio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1OracleConnection" ],
               [ "PostgresConnection", "d9/dd3/classio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1PostgresConnection.html", "d9/dd3/classio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1PostgresConnection" ],
               [ "SQLiteConnection", "dd/dc6/classio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1SQLiteConnection.html", "dd/dc6/classio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1SQLiteConnection" ]
             ] ],
@@ -19,6 +20,7 @@ var annotated_dup =
               [ "Adapter", "db/dd8/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Adapter.html", null ],
               [ "Again", "da/da1/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Again.html", "da/da1/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Again" ],
               [ "Config", "db/d86/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Config.html", "db/d86/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Config" ],
+              [ "Environment", "d3/d49/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Environment.html", null ],
               [ "FileUtils", "de/de9/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1FileUtils.html", null ],
               [ "QueryBuilder", "d8/dbb/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1QueryBuilder.html", "d8/dbb/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1QueryBuilder" ],
               [ "SQLogger", "d6/db5/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1SQLogger.html", "d6/db5/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1SQLogger" ],

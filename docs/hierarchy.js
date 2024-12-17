@@ -5,6 +5,7 @@ var hierarchy =
     [ "AutoCloseable", "d8/dfd/classAutoCloseable.html", [
       [ "io.github.kdesp73.databridge.connections.DatabaseConnection", "dc/d45/interfaceio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1DatabaseConnection.html", [
         [ "io.github.kdesp73.databridge.connections.MSAccessConnection", "d6/d49/classio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1MSAccessConnection.html", null ],
+        [ "io.github.kdesp73.databridge.connections.OracleConnection", "d2/da4/classio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1OracleConnection.html", null ],
         [ "io.github.kdesp73.databridge.connections.PostgresConnection", "d9/dd3/classio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1PostgresConnection.html", null ],
         [ "io.github.kdesp73.databridge.connections.SQLiteConnection", "dd/dc6/classio_1_1github_1_1kdesp73_1_1databridge_1_1connections_1_1SQLiteConnection.html", null ]
       ] ]
@@ -15,6 +16,7 @@ var hierarchy =
       [ "io.github.kdesp73.databridge.migration.Migration", "d6/d13/classio_1_1github_1_1kdesp73_1_1databridge_1_1migration_1_1Migration.html", null ]
     ] ],
     [ "io.github.kdesp73.databridge.helpers.Config", "db/d86/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Config.html", null ],
+    [ "io.github.kdesp73.databridge.helpers.Environment", "d3/d49/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1Environment.html", null ],
     [ "io.github.kdesp73.databridge.helpers.FileUtils", "de/de9/classio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1FileUtils.html", null ],
     [ "io.github.kdesp73.databridge.helpers.SQLogger.LogLevel", "d3/d2e/enumio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1SQLogger_1_1LogLevel.html", null ],
     [ "io.github.kdesp73.databridge.helpers.SQLogger.LogType", "da/db1/enumio_1_1github_1_1kdesp73_1_1databridge_1_1helpers_1_1SQLogger_1_1LogType.html", null ],
