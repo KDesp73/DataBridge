@@ -3,7 +3,7 @@
 # General Configuration
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "DataBridge Documentation"
-PROJECT_NUMBER         = 2.0.17
+PROJECT_NUMBER         = 2.0.18
 PROJECT_BRIEF          = "A Java library for managing database connections and transactions"
 OUTPUT_DIRECTORY       = ./docs
 CREATE_SUBDIRS         = YES

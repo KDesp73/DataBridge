@@ -42,7 +42,12 @@ public enum AvailableConnections {
     /**
      * MS Access connection type.
      */
-    MSACCESS(MSAccessConnection.class);
+    MSACCESS(MSAccessConnection.class),
+
+	/**
+	 * Oracle connection type.
+	 */
+	ORACLE(OracleConnection.class);
 
     private DatabaseConnection connection;
 
