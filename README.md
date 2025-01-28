@@ -14,10 +14,10 @@ Or check out the available examples in [examples/](https://github.com/KDesp73/Da
 
 ## Supported Databases
 
-- Microsoft Access Database
+- Microsoft Access
 - SQLite
 - Postgresql
-- Oracle (Untested)
+- Oracle
 
 More soon to be added
 
