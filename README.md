@@ -1,5 +1,7 @@
 # DataBridge
 
+[![MvnRepository](https://badges.mvnrepository.com/badge/io.github.kdesp73/DataBridge/badge.svg?label=MvnRepository)](https://mvnrepository.com/artifact/io.github.kdesp73/DataBridge)
+
 DataBridge is a Java library that helps you work with databases like
 PostgreSQL, SQLite, MS Access, and more. It makes it easier to connect
 to databases, build SQL queries, handle transactions,
